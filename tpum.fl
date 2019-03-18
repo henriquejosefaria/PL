@@ -1,0 +1,36 @@
+%{
+#include<stdio.h>
+#include<string.h>
+int c;
+%}
+
+%option yylineno
+%option noyywrap
+
+CP [A-Za-z:\ ªº/!ñàáâåãòóçõéèôōöêíìúüùß()',;.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\-]+
+MAIUSCULAS [A-Z]
+MINUSCULAS [a-z]
+NUMEROS [0-9]+ 
+PARAGRAFOS (\n)
+
+%%
+  
+INSERT\ INTO\ `langlinks`\ VALUES\ (.*,.*,.*),.*;				{c++;if(c==1)printf("%d - %s\n",c,yytext);}
+.|\n 													{}
+%%
+
+
+int main(int argc,char* argv[]) {
+	c = 0;
+	printf("Inicio da filtragem\n");
+
+	for(int i = 1; i<argc ; i++) {	
+		yyin=fopen(argv[1],"r");
+   	 	yylex();
+   		fclose(yyin);
+    }
+
+	printf("Fim da filtragem\n");
+
+	return 0;
+}

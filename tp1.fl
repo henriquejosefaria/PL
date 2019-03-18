@@ -1,0 +1,52 @@
+%{
+#include<stdio.h>
+#include<string.h>
+#include "htable.h"
+
+char s[300];
+char id[300];
+TAD_HTABLE hash; 
+long dim = 0;
+%}
+
+%option yylineno
+%option noyywrap
+
+CP [A-Za-z: ªº/!ñàáâåãòóçõéèôōöêíìúüùß()',;.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\-]+
+MAIUSCULAS [A-Z]
+MINUSCULAS [a-z]
+NUMEROS [0-9]+ 
+PARAGRAFOS (\n)
+
+%%
+"<title>"				{/*printf("traducao:");*/;}
+"</title>\n"			{/*printf(",");*/}
+"<id>"   				{/*printf("id:")*/counter++;}
+"</id>\n"				{add(s,atol(id),hash);}
+"--\n"					{;}
+{CP}                    {/*printf("%s",yytext);*/sprintf(s,"%s",yytext);}
+{NUMEROS} 				{/*printf("%s",yytext);*/sprintf(id,"%s",yytext);}
+(.|'\n')   				{;}
+%%
+
+
+int main(int argc,char* argv[]) {
+
+	hash = Htable(1);
+
+	printf("Inicio da filtragem\n");
+				
+	yyin=fopen(argv[1],"r");
+    yylex();
+    fclose(yyin);
+
+    dim = getHtableSize(hash);
+    char* str = malloc(sizeof(100));
+    str = getDados(hash,5934109);
+    printf("ELEMENTOS NA HASH: %ld \n",dim);
+    printf("%s \n",str);
+
+	printf("Fim da filtragem\n");
+
+	return 0;
+}
