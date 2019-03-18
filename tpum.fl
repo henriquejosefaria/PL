@@ -1,7 +1,8 @@
 %{
 #include <stdio.h>
-#include <string.h>
+#include<string.h>
 #include "htable.h"
+#include "htable.c"
 
 typedef struct DADOS {
 	char* es;
@@ -13,38 +14,61 @@ typedef struct DADOS {
 	char* pt;
 }DADOS;
 
-TAD_HTABLE hash;
+TAD_HTABLE h;
 char* tmp;
 int index;
+char* frase;
+int nova;
 void fazcoisas(char* str);
 %}
 
 %option yylineno
 %option noyywrap
 
-CP [A-Za-z:\ ªº/!\?=ñàáâåãòóçõéèôōöêíìúüùß&',;.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\-]
+CP [: ªº/!ñàáâåãòóçõéèôōöêíìúüùß',;\.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\\-]+
+LETRAS [A-Za-z\ |á|è|í|ó|ú|á|é|í|ó|ú|ã|õ|ç|ş]
 NUMEROS [0-9]+ 
 LINGUA (de|en|fr|it|ru|es)
+PARAGRAFOS (\n)
+ESPACO [\ ]
 
 %%
 
-(\({NUMEROS},{CP}{LINGUA}{CP},{CP}+\){CP})?			{faztraducao(yytext);}
+"<title>".*:         							    {;}
+"<title>"           							    {;}
+"</title>\n"										{;}
+"<id>"   										    {;}
+"</id>\n"											{;}
+"--\n"												{;}
+"<title>"({LETRAS}+{NUMEROS})+                      {;}
+"<title>"{LETRAS}+                                  {
+                                                     int x = strlen(yytext)-6;
+                                                     frase = (char*) malloc(x*sizeof(char));
+                                                     sprintf(frase,"%s",yytext+7);
+                                                     frase[x] = '\0';
+                                                     nova = 1;
+                                                    } // não precisamos de caracteres especiais
+"<id>"{NUMEROS}+                                    {
+                                                     if(nova != 0){
+                                                        int x = atoi(yytext+4);
+                                                        add(frase,x,h);
+                                                        printf("%d,%s\n",x,(char*)getDados(h,x));
+                                                     } 
+                                                     nova=0;
+                                                    }
+(\({NUMEROS},{CP}{LINGUA}{CP},{CP}+\){CP})?			{faztraducao(yytext+1);}
 (.|\n)												{}
 
 %%
 
 void retiraExcesso(char* str) {
-	int c = 0,i = 0,j;
-	for(; str[i] != '\0' ; i++) {
-		if(str[i]==',') c++;
-		else if(c==2) break;
-	}
-	i++;
-	for(j = i; str[j]!='\0' ; j++) {
+	int j;
+	for(j = index; str[j]!='\0' ; j++) {
 		if(str[j]==':') break;
 	}
 	if(str[j]!='\0') {
 		j++;
+		int i = index+1;
 		for(; str[j]!='\0' ; j++, i++)
 			str[i] = str[j];
 		str[i] = '\0';
@@ -70,13 +94,13 @@ char* getLang(char* str) {
 	res[0] = str[index];
 	res[1] = str[index+1];
 	res[2] = '\0';
-	index+=2;
+	index+=3;
 	return res;
 }
 
 char* getdados(char* str) {
-	char* res = malloc(sizeof(char)*strlen(str+index+1));
-	strcpy(res,str+index+1);
+	char* res = malloc(sizeof(char)*strlen(str+index));
+	strcpy(res,str+index);
 	return res;
 }
 
@@ -103,26 +127,32 @@ void addLang(DADOS d, char* lang, char* str) {
 
 void faztraducao(char* str) {
 	str[strlen(str)-2]='\0';
-	retiraExcesso(str);
 	int id = getId(str);
 	char* lang = getLang(str);
+	retiraExcesso(str);
 	char* dados = getdados(str);
-	DADOS d = hash.getDados(id);
+	DADOS d = getDados(h,id);
 	addLang(d,lang,dados);
 }
 
 int main(int argc,char* argv[]) {
-	hash = Htable(1);
+	h = Htable((long)1);
+    nova = 0;
 
 	printf("Inicio da filtragem\n");
 
 	for(int i = 1; i<argc ; i++) {	
-		yyin = fopen(argv[1],"r");
+		yyin = fopen(argv[i],"r");
    	 	yylex();
    		fclose(yyin);
     }
 
 	printf("Fim da filtragem\n");
+
+	FILE* f = fopen("output.txt","w");
+	//printar a estrutura toda para o ficheiro
+
+	fclose(f);
 
 	return 0;
 }
