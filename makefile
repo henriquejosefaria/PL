@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall
+CFLAGS= -Wall -O2
 
 all: tp1
 
@@ -11,12 +11,21 @@ tp1: lex.yy.c htable.c
 
 .PHONY: clean
 
-clean:
+clean_tp1:
 	rm lex.yy.c
 	rm tp1
+
+clean_tpum:
+	rm lex.yy.c
+	rm tpum
+	rm output.txt
 
 install: 
 	cp tp1 /usr/local/bin/
 
 uninstall:
 	rm -f /usr/local/bin/tp1
+
+tpum: tpum.fl htable.c
+	flex tpum.fl
+	gcc lex.yy.c htable.c -o tpum $(CFLAGS)

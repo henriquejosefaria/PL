@@ -1,31 +1,123 @@
 %{
-#include<stdio.h>
-#include<string.h>
-int c;
+#include <stdio.h>
+#include <string.h>
+#include "htable.h"
+
+typedef struct DADOS {
+	char* es;
+	char* en;
+	char* it;
+	char* ru;
+	char* de;
+	char* fr;
+	char* pt;
+}DADOS;
+
+TAD_HTABLE hash;
+char* tmp;
+int index;
+void fazcoisas(char* str);
 %}
 
 %option yylineno
 %option noyywrap
 
-CP [A-Za-z:\ ªº/!ñàáâåãòóçõéèôōöêíìúüùß()',;.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\-]+
-MAIUSCULAS [A-Z]
-MINUSCULAS [a-z]
+CP [A-Za-z:\ ªº/!\?=ñàáâåãòóçõéèôōöêíìúüùß&',;.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\-]
 NUMEROS [0-9]+ 
-PARAGRAFOS (\n)
+LINGUA (de|en|fr|it|ru|es)
 
 %%
-  
-INSERT\ INTO\ `langlinks`\ VALUES\ (.*,.*,.*),.*;				{c++;if(c==1)printf("%d - %s\n",c,yytext);}
-.|\n 													{}
+
+(\({NUMEROS},{CP}{LINGUA}{CP},{CP}+\){CP})?			{faztraducao(yytext);}
+(.|\n)												{}
+
 %%
 
+void retiraExcesso(char* str) {
+	int c = 0,i = 0,j;
+	for(; str[i] != '\0' ; i++) {
+		if(str[i]==',') c++;
+		else if(c==2) break;
+	}
+	i++;
+	for(j = i; str[j]!='\0' ; j++) {
+		if(str[j]==':') break;
+	}
+	if(str[j]!='\0') {
+		j++;
+		for(; str[j]!='\0' ; j++, i++)
+			str[i] = str[j];
+		str[i] = '\0';
+	}
+}
+
+int getId(char* str) {
+	int i = 0;
+	for(; str[i]!='\0'; i++)
+		if(str[i]==',') break;
+	index = i;
+	char* tmp;
+	strncpy(tmp,str,i);
+	tmp[i] = '\0';
+	i = atoi(tmp);
+	free(tmp);
+	return i;
+}
+
+char* getLang(char* str) {
+	index+=2;
+	char* res = malloc(sizeof(char)*3);
+	res[0] = str[index];
+	res[1] = str[index+1];
+	res[2] = '\0';
+	index+=2;
+	return res;
+}
+
+char* getdados(char* str) {
+	char* res = malloc(sizeof(char)*strlen(str+index+1));
+	strcpy(res,str+index+1);
+	return res;
+}
+
+void addLang(DADOS d, char* lang, char* str) {
+	if(strcmp(lang,"en")) {
+		strcpy(dados->en,str);
+	}
+	else if(strcmp(lang,"es")) {
+		strcpy(dados->es,str);
+	}
+	else if(strcmp(lang,"fr")) {
+		strcpy(dados->fr,str);
+	}
+	else if(strcmp(lang,"ru")) {
+		strcpy(dados->ru,str);
+	}
+	else if(strcmp(lang,"it")) {
+		strcpy(dados->it,str);
+	}
+	else {
+		strcpy(dados->de,str);
+	}
+}
+
+void faztraducao(char* str) {
+	str[strlen(str)-2]='\0';
+	retiraExcesso(str);
+	int id = getId(str);
+	char* lang = getLang(str);
+	char* dados = getdados(str);
+	DADOS d = hash.getDados(id);
+	addLang(d,lang,dados);
+}
 
 int main(int argc,char* argv[]) {
-	c = 0;
+	hash = Htable(1);
+
 	printf("Inicio da filtragem\n");
 
 	for(int i = 1; i<argc ; i++) {	
-		yyin=fopen(argv[1],"r");
+		yyin = fopen(argv[1],"r");
    	 	yylex();
    		fclose(yyin);
     }
