@@ -37,6 +37,7 @@ ESPACO [\ ]
                                                      sprintf(frase,"%s",yytext+7);
                                                      frase[x] = '\0';
                                                      nova = 1;
+                                                     printf("Chega aqui? %s\n",frase);
                                                     } // não precisamos de caracteres especiais
 "<id>"{NUMEROS}+                                    {
                                                      if(nova != 0){
@@ -44,6 +45,9 @@ ESPACO [\ ]
                                                         TAD_ARRAY_LIST array = ARRAY_LIST(7);
                                                         addLang(array,"pt",frase);
                                                         add(array,x,h);
+                                                        printf("Chega aqui? %d\n",x);
+                                                        free(frase);
+                                                        printf("Chega aqui?\n");
                                                      } 
                                                      nova=0;
                                                     }
@@ -159,7 +163,6 @@ int main(int argc,char* argv[]) {
 	}
 
 	free_htable(h);
-	free(frase);
 	fclose(f);
 
 	return 0;

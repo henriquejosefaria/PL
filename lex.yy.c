@@ -736,37 +736,41 @@ YY_RULE_SETUP
                                                      sprintf(frase,"%s",yytext+7);
                                                      frase[x] = '\0';
                                                      nova = 1;
+                                                     printf("Chega aqui? %s\n",frase);
                                                     } // não precisamos de caracteres especiais
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 41 "tpum.fl"
+#line 42 "tpum.fl"
 {
                                                      if(nova != 0){
                                                         int x = atoi(yytext+4);
                                                         TAD_ARRAY_LIST array = ARRAY_LIST(7);
                                                         addLang(array,"pt",frase);
                                                         add(array,x,h);
+                                                        printf("Chega aqui? %d\n",x);
+                                                        free(frase);
+                                                        printf("Chega aqui?\n");
                                                      } 
                                                      nova=0;
                                                     }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 50 "tpum.fl"
+#line 54 "tpum.fl"
 {faztraducao(yytext+1);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 51 "tpum.fl"
+#line 55 "tpum.fl"
 {}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 53 "tpum.fl"
+#line 57 "tpum.fl"
 ECHO;
 	YY_BREAK
-#line 770 "lex.yy.c"
+#line 774 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1654,7 +1658,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 53 "tpum.fl"
+#line 57 "tpum.fl"
 
 
 void retiraExcesso(char* str) {
@@ -1764,7 +1768,6 @@ int main(int argc,char* argv[]) {
 	}
 
 	free_htable(h);
-	free(frase);
 	fclose(f);
 
 	return 0;
