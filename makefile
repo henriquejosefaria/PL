@@ -28,4 +28,4 @@ uninstall:
 
 tpum: tpum.fl
 	flex tpum.fl
-	$(CC) lex.yy.c htable.c arrayList.c -I htable.h -I arrayList -o tpum $(CFLAGS)
+	$(CC) lex.yy.c htable.c arrayList.c htable.h arrayList.h -o tpum $(CFLAGS)

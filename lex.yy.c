@@ -431,11 +431,11 @@ char *yytext;
 #include "arrayList.h"
 
 TAD_HTABLE h;
-char* tmp;
 int indice;
 char* frase;
 int nova;
-void fazcoisas(char* str);
+void addLang(TAD_ARRAY_LIST array, char* lang, char* str);
+void faztraducao(char* str);
 #line 440 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
@@ -747,27 +747,26 @@ YY_RULE_SETUP
                                                         TAD_ARRAY_LIST array = ARRAY_LIST(7);
                                                         addLang(array,"pt",frase);
                                                         add(array,x,h);
-                                                        printf("%d,%s\n",x,(char*)getDados(h,x));
                                                      } 
                                                      nova=0;
                                                     }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 51 "tpum.fl"
+#line 50 "tpum.fl"
 {faztraducao(yytext+1);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 52 "tpum.fl"
+#line 51 "tpum.fl"
 {}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 54 "tpum.fl"
+#line 53 "tpum.fl"
 ECHO;
 	YY_BREAK
-#line 771 "lex.yy.c"
+#line 770 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1655,7 +1654,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 54 "tpum.fl"
+#line 53 "tpum.fl"
 
 
 void retiraExcesso(char* str) {
@@ -1677,7 +1676,7 @@ int getId(char* str) {
 	for(; str[i]!='\0'; i++)
 		if(str[i]==',') break;
 	indice = i;
-	char* tmp;
+	char* tmp = malloc(sizeof(char)*(i+1));
 	strncpy(tmp,str,i);
 	tmp[i] = '\0';
 	i = atoi(tmp);
@@ -1733,6 +1732,8 @@ void faztraducao(char* str) {
 	addLang(array,lang,dados);
 }
 
+
+
 int main(int argc,char* argv[]) {
 	h = Htable((long)1);
     nova = 0;
@@ -1748,8 +1749,22 @@ int main(int argc,char* argv[]) {
 	printf("Fim da filtragem\n");
 
 	FILE* f = fopen("output.txt","w");
-	//printar a estrutura toda para o ficheiro
+	int dim = getHtableSize(h);
+	for(int i = 0; i<dim; i++) {
+		TAD_ARRAY_LIST array = (TAD_ARRAY_LIST)getDados(h,i);
+		if(array) {
+			for(int j = 0 ; j<6 ; j++) {
+				char* str = (char*)getElem(array,j);
+				if(str != NULL) {
+					fprintf(f,"%ld,%s,%s\n",getIdAtIndex(h,i),(char*)getElem(array,6),str);
+				}
+			}
+		}
+		free_ARRAY_LIST(array);
+	}
 
+	free_htable(h);
+	free(frase);
 	fclose(f);
 
 	return 0;
