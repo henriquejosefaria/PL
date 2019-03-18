@@ -1,22 +1,12 @@
 %{
 #include <stdio.h>
-#include<string.h>
+#include <string.h>
 #include "htable.h"
-#include "htable.c"
-
-typedef struct DADOS {
-	char* es;
-	char* en;
-	char* it;
-	char* ru;
-	char* de;
-	char* fr;
-	char* pt;
-}DADOS;
+#include "arrayList.h"
 
 TAD_HTABLE h;
 char* tmp;
-int index;
+int indice;
 char* frase;
 int nova;
 void fazcoisas(char* str);
@@ -51,7 +41,9 @@ ESPACO [\ ]
 "<id>"{NUMEROS}+                                    {
                                                      if(nova != 0){
                                                         int x = atoi(yytext+4);
-                                                        add(frase,x,h);
+                                                        TAD_ARRAY_LIST array = ARRAY_LIST(7);
+                                                        addLang(array,"pt",frase);
+                                                        add(array,x,h);
                                                         printf("%d,%s\n",x,(char*)getDados(h,x));
                                                      } 
                                                      nova=0;
@@ -63,12 +55,12 @@ ESPACO [\ ]
 
 void retiraExcesso(char* str) {
 	int j;
-	for(j = index; str[j]!='\0' ; j++) {
+	for(j = indice; str[j]!='\0' ; j++) {
 		if(str[j]==':') break;
 	}
 	if(str[j]!='\0') {
 		j++;
-		int i = index+1;
+		int i = indice+1;
 		for(; str[j]!='\0' ; j++, i++)
 			str[i] = str[j];
 		str[i] = '\0';
@@ -79,7 +71,7 @@ int getId(char* str) {
 	int i = 0;
 	for(; str[i]!='\0'; i++)
 		if(str[i]==',') break;
-	index = i;
+	indice = i;
 	char* tmp;
 	strncpy(tmp,str,i);
 	tmp[i] = '\0';
@@ -89,40 +81,41 @@ int getId(char* str) {
 }
 
 char* getLang(char* str) {
-	index+=2;
+	indice+=2;
 	char* res = malloc(sizeof(char)*3);
-	res[0] = str[index];
-	res[1] = str[index+1];
+	res[0] = str[indice];
+	res[1] = str[indice+1];
 	res[2] = '\0';
-	index+=3;
+	indice+=3;
 	return res;
 }
 
 char* getdados(char* str) {
-	char* res = malloc(sizeof(char)*strlen(str+index));
-	strcpy(res,str+index);
+	char* res = malloc(sizeof(char)*strlen(str+indice));
+	strcpy(res,str+indice);
 	return res;
 }
 
-void addLang(DADOS d, char* lang, char* str) {
+void addLang(TAD_ARRAY_LIST array, char* lang, char* str) {
 	if(strcmp(lang,"en")) {
-		strcpy(dados->en,str);
+		addElemAtIndex(array,str,0);
 	}
 	else if(strcmp(lang,"es")) {
-		strcpy(dados->es,str);
+		addElemAtIndex(array,str,1);
 	}
 	else if(strcmp(lang,"fr")) {
-		strcpy(dados->fr,str);
+		addElemAtIndex(array,str,2);
 	}
 	else if(strcmp(lang,"ru")) {
-		strcpy(dados->ru,str);
+		addElemAtIndex(array,str,3);
 	}
 	else if(strcmp(lang,"it")) {
-		strcpy(dados->it,str);
+		addElemAtIndex(array,str,4);
 	}
-	else {
-		strcpy(dados->de,str);
+	else if(strcmp(lang,"de")) {
+		addElemAtIndex(array,str,5);
 	}
+	else addElemAtIndex(array,str,6);
 }
 
 void faztraducao(char* str) {
@@ -131,8 +124,8 @@ void faztraducao(char* str) {
 	char* lang = getLang(str);
 	retiraExcesso(str);
 	char* dados = getdados(str);
-	DADOS d = getDados(h,id);
-	addLang(d,lang,dados);
+	TAD_ARRAY_LIST array = getDados(h,id);
+	addLang(array,lang,dados);
 }
 
 int main(int argc,char* argv[]) {

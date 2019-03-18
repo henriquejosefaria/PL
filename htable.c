@@ -3,7 +3,7 @@
 #include <math.h>
 #include <string.h>
 
-#include <htable.h>
+#include "htable.h"
 
 #define FREE                      0
 #define USED                      1

@@ -26,6 +26,6 @@ install:
 uninstall:
 	rm -f /usr/local/bin/tp1
 
-tpum: tpum.fl htable.c
+tpum: tpum.fl
 	flex tpum.fl
-	gcc lex.yy.c htable.c -o tpum $(CFLAGS)
+	$(CC) lex.yy.c htable.c arrayList.c -I htable.h -I arrayList -o tpum $(CFLAGS)
