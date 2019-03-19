@@ -749,7 +749,6 @@ YY_RULE_SETUP
                                                         addLang(array,"pt",frase);
                                                         add(array,x,h);
                                                         printf("Chega aqui? %d\n",x);
-                                                        free(frase);
                                                         printf("Chega aqui?\n");
                                                      } 
                                                      nova=0;
@@ -757,20 +756,20 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 54 "tpum.fl"
+#line 53 "tpum.fl"
 {faztraducao(yytext+1);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 55 "tpum.fl"
+#line 54 "tpum.fl"
 {}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 57 "tpum.fl"
+#line 56 "tpum.fl"
 ECHO;
 	YY_BREAK
-#line 774 "lex.yy.c"
+#line 773 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1658,7 +1657,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 57 "tpum.fl"
+#line 56 "tpum.fl"
 
 
 void retiraExcesso(char* str) {
