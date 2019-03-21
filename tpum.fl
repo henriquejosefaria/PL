@@ -24,7 +24,13 @@ ESPACO [\ ]
 
 %%
 
-"<title>".*:         							    {;}
+"<title>".*:{LETRAS}+      						    {int x = 0; 
+                                                     while(yytext[x] != ´:´){x++;} 
+                                                     frase = (char*) malloc((strlen(yytext)-x)*sizeof(char));
+                                                     sprintf(frase,"%s",yytext+x);
+                                                     frase[x] = '\0';
+                                                     nova = 1;
+                                                    }
 "<title>"           							    {;}
 "</title>\n"										{;}
 "<id>"   										    {;}
