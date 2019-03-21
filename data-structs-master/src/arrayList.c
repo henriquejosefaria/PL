@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "arrayList.h"
+#include <arrayList.h>
 
 
 typedef struct TCD_ARRAY_LIST{

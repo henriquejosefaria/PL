@@ -3,7 +3,8 @@
 #include <math.h>
 #include <string.h>
 
-#include "htable.h"
+#include "../include/htable.h"
+//#include "dictionary.c"
 
 #define FREE                      0
 #define USED                      1
@@ -13,7 +14,7 @@ typedef struct cell{
 	long id;
 	long status;
 	long colisoes;
-	void *dados;
+	TCD_DICTIONARY *dados;
 } HTABLE_CELL;
 
 
@@ -39,7 +40,7 @@ long getIdAtIndex(TAD_HTABLE htable, long index){
 }
 
 
-void* getDados(TAD_HTABLE htable, long id){
+void getDados(TAD_HTABLE htable, long id){
 	#ifdef TESTA_ERRO_HTABLE
 	if (htable == NULL || htable->celulas == NULL){
 		perror("htable == NULL || htable->celulas == NULL: getDados() on module HTABLE"); 
@@ -47,7 +48,8 @@ void* getDados(TAD_HTABLE htable, long id){
 	}	
 	#endif
 	long index = indexOf(id, htable);
-	return htable->celulas[index].dados;
+	showTranslations(htable->celulas[index].dados);
+	printf("acabei\n");
 }
 
 
@@ -88,13 +90,12 @@ TAD_HTABLE Htable(long dim){
 	for (i = 0; i < dim; i++){
 		h->celulas[i].status = FREE;
 		h->celulas[i].colisoes = 0;
-		h->celulas[i].dados = NULL;
+		h->celulas[i].dados = Dictionary();
 	}
 	return h;
 }
 
-
-void add(void* dados, long id, TAD_HTABLE htable){
+void add(void* dados, long id, TAD_HTABLE htable,int x){
 	#ifdef TESTA_ERRO_HTABLE
 	if (htable == NULL || htable->celulas == NULL || dados == NULL){
 		perror("htable == NULL || htable->celulas == NULL || dados == NULL: add() on module HTABLE"); 
@@ -114,7 +115,7 @@ void add(void* dados, long id, TAD_HTABLE htable){
 	h[p].id = id;
 	h[p].status = USED;
 	h[p_inicial].colisoes = i - 1;
-	h[p].dados = dados;
+	addDic(h[p].dados,dados,x);
     if (usedPercentage(htable) > 0.7) {
     	resize(htable);
     }

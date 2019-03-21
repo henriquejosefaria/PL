@@ -8,29 +8,19 @@ TAD_HTABLE h;
 int indice;
 char* frase;
 int nova;
-void addLang(TAD_ARRAY_LIST array, char* lang, char* str);
 void faztraducao(char* str);
 %}
 
 %option yylineno
 %option noyywrap
 
-CP [: ªº/!ñàáâåãòóçõéèôōöêíìúüùß',;\.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\\-]+
-LETRAS [A-Za-z\ |á|è|í|ó|ú|á|é|í|ó|ú|ã|õ|ç|ş]
+CP [:\ ªº/!ñàáâåãòóçõéèôōöêíìúüùß',;\.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\\-]+
+LETRAS [A-Za-z:\ |á|è|í|ó|ú|á|é|í|ó|ú|ã|õ|ç|ş]
 NUMEROS [0-9]+ 
-LINGUA (de|en|fr|it|ru|es)
-PARAGRAFOS (\n)
-ESPACO [\ ]
 
 %%
 
-"<title>".*:{LETRAS}+      						    {int x = 0; 
-                                                     while(yytext[x] != ´:´){x++;} 
-                                                     frase = (char*) malloc((strlen(yytext)-x)*sizeof(char));
-                                                     sprintf(frase,"%s",yytext+x);
-                                                     frase[x] = '\0';
-                                                     nova = 1;
-                                                    }
+"<title>".*:         							    {;}
 "<title>"           							    {;}
 "</title>\n"										{;}
 "<id>"   										    {;}
@@ -52,8 +42,13 @@ ESPACO [\ ]
                                                      } 
                                                      nova=0;
                                                     }
-(\({NUMEROS},{CP}{LINGUA}{CP},{CP}+\){CP})?			{faztraducao(yytext+1);}
-(.|'\n')    										{;}
+(\({NUMEROS},\'en\',\'{LETRAS}+\'\)(,|;))?			{faztraducao(yytext+1,"en");}
+(\({NUMEROS},\'es\',\'{LETRAS}+\'\)(,|;))?			{faztraducao(yytext+1,"es");}
+(\({NUMEROS},\'de\',\'{LETRAS}+\'\)(,|;))?			{faztraducao(yytext+1,"de");}
+(\({NUMEROS},\'fr\',\'{LETRAS}+\'\)(,|;))?			{faztraducao(yytext+1,"fr");}
+(\({NUMEROS},\'it\',\'{LETRAS}+\'\)(,|;))?			{faztraducao(yytext+1,"it");}
+(\({NUMEROS},\'ru\',\'{LETRAS}+\'\)(,|;))?			{faztraducao(yytext+1,"ru");}
+(.|\n)    											{;}
 
 %%
 
@@ -84,16 +79,6 @@ int getId(char* str) {
 	return i;
 }
 
-char* getLang(char* str) {
-	indice+=2;
-	char* res = malloc(sizeof(char)*3);
-	res[0] = str[indice];
-	res[1] = str[indice+1];
-	res[2] = '\0';
-	indice+=3;
-	return res;
-}
-
 char* getdados(char* str) {
 	char* res = malloc(sizeof(char)*strlen(str+indice));
 	strcpy(res,str+indice);
@@ -122,17 +107,16 @@ void addLang(TAD_ARRAY_LIST array, char* lang, char* str) {
 	else addElemAtIndex(array,str,6);
 }
 
-void faztraducao(char* str) {
+void faztraducao(char* str,char* lang) {
 	str[strlen(str)-2]='\0';
 	int id = getId(str);
-	char* lang = getLang(str);
+	index+=5;
 	retiraExcesso(str);
 	char* dados = getdados(str);
 	TAD_ARRAY_LIST array = getDados(h,id);
-	addLang(array,lang,dados);
+	if(array != null)
+		addLang(array,lang,dados);
 }
-
-
 
 int main(int argc,char* argv[]) {
 	h = Htable((long)1);
