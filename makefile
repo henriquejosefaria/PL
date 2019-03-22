@@ -1,31 +1,18 @@
 CC=gcc
-CFLAGS= -Wall -O2
+CFLAGS= $(shell pkg-config --cflags glib-2.0)
 
-all: tp1
+LFLAGS= $(shell pkg-config --libs glib-2.0)
 
-lex.yy.c: tp1.fl
-	flex tp1.fl
+all: a.out
 
-tp1: lex.yy.c htable.c 
-	$(CC) lex.yy.c htable.c -o tp1 $(CFLAGS)
+lex.yy.c: 1tp1.fl
+	flex 1tp1.fl
+
+a.out: lex.yy.c htable.c 
+	$(CC) $(CFLAGS) lex.yy.c htable.c -o tp1 $(LFLAGS)  
 
 .PHONY: clean
 
-clean_tp1:
-	rm lex.yy.c
-	rm tp1
-
-clean_tpum:
-	rm lex.yy.c
-	rm tpum
-	rm output.txt
-
-install: 
-	cp tp1 /usr/local/bin/
-
-uninstall:
-	rm -f /usr/local/bin/tp1
-
-tpum: tpum.fl
-	flex tpum.fl
-	$(CC) lex.yy.c htable.c arrayList.c htable.h arrayList.h -o tpum $(CFLAGS)
+clean:
+	rm -f lex.yy.c
+	rm -f tp1

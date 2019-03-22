@@ -1,0 +1,176 @@
+%{
+#include<stdio.h>
+#include<string.h>
+#include<gmodule.h>
+
+typedef struct entrada {
+    char* titulo;
+}*DIC_ENTRADA;
+
+int nova=0;
+int tuplos;
+GHashTable* h;
+long dim = 0;
+char* frase;
+DIC_ENTRADA e;
+long i;
+
+DIC_ENTRADA novaEntrada(char* tit)
+{
+    DIC_ENTRADA ent = malloc(sizeof(struct entrada));
+    ent->titulo = strdup(tit);  
+    return ent;
+}
+
+void retiraExcesso(char* str) {
+    int j;
+    for(j = indice; str[j]!='\0' ; j++) {
+        if(str[j]==':') break;
+    }
+    if(str[j]!='\0') {
+        j++;
+        int i = indice+1;
+        for(; str[j]!='\0' ; j++, i++)
+            str[i] = str[j];
+        str[i] = '\0';
+    }
+}
+
+int getId(char* str) {
+    int i = 0;
+    for(; str[i]!='\0'; i++)
+        if(str[i]==',') break;
+    indice = i;
+    char* tmp = malloc(sizeof(char)*(i+1));
+    strncpy(tmp,str,i);
+    tmp[i] = '\0';
+    i = atoi(tmp);
+    free(tmp);
+    return i;
+}
+
+char* getdados(char* str) {
+    char* res = malloc(sizeof(char)*strlen(str+indice));
+    strcpy(res,str+indice);
+    return res;
+}
+
+void addLang(TAD_ARRAY_LIST array, char* lang, char* str) {
+    /*if(strcmp(lang,"en")) {
+        addElemAtIndex(array,str,0);
+    }
+    else if(strcmp(lang,"es")) {
+        addElemAtIndex(array,str,1);
+    }
+    else if(strcmp(lang,"fr")) {
+        addElemAtIndex(array,str,2);
+    }
+    else if(strcmp(lang,"ru")) {
+        addElemAtIndex(array,str,3);
+    }
+    else if(strcmp(lang,"it")) {
+        addElemAtIndex(array,str,4);
+    }
+    else if(strcmp(lang,"de")) {
+        addElemAtIndex(array,str,5);
+    }
+    else addElemAtIndex(array,str,6);*/
+}
+
+void faztraducao(char* str,char* lang) {
+    if(tuplos!=0) {
+        str[strlen(str)-2]='\0';
+        int id = getId(str);
+        index+=5;
+        retiraExcesso(str);
+        char* dados = getdados(str);
+        //TAD_ARRAY_LIST array = getDados(h,id);
+        //if(array != null)
+            addLang(array,lang,dados);
+        tuplos--;
+    }
+}
+
+%}
+
+%x PT OTHER
+
+%option yylineno
+%option noyywrap
+
+CP [ª|ºñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]+
+PONTUACAO  [:|/|!|\(|\)|'|\,|\;|\.|\-]+
+MAIUSCULAS [A-Z]+
+MINUSCULAS [a-z]+
+LETRAS [A-Za-z]+
+ESPACO [\ ]
+NUMEROS [0-9]+
+PARAGRAFOS (\n)
+INTERESSA ({LETRAS}|{CP}|{PONTUACAO}|{ESPACO})+
+
+%%
+"<title>"				                            {BEGIN PT;}
+PT {
+    "</title>"			                            {;}
+    "<id>"   				                        {;}
+    "</id>"				                            {;}
+    "--"					                        {;}
+    ({INTERESSA}+{NUMEROS}*)                        {e = novaEntrada(yytext);nova=1;}
+    {NUMEROS} 				                        {if (nova==1) {
+                                                        g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);
+                                                        nova=0;
+                                                    }}
+    (.|'\n')                                        {;}
+}
+"INSERT INTO "                                      {BEGIN OTHER;}
+OTHER {
+    (\({NUMEROS},\'en\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"en");}
+    (\({NUMEROS},\'es\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"es");}
+    (\({NUMEROS},\'de\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"de");}
+    (\({NUMEROS},\'fr\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"fr");}
+    (\({NUMEROS},\'it\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"it");}
+    (\({NUMEROS},\'ru\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"ru");}
+    (.|'\n')                                        {;}
+}
+(.|'\n')                                            {;}
+%%
+ 
+
+int main(int argc,char* argv[]) {
+
+    h = g_hash_table_new(g_direct_hash,g_direct_equal); 
+
+    tuplos = atoi(argv[1]);
+	printf("Inicio da filtragem\n");
+	
+    for(int i = 2; i< argc ; i++) {		
+    	yyin=fopen(argv[i],"r");
+        yylex();
+        fclose(yyin);
+    }
+    /*
+    dim = getHtableSize(hash);
+    
+    DIC_ENTRADA str = getDados(hash,721);
+
+    printf("721 -> %s\n",str->titulo); // Douro (sub-regiao)
+
+    printf("655 -> %s\n",((DIC_ENTRADA) getDados(hash,655))->titulo); // Celula Animal
+    printf("548 -> %s\n",((DIC_ENTRADA) getDados(hash,548))->titulo); // Carvao Mineral
+    printf("220 -> %s\n",((DIC_ENTRADA) getDados(hash,220))->titulo); // Astronomia
+    printf("436 -> %s\n",((DIC_ENTRADA) getDados(hash,436))->titulo);
+    */
+    printf("655 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(655)))->titulo); // Celula Animal
+    printf("548 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(548)))->titulo); // Carvao Mineral
+    printf("3392315 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392315)))->titulo); // Astronomia
+    printf("436 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(436)))->titulo);
+    printf("3392054 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392054)))->titulo);
+    printf("3392287 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392287)))->titulo);
+    printf("3392328 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392328)))->titulo);
+    printf("3392284 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392284)))->titulo);
+    printf("3391979 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3391979)))->titulo);
+    
+	printf("Fim da filtragem\n");
+
+	return 0;
+}

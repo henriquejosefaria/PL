@@ -8,7 +8,7 @@ TAD_HTABLE h;
 int indice;
 char* frase;
 int nova;
-void faztraducao(char* str);
+void faztraducao(char* str, char* lang);
 %}
 
 %option yylineno
