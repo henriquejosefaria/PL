@@ -14,7 +14,9 @@ long dim = 0;
 char* frase;
 DIC_ENTRADA e;
 long i;
+int indice = 0;
 
+void faztraducao(char* str, char* lang);
 DIC_ENTRADA novaEntrada(char* tit)
 {
     DIC_ENTRADA ent = malloc(sizeof(struct entrada));
@@ -22,6 +24,43 @@ DIC_ENTRADA novaEntrada(char* tit)
     return ent;
 }
 
+%}
+
+%option yylineno
+%option noyywrap
+
+CP [ª|ºñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]+
+PONTUACAO  [:|/|!|\(|\)|'|\,|\;|\.|\-]+
+MAIUSCULAS [A-Z]+
+MINUSCULAS [a-z]+
+LETRAS [A-Za-z]+
+ESPACO [\ ]
+NUMEROS [0-9]+
+PARAGRAFOS (\n)
+INTERESSA ({LETRAS}|{CP}|{PONTUACAO}|{ESPACO})+
+
+%%
+
+"<title>"				                       {;}
+"</title>"			                           {;}
+"<id>"   				                       {;}
+"</id>"				                           {;}
+"--"					                       {;}
+({INTERESSA}+{NUMEROS}*)                       {e = novaEntrada(yytext);nova=1;}
+{NUMEROS} 				                       {if (nova==1) {
+                                                    g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);
+                                                    nova=0;
+                                                }}
+(\({NUMEROS},\'en\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"en");}
+(\({NUMEROS},\'es\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"es");}
+(\({NUMEROS},\'de\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"de");}
+(\({NUMEROS},\'fr\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"fr");}
+(\({NUMEROS},\'it\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"it");}
+(\({NUMEROS},\'ru\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"ru");}
+(.|'\n')   				                       {;}
+
+%%
+ 
 void retiraExcesso(char* str) {
     int j;
     for(j = indice; str[j]!='\0' ; j++) {
@@ -55,8 +94,8 @@ char* getdados(char* str) {
     return res;
 }
 
-void addLang(TAD_ARRAY_LIST array, char* lang, char* str) {
-    /*if(strcmp(lang,"en")) {
+/*void addLang(TAD_ARRAY_LIST array, char* lang, char* str) {
+    if(strcmp(lang,"en")) {
         addElemAtIndex(array,str,0);
     }
     else if(strcmp(lang,"es")) {
@@ -74,67 +113,22 @@ void addLang(TAD_ARRAY_LIST array, char* lang, char* str) {
     else if(strcmp(lang,"de")) {
         addElemAtIndex(array,str,5);
     }
-    else addElemAtIndex(array,str,6);*/
-}
+    else addElemAtIndex(array,str,6);
+}*/
 
 void faztraducao(char* str,char* lang) {
     if(tuplos!=0) {
         str[strlen(str)-2]='\0';
         int id = getId(str);
-        index+=5;
+        indice+=5;
         retiraExcesso(str);
         char* dados = getdados(str);
         //TAD_ARRAY_LIST array = getDados(h,id);
         //if(array != null)
-            addLang(array,lang,dados);
+            //addLang(array,lang,dados);
         tuplos--;
     }
 }
-
-%}
-
-%x PT OTHER
-
-%option yylineno
-%option noyywrap
-
-CP [ª|ºñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]+
-PONTUACAO  [:|/|!|\(|\)|'|\,|\;|\.|\-]+
-MAIUSCULAS [A-Z]+
-MINUSCULAS [a-z]+
-LETRAS [A-Za-z]+
-ESPACO [\ ]
-NUMEROS [0-9]+
-PARAGRAFOS (\n)
-INTERESSA ({LETRAS}|{CP}|{PONTUACAO}|{ESPACO})+
-
-%%
-"<title>"				                            {BEGIN PT;}
-PT {
-    "</title>"			                            {;}
-    "<id>"   				                        {;}
-    "</id>"				                            {;}
-    "--"					                        {;}
-    ({INTERESSA}+{NUMEROS}*)                        {e = novaEntrada(yytext);nova=1;}
-    {NUMEROS} 				                        {if (nova==1) {
-                                                        g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);
-                                                        nova=0;
-                                                    }}
-    (.|'\n')                                        {;}
-}
-"INSERT INTO "                                      {BEGIN OTHER;}
-OTHER {
-    (\({NUMEROS},\'en\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"en");}
-    (\({NUMEROS},\'es\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"es");}
-    (\({NUMEROS},\'de\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"de");}
-    (\({NUMEROS},\'fr\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"fr");}
-    (\({NUMEROS},\'it\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"it");}
-    (\({NUMEROS},\'ru\',\'{LETRAS}+\'\)(,|;))?      {faztraducao(yytext+1,"ru");}
-    (.|'\n')                                        {;}
-}
-(.|'\n')                                            {;}
-%%
- 
 
 int main(int argc,char* argv[]) {
 

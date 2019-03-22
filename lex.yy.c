@@ -265,11 +265,15 @@ static void yy_flex_free YY_PROTO(( void * ));
 #define YY_AT_BOL() (yy_current_buffer->yy_at_bol)
 
 
+#define YY_USES_REJECT
+
 #define yywrap() 1
 #define YY_SKIP_YYWRAP
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
+extern int yylineno;
+int yylineno = 1;
 extern char *yytext;
 #define yytext_ptr yytext
 
@@ -290,20 +294,31 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 
 #define YY_NUM_RULES 15
 #define YY_END_OF_BUFFER 16
-static yyconst short int yy_accept[102] =
+static yyconst short int yy_acclist[67] =
     {   0,
-        8,    8,   16,   14,   15,    6,    6,    6,    6,    6,
-        7,   14,    6,    6,    6,    6,    6,    6,    6,    6,
-        6,    0,    6,    5,    7,    0,    0,    0,   14,    0,
-        0,    0,    0,    0,    0,    0,    0,    3,    0,    0,
-        0,    0,    0,    0,    4,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    1,    0,    0,    0,    0,    0,    0,    2,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,   10,    8,    9,   11,   12,   13,
+        8,    9,   10,   11,   12,   13,    8,    9,   10,   11,
+       12,   13,   16,   14,   15,   15,    6,   14,   15,    6,
+       14,   15,    6,   14,   15,    6,   14,   15,    6,   14,
+       15,    7,   14,   15,   14,   15,    6,   14,   15,    6,
+       14,   15,    6,   14,   15,    6,    6,    6,    6,    6,
+        6,    6,    5,    6,    7,   14,    3,    4,    1,    2,
+       10,    8,    9,   11,   12,   13
+    } ;
 
-        0
+static yyconst short int yy_accept[103] =
+    {   0,
+        1,    7,   13,   14,   16,   17,   20,   23,   26,   29,
+       32,   35,   37,   40,   43,   46,   47,   48,   49,   50,
+       51,   52,   52,   53,   55,   56,   56,   56,   56,   57,
+       57,   57,   57,   57,   57,   57,   57,   57,   58,   58,
+       58,   58,   58,   58,   58,   59,   59,   59,   59,   59,
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+       59,   59,   59,   60,   60,   60,   60,   60,   60,   60,
+       61,   61,   61,   61,   61,   61,   61,   61,   61,   61,
+       61,   61,   61,   61,   61,   61,   61,   61,   61,   61,
+       61,   61,   61,   61,   61,   62,   63,   64,   65,   66,
+
+       67,   67
     } ;
 
 static yyconst int yy_ec[256] =
@@ -421,13 +436,16 @@ static yyconst short int yy_chk[168] =
       101,  101,  101,  101,  101,  101,  101
     } ;
 
-static yy_state_type yy_last_accepting_state;
-static char *yy_last_accepting_cpos;
-
-/* The intent behind this definition is that it'll catch
- * any uses of REJECT which flex missed.
- */
-#define REJECT reject_used_but_not_detected
+static yy_state_type yy_state_buf[YY_BUF_SIZE + 2], *yy_state_ptr;
+static char *yy_full_match;
+static int yy_lp;
+#define REJECT \
+{ \
+*yy_cp = yy_hold_char; /* undo effects of setting up yytext */ \
+yy_cp = yy_full_match; /* restore poss. backed-over text */ \
+++yy_lp; \
+goto find_rule; \
+}
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
@@ -444,12 +462,15 @@ typedef struct entrada {
 }*DIC_ENTRADA;
 
 int nova=0;
+int tuplos;
 GHashTable* h;
 long dim = 0;
 char* frase;
 DIC_ENTRADA e;
 long i;
+int indice = 0;
 
+void faztraducao(char* str, char* lang);
 DIC_ENTRADA novaEntrada(char* tit)
 {
     DIC_ENTRADA ent = malloc(sizeof(struct entrada));
@@ -457,8 +478,7 @@ DIC_ENTRADA novaEntrada(char* tit)
     return ent;
 }
 
-//%option yylineno
-#line 462 "lex.yy.c"
+#line 482 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -620,9 +640,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 39 "1tp1.fl"
+#line 42 "1tp1.fl"
 
-#line 626 "lex.yy.c"
+
+#line 647 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -661,15 +682,12 @@ YY_DECL
 		yy_bp = yy_cp;
 
 		yy_current_state = yy_start;
+		yy_state_ptr = yy_state_buf;
+		*yy_state_ptr++ = yy_current_state;
 yy_match:
 		do
 			{
 			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
-			if ( yy_accept[yy_current_state] )
-				{
-				yy_last_accepting_state = yy_current_state;
-				yy_last_accepting_cpos = yy_cp;
-				}
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
@@ -677,112 +695,126 @@ yy_match:
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+			*yy_state_ptr++ = yy_current_state;
 			++yy_cp;
 			}
 		while ( yy_base[yy_current_state] != 140 );
 
 yy_find_action:
-		yy_act = yy_accept[yy_current_state];
-		if ( yy_act == 0 )
-			{ /* have to back up */
-			yy_cp = yy_last_accepting_cpos;
-			yy_current_state = yy_last_accepting_state;
-			yy_act = yy_accept[yy_current_state];
+		yy_current_state = *--yy_state_ptr;
+		yy_lp = yy_accept[yy_current_state];
+find_rule: /* we branch to this label when backing up */
+		for ( ; ; ) /* until we find what rule we matched */
+			{
+			if ( yy_lp && yy_lp < yy_accept[yy_current_state + 1] )
+				{
+				yy_act = yy_acclist[yy_lp];
+					{
+					yy_full_match = yy_cp;
+					break;
+					}
+				}
+			--yy_cp;
+			yy_current_state = *--yy_state_ptr;
+			yy_lp = yy_accept[yy_current_state];
 			}
 
 		YY_DO_BEFORE_ACTION;
 
+		if ( yy_act != YY_END_OF_BUFFER )
+			{
+			int yyl;
+			for ( yyl = 0; yyl < yyleng; ++yyl )
+				if ( yytext[yyl] == '\n' )
+					++yylineno;
+			}
 
 do_action:	/* This label is used only to access EOF actions. */
 
 
 		switch ( yy_act )
 	{ /* beginning of action switch */
-			case 0: /* must back up */
-			/* undo the effects of YY_DO_BEFORE_ACTION */
-			*yy_cp = yy_hold_char;
-			yy_cp = yy_last_accepting_cpos;
-			yy_current_state = yy_last_accepting_state;
-			goto yy_find_action;
-
 case 1:
-YY_RULE_SETUP
-#line 40 "1tp1.fl"
-{;}
-	YY_BREAK
-case 2:
-YY_RULE_SETUP
-#line 41 "1tp1.fl"
-{;}
-	YY_BREAK
-case 3:
-YY_RULE_SETUP
-#line 42 "1tp1.fl"
-{;}
-	YY_BREAK
-case 4:
-YY_RULE_SETUP
-#line 43 "1tp1.fl"
-{;}
-	YY_BREAK
-case 5:
 YY_RULE_SETUP
 #line 44 "1tp1.fl"
 {;}
 	YY_BREAK
-case 6:
+case 2:
 YY_RULE_SETUP
 #line 45 "1tp1.fl"
+{;}
+	YY_BREAK
+case 3:
+YY_RULE_SETUP
+#line 46 "1tp1.fl"
+{;}
+	YY_BREAK
+case 4:
+YY_RULE_SETUP
+#line 47 "1tp1.fl"
+{;}
+	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 48 "1tp1.fl"
+{;}
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 49 "1tp1.fl"
 {e = novaEntrada(yytext);nova=1;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 46 "1tp1.fl"
-{if (nova==1) {g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);nova=0;}}
+#line 50 "1tp1.fl"
+{if (nova==1) {
+                                                    g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);
+                                                    nova=0;
+                                                }}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 47 "1tp1.fl"
-{/*faztraducao(yytext+1,"en")*/;}
+#line 54 "1tp1.fl"
+{faztraducao(yytext+1,"en");}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 48 "1tp1.fl"
-{/*faztraducao(yytext+1,"es")*/;}
+#line 55 "1tp1.fl"
+{faztraducao(yytext+1,"es");}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 49 "1tp1.fl"
-{/*faztraducao(yytext+1,"de")*/;}
+#line 56 "1tp1.fl"
+{faztraducao(yytext+1,"de");}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 50 "1tp1.fl"
-{/*faztraducao(yytext+1,"fr")*/;}
+#line 57 "1tp1.fl"
+{faztraducao(yytext+1,"fr");}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 51 "1tp1.fl"
-{/*faztraducao(yytext+1,"it")*/;}
+#line 58 "1tp1.fl"
+{faztraducao(yytext+1,"it");}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 52 "1tp1.fl"
-{/*faztraducao(yytext+1,"ru")*/;}
+#line 59 "1tp1.fl"
+{faztraducao(yytext+1,"ru");}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 53 "1tp1.fl"
+#line 60 "1tp1.fl"
 {;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 54 "1tp1.fl"
+#line 62 "1tp1.fl"
 ECHO;
 	YY_BREAK
-#line 784 "lex.yy.c"
-case YY_STATE_EOF(INITIAL):
-	yyterminate();
+#line 816 "lex.yy.c"
+			case YY_STATE_EOF(INITIAL):
+				yyterminate();
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1060,15 +1092,12 @@ static yy_state_type yy_get_previous_state()
 	register char *yy_cp;
 
 	yy_current_state = yy_start;
+	yy_state_ptr = yy_state_buf;
+	*yy_state_ptr++ = yy_current_state;
 
 	for ( yy_cp = yytext_ptr + YY_MORE_ADJ; yy_cp < yy_c_buf_p; ++yy_cp )
 		{
 		register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
-		if ( yy_accept[yy_current_state] )
-			{
-			yy_last_accepting_state = yy_current_state;
-			yy_last_accepting_cpos = yy_cp;
-			}
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
@@ -1076,6 +1105,7 @@ static yy_state_type yy_get_previous_state()
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+		*yy_state_ptr++ = yy_current_state;
 		}
 
 	return yy_current_state;
@@ -1096,14 +1126,8 @@ yy_state_type yy_current_state;
 #endif
 	{
 	register int yy_is_jam;
-	register char *yy_cp = yy_c_buf_p;
 
 	register YY_CHAR yy_c = 1;
-	if ( yy_accept[yy_current_state] )
-		{
-		yy_last_accepting_state = yy_current_state;
-		yy_last_accepting_cpos = yy_cp;
-		}
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
@@ -1112,6 +1136,8 @@ yy_state_type yy_current_state;
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 	yy_is_jam = (yy_current_state == 101);
+	if ( ! yy_is_jam )
+		*yy_state_ptr++ = yy_current_state;
 
 	return yy_is_jam ? 0 : yy_current_state;
 	}
@@ -1154,6 +1180,8 @@ register char *yy_bp;
 
 	*--yy_cp = (char) c;
 
+	if ( c == '\n' )
+		--yylineno;
 
 	yytext_ptr = yy_bp;
 	yy_hold_char = *yy_cp;
@@ -1230,6 +1258,8 @@ static int input()
 	*yy_c_buf_p = '\0';	/* preserve yytext */
 	yy_hold_char = *++yy_c_buf_p;
 
+	if ( c == '\n' )
+		++yylineno;
 
 	return c;
 	}
@@ -1670,18 +1700,86 @@ int main()
 	return 0;
 	}
 #endif
-#line 54 "1tp1.fl"
+#line 62 "1tp1.fl"
 
  
+void retiraExcesso(char* str) {
+    int j;
+    for(j = indice; str[j]!='\0' ; j++) {
+        if(str[j]==':') break;
+    }
+    if(str[j]!='\0') {
+        j++;
+        int i = indice+1;
+        for(; str[j]!='\0' ; j++, i++)
+            str[i] = str[j];
+        str[i] = '\0';
+    }
+}
+
+int getId(char* str) {
+    int i = 0;
+    for(; str[i]!='\0'; i++)
+        if(str[i]==',') break;
+    indice = i;
+    char* tmp = malloc(sizeof(char)*(i+1));
+    strncpy(tmp,str,i);
+    tmp[i] = '\0';
+    i = atoi(tmp);
+    free(tmp);
+    return i;
+}
+
+char* getdados(char* str) {
+    char* res = malloc(sizeof(char)*strlen(str+indice));
+    strcpy(res,str+indice);
+    return res;
+}
+
+/*void addLang(TAD_ARRAY_LIST array, char* lang, char* str) {
+    if(strcmp(lang,"en")) {
+        addElemAtIndex(array,str,0);
+    }
+    else if(strcmp(lang,"es")) {
+        addElemAtIndex(array,str,1);
+    }
+    else if(strcmp(lang,"fr")) {
+        addElemAtIndex(array,str,2);
+    }
+    else if(strcmp(lang,"ru")) {
+        addElemAtIndex(array,str,3);
+    }
+    else if(strcmp(lang,"it")) {
+        addElemAtIndex(array,str,4);
+    }
+    else if(strcmp(lang,"de")) {
+        addElemAtIndex(array,str,5);
+    }
+    else addElemAtIndex(array,str,6);
+}*/
+
+void faztraducao(char* str,char* lang) {
+    if(tuplos!=0) {
+        str[strlen(str)-2]='\0';
+        int id = getId(str);
+        indice+=5;
+        retiraExcesso(str);
+        char* dados = getdados(str);
+        //TAD_ARRAY_LIST array = getDados(h,id);
+        //if(array != null)
+            //addLang(array,lang,dados);
+        tuplos--;
+    }
+}
 
 int main(int argc,char* argv[]) {
 
     h = g_hash_table_new(g_direct_hash,g_direct_equal); 
-	/*hash = Htable(1);*/
 
+    tuplos = atoi(argv[1]);
 	printf("Inicio da filtragem\n");
-		
-    for(int i = 1; i< argc ; i++) {		
+	
+    for(int i = 2; i< argc ; i++) {		
     	yyin=fopen(argv[i],"r");
         yylex();
         fclose(yyin);
