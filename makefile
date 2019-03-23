@@ -3,7 +3,7 @@ CFLAGS= $(shell pkg-config --cflags glib-2.0)
 
 LFLAGS= $(shell pkg-config --libs glib-2.0)
 
-all: clean
+all: tp1
 
 lex.yy.c: 1tp1.fl
 	flex -8 1tp1.fl
