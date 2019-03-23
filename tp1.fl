@@ -13,7 +13,7 @@ int nova;
 %option yylineno
 %option noyywrap
 
-CP [: ªº/!ñàáâåãòóçõéèôōöêíìúüùß()',;\.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\\-]
+CP [A-Za-z: ªº/!ñàáâåãòóçõéèôōöêíìúüùß()',;\.ØÚÙÛÓÔÒÌÎÍÀÂÁÊÉÈ\\-]
 LETRAS [A-Za-z\ |á|è|í|ó|ú|á|é|í|ó|ú|ã|õ|ç|ş]
 ESPACO [\ ]
 NUMEROS [0-9] 
@@ -26,8 +26,8 @@ LINGUA (de|en|fr|it|ru|es)
                                                      while(yytext[x] != ':'){x++;} 
                                                      frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
                                                      sprintf(frase,"%s",yytext+x+1);
-                                                     frase[strlen(yytext)-x] = '\0';
-                                                     printf("%s\n",frase);
+                                                     //frase[strlen(yytext)-x] = '\0';
+                                                     //printf("%s\n",frase);
                                                      nova = 1;
                                                     }
 "<title>"                                           {;}
@@ -35,19 +35,20 @@ LINGUA (de|en|fr|it|ru|es)
 "<id>"                                              {;}
 "</id>\n"                                           {;}
 "--\n"                                              {;}
-"<title>".*{NUMEROS}+                               {;}
-"<title>"{LETRAS}+                                  {
+"<title>".*{NUMEROS}+                              {;}
+"<title>"{CP}+                                  {
                                                      int x = strlen(yytext)-6;
                                                      frase = (char*) malloc(x*sizeof(char));
                                                      sprintf(frase,"%s",yytext+7);
-                                                     frase[x] = '\0';
+                                                     //frase[x] = '\0';
                                                      nova = 1;
                                                     }
 "<id>"{NUMEROS}+                                    {
                                                      if(nova != 0){
                                                         int x = atoi(yytext+4);
                                                         add(frase,x,h,1);
-                                                        printf("vai fazer\n");
+                                                        free(frase);
+                                                        //printf("vai fazer\n");
                                                         //getDados(h,x);
                                                         //printf("fez");
                                                      } 

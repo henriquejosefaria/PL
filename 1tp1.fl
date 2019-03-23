@@ -10,8 +10,6 @@ typedef struct entrada {
 int nova=0;
 int tuplos;
 GHashTable* h;
-long dim = 0;
-char* frase;
 DIC_ENTRADA e;
 long i;
 int indice = 0;
@@ -29,28 +27,36 @@ DIC_ENTRADA novaEntrada(char* tit)
 %option yylineno
 %option noyywrap
 
-CP [ª|ºñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]+
-PONTUACAO  [:|/|!|\(|\)|'|\,|\;|\.|\-]+
+CP [ª|ºñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]+
+PONTUACAO  [:|/|!|\(|\)|'|\,|\;|\.|\-|\?|\–]+
+CONNECT (d[eao]|de\ los|dos|von)
 MAIUSCULAS [A-Z]+
 MINUSCULAS [a-z]+
 LETRAS [A-Za-z]+
 ESPACO [\ ]
 NUMEROS [0-9]+
 PARAGRAFOS (\n)
-INTERESSA ({LETRAS}|{CP}|{PONTUACAO}|{ESPACO})+
+INTERESSA ({LETRAS}|{CP}|{PONTUACAO}|{ESPACO}|{NUMEROS})+
 
 %%
 
-"<title>"				                       {;}
-"</title>"			                           {;}
-"<id>"   				                       {;}
-"</id>"				                           {;}
-"--"					                       {;}
-({INTERESSA}+{NUMEROS}*)                       {e = novaEntrada(yytext);nova=1;}
-{NUMEROS} 				                       {if (nova==1) {
+"<title>"                                      {;}
+"</title>"                                     {;}
+"<id>"                                         {;}
+"</id>"                                        {;}
+"--"                                           {;}
+^"<title>Wikipédia:"                           {;}
+^"<title>Predefinição:"                        {;}
+^"<title>Ficheiro:"                            {;}
+^"<title>Categoria:"                           {;}
+^"<title>Ajuda:"                               {;}
+{NUMEROS}                                      {if (nova==1) {
                                                     g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);
-                                                    nova=0;
-                                                }}
+                                                    nova=0;}
+                                               }
+{INTERESSA}                                    {e = novaEntrada(yytext);nova=1;}                                       
+{PARAGRAFOS}                                   {;}
+
 (\({NUMEROS},\'en\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"en");}
 (\({NUMEROS},\'es\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"es");}
 (\({NUMEROS},\'de\',\'{LETRAS}+\'\)(,|;))?     {faztraducao(yytext+1,"de");}
@@ -156,13 +162,14 @@ int main(int argc,char* argv[]) {
     */
     printf("655 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(655)))->titulo); // Celula Animal
     printf("548 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(548)))->titulo); // Carvao Mineral
-    printf("3392315 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392315)))->titulo); // Astronomia
+    printf("244 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(244)))->titulo); // 220-> Astronomia
     printf("436 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(436)))->titulo);
-    printf("3392054 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392054)))->titulo);
+    printf("1735841 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(1735841)))->titulo);
     printf("3392287 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392287)))->titulo);
     printf("3392328 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392328)))->titulo);
     printf("3392284 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392284)))->titulo);
     printf("3391979 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3391979)))->titulo);
+    printf("516 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(516)))->titulo);
     
 	printf("Fim da filtragem\n");
 
