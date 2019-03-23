@@ -34,44 +34,48 @@ DIC_ENTRADA novaEntrada(char* tit){
 }
 
 %}
-%x F1 F2
+%x TITLE ID F2
 
 %option yylineno
 %option noyywrap
 
 CP [ª|º|ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]
-PONTUACAO  [:|\/|!|\(|\)|\'|\,|\;|\.|\-|\?|\–|\-]
+PONTUACAO  [\ |:|\/|!|\(|\)|\'|\,|\;|\.|\-|\?|\–|\-|&]
 LETRAS [A-Za-z]
 NUMEROS [0-9]
-INTERESSA ({LETRAS}|{CP}|{PONTUACAO}|\ |{NUMEROS})
+INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
 
 %%
 
-<*>"<title>"                                          {BEGIN F1;}
-<*>"-- MySQL"                                         {BEGIN F2;}
-<F1>{
-    ^"<title>"                                      {;}
+<*>"<title>"                                       {BEGIN TITLE;}
+<*>"INSERT INTO `langlinks` VALUES "               {BEGIN F2;}
+<TITLE>{
+    ^"<title>"                                     {;}
     "</title>"                                     {;}
-    "<id>"                                         {;}
-    "</id>"                                        {;}
-    "--"                                           {;}
+    "<id>"                                         {BEGIN ID;}
     ^"<title>Wikipédia:"                           {;}
     ^"<title>Predefinição:"                        {;}
     ^"<title>Ficheiro:"                            {;}
     ^"<title>Categoria:"                           {;}
     ^"<title>Ajuda:"                               {;}
+    {INTERESSA}+                                   {e = novaEntrada(yytext);nova=1;}
+    ({INTERESSA}|{NUMEROS})+                       {;}
+    "INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
+    (.|\n)                                         {;}
+}
+
+<ID>{
+    "<title>"                                      {BEGIN TITLE;}
+    "</id>"                                        {;}
     {NUMEROS}+                                     {if (nova==1) {
                                                         g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);
                                                         nova=0;
                                                     }
                                                    }
-    {INTERESSA}+                                   {e = novaEntrada(yytext);nova=1;}
-    ({INTERESSA}|{NUMEROS})+                       {;}
-    (.|\n)                                         {;}
-}                                   
+    "INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
+}                                 
 
 <F2>{
-    ^"INSERT INTO `langlinks` VALUES "
     (\({NUMEROS},\'en\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"en");}
     (\({NUMEROS},\'es\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"es");}
     (\({NUMEROS},\'de\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"de");}
@@ -80,7 +84,7 @@ INTERESSA ({LETRAS}|{CP}|{PONTUACAO}|\ |{NUMEROS})
     (\({NUMEROS},\'ru\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"ru");}
     (.|\n)   				                       {;}
 }
-<*>.|\nova                                         {;}
+<*>.|\n                                            {;}
 
 %%
  
@@ -123,18 +127,23 @@ void addLang(DIC_ENTRADA dic, char* lang, char* dados) {
     else if(strcmp(lang,"en")==0) dic->ingles = strdup(dados);
     else if(strcmp(lang,"it")==0) dic->italiano = strdup(dados);
     else dic->russo = strdup(dados);
+    printf("LANG: %s, DADOS: %s\n",lang,dados);
 }
 
 void faztraducao(char* str,char* lang) {
     if(tuplos!=0) {
         str[strlen(str)-2]='\0';
+        printf("%s\n",str);
         int id = getId(str);
         indice+=5;
         retiraExcesso(str);
         char* dados = getdados(str);
         DIC_ENTRADA dic = (DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(id));
-        if(dic != NULL) addLang(dic,lang,dados);
-        tuplos--;
+        if(dic != NULL) {
+            printf("PT: %s, ",dic->titulo);
+            addLang(dic,lang,dados);
+            tuplos--;
+        }
     }
 }
 
