@@ -16,8 +16,9 @@ tp1: lex.yy.c
 clean:
 	rm -f lex.yy.c
 	rm -f tp1
+	rm -f output.txt
 
-install: tp1
+install: unistall tp1
 	sudo cp tp1 /usr/local/bin
 
 unistall:
