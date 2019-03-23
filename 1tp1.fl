@@ -48,7 +48,7 @@ INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
 %%
 
 <*>"<title>"                                       {BEGIN TITLE;}
-<*>"INSERT INTO `langlinks` VALUES "               {BEGIN F2;}
+<*>^"INSERT INTO `langlinks` VALUES "               {BEGIN F2;}
 <TITLE>{
     ^"<title>"                                     {;}
     "</title>"                                     {;}
@@ -60,8 +60,8 @@ INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
     ^"<title>Ajuda:"                               {;}
     {INTERESSA}+                                   {e = novaEntrada(yytext);nova=1;}
     ({INTERESSA}|{NUMEROS})+                       {;}
-    "INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
-    (.|\n)                                         {;}
+    ^"INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
+    .|\n                                           {;}
 }
 
 <ID>{
@@ -72,17 +72,19 @@ INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
                                                         nova=0;
                                                     }
                                                    }
-    "INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
+    ^"INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
+    .|\n                                           {;}
 }                                 
 
 <F2>{
+    ^"INSERT INTO `langlinks` VALUES "                {;}
     (\({NUMEROS},\'en\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"en");}
     (\({NUMEROS},\'es\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"es");}
     (\({NUMEROS},\'de\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"de");}
     (\({NUMEROS},\'fr\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"fr");}
     (\({NUMEROS},\'it\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"it");}
     (\({NUMEROS},\'ru\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"ru");}
-    (.|\n)   				                       {;}
+    .|\n      				                       {;}
 }
 <*>.|\n                                            {;}
 
@@ -145,6 +147,7 @@ void faztraducao(char* str,char* lang) {
             tuplos--;
         }
     }
+    else yyterminate();
 }
 
 void printDicionario(DIC_ENTRADA dic) {
