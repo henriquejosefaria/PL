@@ -41,8 +41,8 @@ DIC_ENTRADA novaEntrada(char* tit){
 %option noyywrap
 
 CP [ª|º|ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]
-PONTUACAO  [\ |:|\/|!|\(|\)|\'|\,|\;|\.|\-|\?|\–|\-|&]
-LETRAS [A-Za-z\ |ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|Èş]
+PONTUACAO  [,|;]
+LETRAS [A-Za-z\ |ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È|ş]
 NUMEROS [0-9]
 INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
 
@@ -102,12 +102,12 @@ INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
 
 <F2>{
     ^"INSERT INTO `langlinks` VALUES "                {;}
-    (\({NUMEROS},\'en\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"en");}
-    (\({NUMEROS},\'es\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"es");}
-    (\({NUMEROS},\'de\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"de");}
-    (\({NUMEROS},\'fr\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"fr");}
-    (\({NUMEROS},\'it\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"it");}
-    (\({NUMEROS},\'ru\',\'{INTERESSA}+\'\)(,|;))?     {faztraducao(yytext+1,"ru");}
+    (\({NUMEROS}+",'en','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"en");}
+    (\({NUMEROS}+",'es','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"es");}
+    (\({NUMEROS}+",'de','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"de");}
+    (\({NUMEROS}+",'fr','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"fr");}
+    (\({NUMEROS}+",'it','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"it");}
+    (\({NUMEROS}+",'ru','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"ru");}
     .|\n      				                       {;}
 }
 <*>.|\n                                            {;}
