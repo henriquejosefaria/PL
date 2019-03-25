@@ -1,6 +1,7 @@
 %{
 #include<stdio.h>
 #include<string.h>
+#include<glib.h>
 #include<gmodule.h>
 
 typedef struct entrada {
@@ -49,6 +50,29 @@ INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
 
 <*>"<title>"                                       {BEGIN TITLE;}
 <*>^"INSERT INTO `langlinks` VALUES "               {BEGIN F2;}
+"<title>".*:{LETRAS}+                               {printf("entrei 1");
+                                                     int x = 0; 
+                                                     while(yytext[x] != ':'){x++;} 
+                                                     frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
+                                                     sprintf(frase,"%s",yytext+x+1);
+                                                     frase[strlen(yytext)-x] = '\0';
+                                                     e = novaEntrada(frase);
+                                                     nova = 1;
+                                                    }
+"<title>"{LETRAS}+                                  {printf("entrei 8");
+                                                     int x = strlen(yytext)-6;
+                                                     frase = (char*) malloc(x*sizeof(char));
+                                                     sprintf(frase,"%s",yytext+7);
+                                                     frase[x-1] = '\0';
+                                                     e = novaEntrada(frase);
+                                                     nova = 1;
+                                                    }
+"<id>"{NUMEROS}+                                    { printf("entrei 9");
+                                                     if(nova != 0){
+                                                        g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
+                                                     }
+                                                     nova=0;
+                                                    }
 <TITLE>{
     ^"<title>"                                     {;}
     "</title>"                                     {;}
