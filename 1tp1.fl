@@ -16,6 +16,7 @@ typedef struct entrada {
 
 int nova=0;
 int tuplos;
+char* frase;
 GHashTable* h;
 DIC_ENTRADA e;
 long i;
@@ -35,80 +36,66 @@ DIC_ENTRADA novaEntrada(char* tit){
 }
 
 %}
-%x TITLE ID F2
+%x F1 F2
+
 
 %option yylineno
 %option noyywrap
 
 CP [ª|º|ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]
-PONTUACAO  [,|;]
-LETRAS [A-Za-z\ |ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È|ş]
+PONTUACAO  [,|;|!|?]
+PARENTESES [(|)]
+LETRAS [A-Za-z\ |ñ|à|á|â|å|ã|ä|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È|ş|'|\-|,|/|\.]
 NUMEROS [0-9]
 INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
+PRIM({PARENTESES}{NUMEROS}{LETRAS})
+LIG (\({NUMEROS}+",'".*"','".*\))
 
 %%
 
-<*>"<title>"                                       {BEGIN TITLE;}
-<*>^"INSERT INTO `langlinks` VALUES "               {BEGIN F2;}
-"<title>".*:{LETRAS}+                               {printf("entrei 1");
-                                                     int x = 0; 
-                                                     while(yytext[x] != ':'){x++;} 
-                                                     frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
-                                                     sprintf(frase,"%s",yytext+x+1);
-                                                     frase[strlen(yytext)-x] = '\0';
-                                                     e = novaEntrada(frase);
-                                                     nova = 1;
-                                                    }
-"<title>"{LETRAS}+                                  {printf("entrei 8");
-                                                     int x = strlen(yytext)-6;
-                                                     frase = (char*) malloc(x*sizeof(char));
-                                                     sprintf(frase,"%s",yytext+7);
-                                                     frase[x-1] = '\0';
-                                                     e = novaEntrada(frase);
-                                                     nova = 1;
-                                                    }
-"<id>"{NUMEROS}+                                    { printf("entrei 9");
-                                                     if(nova != 0){
-                                                        g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
-                                                     }
-                                                     nova=0;
-                                                    }
-<TITLE>{
-    ^"<title>"                                     {;}
-    "</title>"                                     {;}
-    "<id>"                                         {BEGIN ID;}
-    ^"<title>Wikipédia:"                           {;}
-    ^"<title>Predefinição:"                        {;}
-    ^"<title>Ficheiro:"                            {;}
-    ^"<title>Categoria:"                           {;}
-    ^"<title>Ajuda:"                               {;}
-    {INTERESSA}+                                   {e = novaEntrada(yytext);nova=1;}
-    ({INTERESSA}|{NUMEROS})+                       {;}
-    ^"INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
-    .|\n                                           {;}
+<*>"<title>"                                        {BEGIN F1;}
+<*>"INSERT INTO `langlinks` VALUES "               {if(tuplos!=0){BEGIN F2;} else yyterminate();}
+<F1>{
+   "<title>".*{NUMEROS}                                {;}
+   "<title>".*[!|?]                                    {;}
+   "<title>".*:{LETRAS}+                               {int x = 0; 
+                                                        while(yytext[x] != ':'){x++;} 
+                                                        frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
+                                                        sprintf(frase,"%s",yytext+x+1);
+                                                        frase[strlen(yytext)-x] = '\0';
+                                                        e = novaEntrada(frase);
+                                                        nova = 1;
+                                                       }
+   "<title>"{LETRAS}+                                  {int x = strlen(yytext)-6;
+                                                        frase = (char*) malloc(x*sizeof(char));
+                                                        sprintf(frase,"%s",yytext+7);
+                                                        frase[x-1] = '\0';
+                                                        e = novaEntrada(frase);
+                                                        nova = 1;
+                                                       }
+   "<id>"{NUMEROS}+                                    {if(nova != 0){
+                                                           g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
+                                                        }
+                                                        nova=0;
+                                                       }
+    
 }
 
-<ID>{
-    "<title>"                                      {BEGIN TITLE;}
-    "</id>"                                        {;}
-    {NUMEROS}+                                     {if (nova==1) {
-                                                        g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext)),e);
-                                                        nova=0;
-                                                    }
-                                                   }
-    ^"INSERT INTO `langlinks` VALUES "              {BEGIN F2;}
-    .|\n                                           {;}
-}                                 
-
 <F2>{
-    ^"INSERT INTO `langlinks` VALUES "                {;}
-    (\({NUMEROS}+",'en','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"en");}
-    (\({NUMEROS}+",'es','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"es");}
-    (\({NUMEROS}+",'de','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"de");}
-    (\({NUMEROS}+",'fr','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"fr");}
-    (\({NUMEROS}+",'it','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"it");}
-    (\({NUMEROS}+",'ru','"{LETRAS}+"')"PONTUACAO)?     {faztraducao(yytext+1,"ru");}
-    .|\n      				                       {;}
+    (\({PARENTESES}*{NUMEROS}*{LETRAS}*\))?           { //printf("%s\n",yytext);
+                                                   int i=0;
+                                                   while(yytext[i] != ',') i++; 
+                                                   if(yytext[i+2] == 'd' && yytext[i+3] == 'e'){
+                                                       printf("%s\n",yytext);
+                                                       faztraducao(yytext+1,"en");
+                                                   }
+                                                }
+    (\({NUMEROS}+",'en','".*"')"PONTUACAO)?     {printf("1"); faztraducao(yytext+1,"en");}
+    (\({NUMEROS}+",'es','".*"')"PONTUACAO)?     {printf("2"); faztraducao(yytext+1,"es");}
+    (\({NUMEROS}+",'de','".*"')"PONTUACAO)?     {printf("3"); faztraducao(yytext+1,"de");}
+    (\({NUMEROS}+",'fr','".*"')"PONTUACAO)?     {printf("4"); faztraducao(yytext+1,"fr");}
+    (\({NUMEROS}+",'it','".*"')"PONTUACAO)?     {printf("5"); faztraducao(yytext+1,"it");}
+    (\({NUMEROS}+",'ru','".*"')"PONTUACAO)?     {printf("6"); faztraducao(yytext+1,"ru");}
 }
 <*>.|\n                                            {;}
 
@@ -171,7 +158,7 @@ void faztraducao(char* str,char* lang) {
             tuplos--;
         }
     }
-    else yyterminate();
+    //else yyterminate();
 }
 
 void printDicionario(DIC_ENTRADA dic) {
@@ -198,14 +185,15 @@ int main(int argc,char* argv[]) {
     }
     printf("655 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(655)))->titulo); // Celula Animal
     printf("548 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(548)))->titulo); // Carvao Mineral
-    printf("244 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(244)))->titulo); // 220-> Astronomia
+    //printf("244 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(244)))->titulo); // 220-> Astronomia
     printf("436 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(436)))->titulo);
     printf("1735841 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(1735841)))->titulo);
-    printf("3392287 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392287)))->titulo);
+    //printf("3392287 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392287)))->titulo);
     printf("3392328 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392328)))->titulo);
-    printf("3392284 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392284)))->titulo);
-    printf("3391979 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3391979)))->titulo);
+    //printf("3392284 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3392284)))->titulo);
+    //printf("3391979 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(3391979)))->titulo);
     printf("516 -> %s\n",((DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(516)))->titulo);
+
     
 	printf("Fim da filtragem\n");
 
