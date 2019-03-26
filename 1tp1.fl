@@ -54,7 +54,7 @@ LIG (\({NUMEROS}+",'".*"','".*\))
 %%
 
 <*>"<title>"                                        {BEGIN F1;}
-<*>"INSERT INTO `langlinks` VALUES "               {if(tuplos!=0){BEGIN F2;} else yyterminate();}
+<*>"INSERT INTO `langlinks` VALUES "                {BEGIN F2;}
 <F1>{
    "<title>".*{NUMEROS}                                {;}
    "<title>".*[!|?]                                    {;}
@@ -78,6 +78,7 @@ LIG (\({NUMEROS}+",'".*"','".*\))
                                                         }
                                                         nova=0;
                                                        }
+.|\n                                                   {;}
     
 }
 
@@ -97,6 +98,7 @@ LIG (\({NUMEROS}+",'".*"','".*\))
     (\({NUMEROS}+",'it','".*"')"PONTUACAO)?     {printf("5"); faztraducao(yytext+1,"it");}
     (\({NUMEROS}+",'ru','".*"')"PONTUACAO)?     {printf("6"); faztraducao(yytext+1,"ru");}
 }
+
 <*>.|\n                                            {;}
 
 %%
