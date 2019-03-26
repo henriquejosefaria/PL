@@ -45,7 +45,7 @@ DIC_ENTRADA novaEntrada(char* tit){
 CP [ª|º|ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]
 PONTUACAO  [,|;|!|?]
 PARENTESES [(|)]
-LETRAS [A-Za-z\ |ñ|à|á|â|å|ã|ä|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È|ş|'|\-|,|/|\.]
+LETRAS [A-Za-z\ |ñ|à|á|â|å|ã|ä|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È|ş|'|\-|,|/|\.А|Б|В|Г|Ґ|Д|Ђ|Ѓ|Е|Ё|Є|Ж|Ѕ|З|И|І|Ї|Й|Ј|К|Л|Љ|М|Н|Њ|О|П|Р|С|Т|Ћ|Ќ|У|Ў|Ф|Х|Ц|Ч|Џ|Ш|Щ|Ъ|Ы|Ь|Э|Ю|Я]
 NUMEROS [0-9]
 INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
 PRIM({PARENTESES}{NUMEROS}{LETRAS})
@@ -83,32 +83,32 @@ LIG (\({NUMEROS}+",'".*"','".*\))
 }
 
 <F2>{
-    (\({NUMEROS}+",'de','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+    (\({NUMEROS}+",'de','"{LETRAS}+"')")?          {
                                                    int i=0;
                                                    while(yytext[i] != ',') i++; 
                                                    faztraducao(yytext+1,"de");
                                                 }
-    (\({NUMEROS}+",'en','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+    (\({NUMEROS}+",'en','"{LETRAS}+"')")?          {
                                                    int i=0;
                                                    while(yytext[i] != ',') i++; 
                                                    faztraducao(yytext+1,"en");
                                                 }
-    (\({NUMEROS}+",'es','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+    (\({NUMEROS}+",'es','"{LETRAS}+"')")?          {
                                                    int i=0;
                                                    while(yytext[i] != ',') i++; 
                                                    faztraducao(yytext+1,"es");
                                                 }
-    (\({NUMEROS}+",'fr','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+    (\({NUMEROS}+",'fr','"{LETRAS}+"')")?          {
                                                    int i=0;
                                                    while(yytext[i] != ',') i++; 
                                                    faztraducao(yytext+1,"fr");
                                                 }
-    (\({NUMEROS}+",'ru','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+    (\({NUMEROS}+",'ru','"{LETRAS}+"')")?          {
                                                    int i=0;
                                                    while(yytext[i] != ',') i++; 
                                                    faztraducao(yytext+1,"ru");
                                                 }
-    (\({NUMEROS}+",'it','"{LETRAS}+"')")?       { //printf("%s\n",yytext);
+    (\({NUMEROS}+",'it','"{LETRAS}+"')")?       {
                                                    int i=0;
                                                    while(yytext[i] != ',') i++; 
                                                    faztraducao(yytext+1,"it");
@@ -158,15 +158,13 @@ void addLang(DIC_ENTRADA dic, char* lang, char* dados) {
     else if(strcmp(lang,"en")==0) dic->ingles = strdup(dados);
     else if(strcmp(lang,"it")==0) dic->italiano = strdup(dados);
     else dic->russo = strdup(dados);
-    printf("LANG: %s, DADOS: %s\n",lang,dados);
 }
 
 void faztraducao(char* str,char* lang) {
     if(tuplos!=0) {
         str[strlen(str)-2]='\0';
-        printf("string = %s\n",str);
         int id = getId(str);
-        indice+=6;
+        indice+=7;
         retiraExcesso(str);
         char* dados = getdados(str);
         DIC_ENTRADA dic = (DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(id));
