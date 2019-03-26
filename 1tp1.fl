@@ -83,20 +83,36 @@ LIG (\({NUMEROS}+",'".*"','".*\))
 }
 
 <F2>{
-    (\({PARENTESES}*{NUMEROS}*{LETRAS}*\))?           { //printf("%s\n",yytext);
+    (\({NUMEROS}+",'de','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
                                                    int i=0;
                                                    while(yytext[i] != ',') i++; 
-                                                   if(yytext[i+2] == 'd' && yytext[i+3] == 'e'){
-                                                       printf("%s\n",yytext);
-                                                       faztraducao(yytext+1,"en");
-                                                   }
+                                                   faztraducao(yytext+1,"de");
                                                 }
-    (\({NUMEROS}+",'en','".*"')"PONTUACAO)?     {printf("1"); faztraducao(yytext+1,"en");}
-    (\({NUMEROS}+",'es','".*"')"PONTUACAO)?     {printf("2"); faztraducao(yytext+1,"es");}
-    (\({NUMEROS}+",'de','".*"')"PONTUACAO)?     {printf("3"); faztraducao(yytext+1,"de");}
-    (\({NUMEROS}+",'fr','".*"')"PONTUACAO)?     {printf("4"); faztraducao(yytext+1,"fr");}
-    (\({NUMEROS}+",'it','".*"')"PONTUACAO)?     {printf("5"); faztraducao(yytext+1,"it");}
-    (\({NUMEROS}+",'ru','".*"')"PONTUACAO)?     {printf("6"); faztraducao(yytext+1,"ru");}
+    (\({NUMEROS}+",'en','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+                                                   int i=0;
+                                                   while(yytext[i] != ',') i++; 
+                                                   faztraducao(yytext+1,"en");
+                                                }
+    (\({NUMEROS}+",'es','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+                                                   int i=0;
+                                                   while(yytext[i] != ',') i++; 
+                                                   faztraducao(yytext+1,"es");
+                                                }
+    (\({NUMEROS}+",'fr','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+                                                   int i=0;
+                                                   while(yytext[i] != ',') i++; 
+                                                   faztraducao(yytext+1,"fr");
+                                                }
+    (\({NUMEROS}+",'ru','"{LETRAS}+"')")?          { //printf("%s\n",yytext);
+                                                   int i=0;
+                                                   while(yytext[i] != ',') i++; 
+                                                   faztraducao(yytext+1,"ru");
+                                                }
+    (\({NUMEROS}+",'it','"{LETRAS}+"')")?       { //printf("%s\n",yytext);
+                                                   int i=0;
+                                                   while(yytext[i] != ',') i++; 
+                                                   faztraducao(yytext+1,"it");
+                                                }
 }
 
 <*>.|\n                                            {;}
@@ -148,9 +164,9 @@ void addLang(DIC_ENTRADA dic, char* lang, char* dados) {
 void faztraducao(char* str,char* lang) {
     if(tuplos!=0) {
         str[strlen(str)-2]='\0';
-        printf("%s\n",str);
+        printf("string = %s\n",str);
         int id = getId(str);
-        indice+=5;
+        indice+=6;
         retiraExcesso(str);
         char* dados = getdados(str);
         DIC_ENTRADA dic = (DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(id));
