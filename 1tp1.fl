@@ -46,7 +46,7 @@ DIC_ENTRADA novaEntrada(char* tit){
 CP [ª|º|ñ|à|á|â|å|ã|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È]
 PONTUACAO  [,|;|!|?]
 PARENTESES [(|)]
-LETRAS ([A-Za-z\ ]|ñ|à|á|â|å|ã|ä|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È|ş|'|\-|,|\.|А|Б|В|Г|Ґ|Д|Ђ|Ѓ|Е|Ё|Є|Ж|Ѕ|З|И|І|Ї|Й|Ј|К|Л|Љ|М|Н|Њ|О|П|Р|С|Т|Ћ|Ќ|У|Ў|Ф|Х|Ц|Ч|Џ|Ш|Щ|Ъ|Ы|Ь|Э|Ю|Я)
+LETRAS ([A-Za-z\ ]|ñ|à|á|â|å|ã|ä|ò|ó|ç|õ|é|è|ô|ō|ö|ê|ë|í|ì|ú|ü|ù|ß|Ø|Ú|Ù|Û|Ó|Ô|Ò|Ì|Î|Í|À|Â|Á|Ê|É|È|ş|'|\-|,|\.)
 NUMEROS [0-9]
 INTERESSA ({LETRAS}|{CP}|{PONTUACAO})
 PRIM({PARENTESES}{NUMEROS}{LETRAS})
@@ -75,6 +75,7 @@ LIG (\({NUMEROS}+",'".*"','".*\))
                                                         nova = 1;
                                                        }
    "<id>"{NUMEROS}+                                    {if(nova != 0){
+                                                           a[0] += 1;
                                                            g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
                                                         }
                                                         nova=0;
@@ -153,12 +154,12 @@ char* getdados(char* str) {
 }
 
 void addLang(DIC_ENTRADA dic, char* lang, char* dados) {
-    if(strcmp(lang,"de")==0){ dic->alemao = strdup(dados); a[0]+=1;}
-    else if(strcmp(lang,"es")==0){ dic->espanhol = strdup(dados); a[1]+=1;}
-    else if(strcmp(lang,"fr")==0){ dic->frances = strdup(dados); a[2]+=1;}
-    else if(strcmp(lang,"en")==0){ dic->ingles = strdup(dados); a[3]+=1; }
-    else if(strcmp(lang,"it")==0){ dic->italiano = strdup(dados); a[4]+=1;}
-    else{ dic->russo = strdup(dados); a[5]+=1;}
+    if(strcmp(lang,"de")==0){ dic->alemao = strdup(dados); a[1]+=1;}
+    else if(strcmp(lang,"es")==0){ dic->espanhol = strdup(dados); a[2]+=1;}
+    else if(strcmp(lang,"fr")==0){ dic->frances = strdup(dados); a[3]+=1;}
+    else if(strcmp(lang,"en")==0){ dic->ingles = strdup(dados); a[4]+=1; }
+    else if(strcmp(lang,"it")==0){ dic->italiano = strdup(dados); a[5]+=1;}
+    else{ dic->russo = strdup(dados); a[6]+=1;}
 }
 
 void faztraducao(char* str,char* lang) {
@@ -190,7 +191,7 @@ int main(int argc,char* argv[]) {
 
     h = g_hash_table_new(g_direct_hash,g_direct_equal);
     int x;
-    for(x=0;x<7;x++){a[x] = 0; printf("%d\n",a[0]);} 
+    for(x=0;x<7;x++){a[x] = 0;} 
 
     tuplos = atoi(argv[1]);
 	printf("Inicio da filtragem\n");
@@ -202,13 +203,13 @@ int main(int argc,char* argv[]) {
         printf("FICHEIRO: %d\n",i-1);
     }
 	printf("Fim da filtragem\n");
-
+    /*
     DIC_ENTRADA dic;
     for(int i = 0 ; i<500000 ; i++) {
         dic = (DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(i));
         if(dic!=NULL) printDicionario(dic);
     }
     for(x=0;x<7;x++) printf("%d\n",a[x]);
-
+    */
 	return 0;
 }
