@@ -19,7 +19,6 @@ int tuplos;
 char* frase;
 GHashTable* h;
 DIC_ENTRADA e;
-long i;
 int indice = 0;
 int a[7];
 
@@ -54,70 +53,47 @@ LIG (\({NUMEROS}+",'".*"','".*\))
 
 %%
 
-<*>"<title>"                                        {BEGIN F1;}
-<*>"INSERT INTO `langlinks` VALUES "                {BEGIN F2;}
+<*>"<title>"                                    {BEGIN F1;}
+<*>"INSERT INTO `langlinks` VALUES "            {BEGIN F2;}
 <F1>{
-   "<title>".*{NUMEROS}                                {;}
-   "<title>".*[!|?]                                    {;}
-   "<title>".*:{LETRAS}+                               {int x = 0; 
-                                                        while(yytext[x] != ':'){x++;} 
-                                                        frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
-                                                        sprintf(frase,"%s",yytext+x+1);
-                                                        frase[strlen(yytext)-x] = '\0';
-                                                        e = novaEntrada(frase);
-                                                        nova = 1;
-                                                       }
-   "<title>"{LETRAS}+                                  {int x = strlen(yytext)-6;
-                                                        frase = (char*) malloc(x*sizeof(char));
-                                                        sprintf(frase,"%s",yytext+7);
-                                                        frase[x-1] = '\0';
-                                                        e = novaEntrada(frase);
-                                                        nova = 1;
-                                                       }
-   "<id>"{NUMEROS}+                                    {if(nova != 0){
-                                                           a[0] += 1;
-                                                           g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
-                                                        }
-                                                        nova=0;
-                                                       }
-.|\n                                                   {;}
+    "<title>".*{NUMEROS}                        {;}
+    "<title>".*[!|?]                            {;}
+    "<title>".*:{LETRAS}+                       {int x = 0; 
+                                                while(yytext[x] != ':'){x++;} 
+                                                frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
+                                                sprintf(frase,"%s",yytext+x+1);
+                                                frase[strlen(yytext)-x] = '\0';
+                                                e = novaEntrada(frase);
+                                                nova = 1;
+                                                }
+    "<title>"{LETRAS}+                          {int x = strlen(yytext)-6;
+                                                frase = (char*) malloc(x*sizeof(char));
+                                                sprintf(frase,"%s",yytext+7);
+                                                frase[x-1] = '\0';
+                                                e = novaEntrada(frase);
+                                                nova = 1;
+                                                }
+    "<id>"{NUMEROS}+                            {if(nova != 0){
+                                                    a[0] += 1;
+                                                    g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
+                                                  }
+                                                nova=0;
+                                                }
+    .|\n                                        {;}
     
 }
 
 <F2>{
-    (\({NUMEROS}+",'de','"{LETRAS}+"')")?          {
-                                                   int i=0;
-                                                   while(yytext[i] != ',') i++; 
-                                                   faztraducao(yytext+1,"de");
-                                                }
-    (\({NUMEROS}+",'en','"{LETRAS}+"')")?          {
-                                                   int i=0;
-                                                   while(yytext[i] != ',') i++; 
-                                                   faztraducao(yytext+1,"en");
-                                                }
-    (\({NUMEROS}+",'es','"{LETRAS}+"')")?          {
-                                                   int i=0;
-                                                   while(yytext[i] != ',') i++; 
-                                                   faztraducao(yytext+1,"es");
-                                                }
-    (\({NUMEROS}+",'fr','"{LETRAS}+"')")?          {
-                                                   int i=0;
-                                                   while(yytext[i] != ',') i++; 
-                                                   faztraducao(yytext+1,"fr");
-                                                }
-    (\({NUMEROS}+",'ru','"[^']*"')")?          {
-                                                   int i=0;
-                                                   while(yytext[i] != ',') i++; 
-                                                   faztraducao(yytext+1,"ru");
-                                                }
-    (\({NUMEROS}+",'it','"{LETRAS}+"')")?       {
-                                                   int i=0;
-                                                   while(yytext[i] != ',') i++; 
-                                                   faztraducao(yytext+1,"it");
-                                                }
+    ("("{NUMEROS}+",'de','"{LETRAS}+"')")?      {faztraducao(yytext+1,"de");}
+    ("("{NUMEROS}+",'en','"{LETRAS}+"')")?      {faztraducao(yytext+1,"en");}
+    ("("{NUMEROS}+",'es','"{LETRAS}+"')")?      {faztraducao(yytext+1,"es");}
+    ("("{NUMEROS}+",'fr','"{LETRAS}+"')")?      {faztraducao(yytext+1,"fr");}
+    ("("{NUMEROS}+",'ru','"[^']*"')")?          {faztraducao(yytext+1,"ru");}
+    ("("{NUMEROS}+",'it','"{LETRAS}+"')")?      {faztraducao(yytext+1,"it");}
+    .|\n                                        {;}
 }
 
-<*>.|\n                                            {;}
+<*>.|\n                                         {;}
 
 %%
  
@@ -148,7 +124,7 @@ int getId(char* str) {
 }
 
 char* getdados(char* str) {
-    char* res = malloc(sizeof(char)*strlen(str+indice));
+    char* res = malloc(sizeof(char)*(strlen(str+indice)+1));
     strcpy(res,str+indice);
     return res;
 }
@@ -175,7 +151,6 @@ void faztraducao(char* str,char* lang) {
             tuplos--;
         }
     }
-    //else yyterminate();
 }
 
 void printDicionario(DIC_ENTRADA dic) {
@@ -194,7 +169,7 @@ int main(int argc,char* argv[]) {
     for(x=0;x<7;x++){a[x] = 0;} 
 
     tuplos = atoi(argv[1]);
-	printf("Inicio da filtragem\n");
+	  printf("Inicio da filtragem\n");
 	
     for(int i = 2; i< argc ; i++) {		
     	yyin=fopen(argv[i],"r");
@@ -202,14 +177,14 @@ int main(int argc,char* argv[]) {
         fclose(yyin);
         printf("FICHEIRO: %d\n",i-1);
     }
-	printf("Fim da filtragem\n");
-    /*
+	  printf("Fim da filtragem\n");
+    
     DIC_ENTRADA dic;
-    for(int i = 0 ; i<500000 ; i++) {
+    for(int i = 0 ; i<10000000 ; i++) {
         dic = (DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(i));
         if(dic!=NULL) printDicionario(dic);
     }
-    for(x=0;x<7;x++) printf("%d\n",a[x]);
-    */
+    //for(x=0;x<7;x++) printf("%d\n",a[x]);
+    
 	return 0;
 }
