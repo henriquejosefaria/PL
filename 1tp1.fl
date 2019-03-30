@@ -55,31 +55,31 @@ NUMEROS [0-9]
 <*>"<title>"                                        {BEGIN F1;}
 <*>"INSERT INTO `langlinks` VALUES "                {BEGIN F2;}
 <F1>{
-    "<title>".*{NUMEROS}+                               {;}
-    "<title>".*[!?]                                     {;}
-    "<title>"[^0-9]*:{LETRAS}+                          {int x = 0;
-                                                        while(yytext[x] != ':'){x++;} 
-                                                        if(yytext[x+1] == ' ' || yytext[x+1] == ':') x++;
-                                                        frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
-                                                        sprintf(frase,"%s",yytext+x+1);
-                                                        frase[strlen(yytext)-x] = '\0';
-                                                        e = novaEntrada(frase);
-                                                        nova = 1;
-                                                        }
-    "<title>"{LETRAS}+                                  {int x = strlen(yytext)-6;
-                                                        frase = (char*) malloc(x*sizeof(char));
-                                                        sprintf(frase,"%s",yytext+7);
-                                                        frase[x-1] = '\0';
-                                                        e = novaEntrada(frase);
-                                                        nova = 1;
-                                                        }
-    "<id>"{NUMEROS}+                                    {if(nova != 0){
-                                                           a[0] += 1;
-                                                           g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
-                                                        }
-                                                        nova=0;
-                                                        }
-    .|\n                                                {;}    
+    "<title>".*{NUMEROS}+                           {;}
+    "<title>".*[!?]                                 {;}
+    "<title>"[^0-9]*:{LETRAS}+                      {int x = 0;
+                                                    while(yytext[x] != ':'){x++;} 
+                                                    if(yytext[x+1] == ' ' || yytext[x+1] == ':') x++;
+                                                    frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
+                                                    sprintf(frase,"%s",yytext+x+1);
+                                                    frase[strlen(yytext)-x] = '\0';
+                                                    e = novaEntrada(frase);
+                                                    nova = 1;
+                                                    }
+    "<title>"{LETRAS}+                              {int x = strlen(yytext)-6;
+                                                    frase = (char*) malloc(x*sizeof(char));
+                                                    sprintf(frase,"%s",yytext+7);
+                                                    frase[x-1] = '\0';
+                                                    e = novaEntrada(frase);
+                                                    nova = 1;
+                                                    }
+    "<id>"{NUMEROS}+                                {if(nova != 0){
+                                                    a[0] += 1;
+                                                    g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
+                                                    }
+                                                    nova=0;
+                                                    }
+    .|\n                                            {;}    
 }
 
 <F2>{
