@@ -61,9 +61,9 @@ LIG (\({NUMEROS}+",'".*"','".*\))
 <*>"<title>"                                        {BEGIN F1;}
 <*>"INSERT INTO `langlinks` VALUES "                {BEGIN F2;}
 <F1>{
-   "<title>".*{NUMEROS}+                               {;}
-   "<title>".*[!?]                                     {;}
-   "<title>"[^0-9]*:{LETRAS}+                          {int x = 0;
+    "<title>".*{NUMEROS}+                               {;}
+    "<title>".*[!?]                                     {;}
+    "<title>"[^0-9]*:{LETRAS}+                          {int x = 0;
                                                         while(yytext[x] != ':'){x++;} 
                                                         if(yytext[x+1] == ' ' || yytext[x+1] == ':') x++;
                                                         frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
@@ -71,43 +71,30 @@ LIG (\({NUMEROS}+",'".*"','".*\))
                                                         frase[strlen(yytext)-x] = '\0';
                                                         e = novaEntrada(frase);
                                                         nova = 1;
-                                                       }
-   "<title>"{LETRAS}+                                  {int x = strlen(yytext)-6;
+                                                        }
+    "<title>"{LETRAS}+                                  {int x = strlen(yytext)-6;
                                                         frase = (char*) malloc(x*sizeof(char));
                                                         sprintf(frase,"%s",yytext+7);
                                                         frase[x-1] = '\0';
                                                         e = novaEntrada(frase);
                                                         nova = 1;
-                                                       }
-   "<id>"{NUMEROS}+                                    {if(nova != 0){
+                                                        }
+    "<id>"{NUMEROS}+                                    {if(nova != 0){
                                                            a[0] += 1;
                                                            g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
                                                         }
                                                         nova=0;
-                                                       }
-.|\n                                                   {;}
-    
+                                                        }
+    .|\n                                                {;}    
 }
 
 <F2>{
-    (\({NUMEROS}+",'de','"{LETRAS}+"')")?       {
-                                                   faztraducao(yytext+1,"de");
-                                                }
-    (\({NUMEROS}+",'es','"{LETRAS}+"')")?       {
-                                                   faztraducao(yytext+1,"es");
-                                                }
-    (\({NUMEROS}+",'fr','"{LETRAS}+"')")?       {
-                                                   faztraducao(yytext+1,"fr");
-                                                }
-    (\({NUMEROS}+",'en','"{LETRAS}+"')")?       {
-                                                   faztraducao(yytext+1,"en");
-                                                }
-    (\({NUMEROS}+",'it','"{LETRAS}+"')")?       {
-                                                   faztraducao(yytext+1,"it");
-                                                }
-    (\({NUMEROS}+",'ru','"[^']*"')")?          {
-                                                   faztraducao(yytext+1,"ru");
-                                                }
+    (\({NUMEROS}+",'de','"{LETRAS}+"')")?       {faztraducao(yytext+1,"de");}
+    (\({NUMEROS}+",'es','"{LETRAS}+"')")?       {faztraducao(yytext+1,"es");}
+    (\({NUMEROS}+",'fr','"{LETRAS}+"')")?       {faztraducao(yytext+1,"fr");}
+    (\({NUMEROS}+",'en','"{LETRAS}+"')")?       {faztraducao(yytext+1,"en");}
+    (\({NUMEROS}+",'it','"{LETRAS}+"')")?       {faztraducao(yytext+1,"it");}
+    (\({NUMEROS}+",'ru','"[^']*"')")?           {faztraducao(yytext+1,"ru");}
 }
 <*>.|\n                                            {;}
 
