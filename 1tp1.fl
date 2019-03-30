@@ -1,8 +1,11 @@
 %{
 #include<stdio.h>
+#include <stdlib.h>
 #include<string.h>
 #include<glib.h>
 #include<gmodule.h>
+#include <fcntl.h>
+#include <ctype.h>
 
 typedef struct entrada {
     char* titulo;
@@ -19,8 +22,10 @@ int tuplos;
 char* frase;
 GHashTable* h;
 DIC_ENTRADA e;
+long i;
 int indice = 0;
 int a[7];
+FILE* dicfd;
 
 void faztraducao(char* str, char* lang);
 DIC_ENTRADA novaEntrada(char* tit){
@@ -53,47 +58,58 @@ LIG (\({NUMEROS}+",'".*"','".*\))
 
 %%
 
-<*>"<title>"                                    {BEGIN F1;}
-<*>"INSERT INTO `langlinks` VALUES "            {BEGIN F2;}
+<*>"<title>"                                        {BEGIN F1;}
+<*>"INSERT INTO `langlinks` VALUES "                {BEGIN F2;}
 <F1>{
-    "<title>".*{NUMEROS}                        {;}
-    "<title>".*[!|?]                            {;}
-    "<title>".*:{LETRAS}+                       {int x = 0; 
-                                                while(yytext[x] != ':'){x++;} 
-                                                frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
-                                                sprintf(frase,"%s",yytext+x+1);
-                                                frase[strlen(yytext)-x] = '\0';
-                                                e = novaEntrada(frase);
-                                                nova = 1;
-                                                }
-    "<title>"{LETRAS}+                          {int x = strlen(yytext)-6;
-                                                frase = (char*) malloc(x*sizeof(char));
-                                                sprintf(frase,"%s",yytext+7);
-                                                frase[x-1] = '\0';
-                                                e = novaEntrada(frase);
-                                                nova = 1;
-                                                }
-    "<id>"{NUMEROS}+                            {if(nova != 0){
-                                                    a[0] += 1;
-                                                    g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
-                                                  }
-                                                nova=0;
-                                                }
-    .|\n                                        {;}
+   "<title>".*{NUMEROS}+                               {;}
+   "<title>".*[!?]                                     {;}
+   "<title>"[^0-9]*:{LETRAS}+                          {int x = 0;
+                                                        while(yytext[x] != ':'){x++;} 
+                                                        if(yytext[x+1] == ' ' || yytext[x+1] == ':') x++;
+                                                        frase = (char*) malloc((strlen(yytext)-x+1)*sizeof(char));
+                                                        sprintf(frase,"%s",yytext+x+1);
+                                                        frase[strlen(yytext)-x] = '\0';
+                                                        e = novaEntrada(frase);
+                                                        nova = 1;
+                                                       }
+   "<title>"{LETRAS}+                                  {int x = strlen(yytext)-6;
+                                                        frase = (char*) malloc(x*sizeof(char));
+                                                        sprintf(frase,"%s",yytext+7);
+                                                        frase[x-1] = '\0';
+                                                        e = novaEntrada(frase);
+                                                        nova = 1;
+                                                       }
+   "<id>"{NUMEROS}+                                    {if(nova != 0){
+                                                           a[0] += 1;
+                                                           g_hash_table_insert(h,GINT_TO_POINTER(atoi(yytext+4)),e);
+                                                        }
+                                                        nova=0;
+                                                       }
+.|\n                                                   {;}
     
 }
 
 <F2>{
-    ("("{NUMEROS}+",'de','"{LETRAS}+"')")?      {faztraducao(yytext+1,"de");}
-    ("("{NUMEROS}+",'en','"{LETRAS}+"')")?      {faztraducao(yytext+1,"en");}
-    ("("{NUMEROS}+",'es','"{LETRAS}+"')")?      {faztraducao(yytext+1,"es");}
-    ("("{NUMEROS}+",'fr','"{LETRAS}+"')")?      {faztraducao(yytext+1,"fr");}
-    ("("{NUMEROS}+",'ru','"[^']*"')")?          {faztraducao(yytext+1,"ru");}
-    ("("{NUMEROS}+",'it','"{LETRAS}+"')")?      {faztraducao(yytext+1,"it");}
-    .|\n                                        {;}
+    (\({NUMEROS}+",'de','"{LETRAS}+"')")?       {
+                                                   faztraducao(yytext+1,"de");
+                                                }
+    (\({NUMEROS}+",'es','"{LETRAS}+"')")?       {
+                                                   faztraducao(yytext+1,"es");
+                                                }
+    (\({NUMEROS}+",'fr','"{LETRAS}+"')")?       {
+                                                   faztraducao(yytext+1,"fr");
+                                                }
+    (\({NUMEROS}+",'en','"{LETRAS}+"')")?       {
+                                                   faztraducao(yytext+1,"en");
+                                                }
+    (\({NUMEROS}+",'it','"{LETRAS}+"')")?       {
+                                                   faztraducao(yytext+1,"it");
+                                                }
+    (\({NUMEROS}+",'ru','"[^']*"')")?          {
+                                                   faztraducao(yytext+1,"ru");
+                                                }
 }
-
-<*>.|\n                                         {;}
+<*>.|\n                                            {;}
 
 %%
  
@@ -154,37 +170,78 @@ void faztraducao(char* str,char* lang) {
 }
 
 void printDicionario(DIC_ENTRADA dic) {
-    if(dic->alemao != NULL) printf("PT->%s ; DE->%s\n",dic->titulo,dic->alemao);
-    if(dic->espanhol != NULL) printf("PT->%s ; ES->%s\n",dic->titulo,dic->espanhol);
-    if(dic->frances != NULL) printf("PT->%s ; FR->%s\n",dic->titulo,dic->frances);
-    if(dic->ingles != NULL) printf("PT->%s ; EN->%s\n",dic->titulo,dic->ingles);
-    if(dic->italiano != NULL) printf("PT->%s ; IT->%s\n",dic->titulo,dic->italiano);
-    if(dic->russo != NULL) printf("PT->%s ; RU->%s\n",dic->titulo,dic->russo);
+    if(dic->alemao != NULL) fprintf(dicfd,"PT->%s ; DE->%s\n",dic->titulo,dic->alemao);
+    if(dic->espanhol != NULL) fprintf(dicfd,"PT->%s ; ES->%s\n",dic->titulo,dic->espanhol);
+    if(dic->frances != NULL) fprintf(dicfd,"PT->%s ; FR->%s\n",dic->titulo,dic->frances);
+    if(dic->ingles != NULL) fprintf(dicfd,"PT->%s ; EN->%s\n",dic->titulo,dic->ingles);
+    if(dic->italiano != NULL) fprintf(dicfd,"PT->%s ; IT->%s\n",dic->titulo,dic->italiano);
+    if(dic->russo != NULL) fprintf(dicfd,"PT->%s ; RU->%s\n",dic->titulo,dic->russo);
 }
 
 int main(int argc,char* argv[]) {
 
+    GHashTableIter iter;
+    gpointer key,value;
     h = g_hash_table_new(g_direct_hash,g_direct_equal);
-    int x;
+    int x,size,i;
+    char* f=malloc(sizeof(char)*9);
+    FILE* file[26];
+    int b[26];
+    int fd;
+    
     for(x=0;x<7;x++){a[x] = 0;} 
-
-    tuplos = atoi(argv[1]);
-	  printf("Inicio da filtragem\n");
-	
-    for(int i = 2; i< argc ; i++) {		
+    for(x=0;x<26;x++)b[x] = 0;
+	  if(argc == 4) {tuplos = atoi(argv[1]); i=2;}
+    else {tuplos=10000000;i=1;}
+    for(; i< argc ; i++) {
     	yyin=fopen(argv[i],"r");
-        yylex();
-        fclose(yyin);
-        printf("FICHEIRO: %d\n",i-1);
+      yylex();
+      fclose(yyin);
     }
-	  printf("Fim da filtragem\n");
-    
-    DIC_ENTRADA dic;
-    for(int i = 0 ; i<10000000 ; i++) {
-        dic = (DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(i));
-        if(dic!=NULL) printDicionario(dic);
+    FILE* ind = fopen("indice.html","a");
+    for(x=0;x<26;x++){
+       sprintf(f,"%c.html",(97+x));
+       file[x] = fopen(f,"a");
+       }
+    dicfd = fopen("dictionary.txt","a"); 
+    f[1]='\0'; 
+    // aqui inserem-se as entradas nos ficheiros
+    g_hash_table_iter_init (&iter, h);
+    while (g_hash_table_iter_next (&iter, &key, &value))
+    {
+      if(value!=NULL){
+      	sprintf(f,"%c",tolower(((DIC_ENTRADA)value)->titulo[0]));
+      	fd=0;
+      	fd += (int)f[0]-97;
+        if(fd < 26 && fd >= 0){
+           b[((int)f[0]-97)]+=1;
+           fprintf(file[fd],"<button title=\"Clique para mostrar/ocultar\" type=\"button\" onclick=\"if(document.getElementById('%s') .style.display=='none') {document.getElementById('%s') .style.display='block'} else{document.getElementById('%s') .style.display='none'}\">",((DIC_ENTRADA)value)->titulo,((DIC_ENTRADA)value)->titulo,((DIC_ENTRADA)value)->titulo);
+           fprintf(file[fd],"%s",((DIC_ENTRADA)value)->titulo);
+           fprintf(file[fd],"</button>");
+           fprintf(file[fd],"<div id=\"");
+           fprintf(file[fd],"%s",((DIC_ENTRADA)value)->titulo);
+           fprintf(file[fd],"\"style=\"display:none\">");
+           fprintf(file[fd],"Traduções diponiveis:<br>");
+           fprintf(file[fd],"Português: %s<br>",((DIC_ENTRADA)value)->titulo );
+           if(((DIC_ENTRADA)value)->alemao != NULL) fprintf(file[fd],"Alemão: %s;<br>",((DIC_ENTRADA)value)->alemao);
+           if(((DIC_ENTRADA)value)->espanhol != NULL) fprintf(file[fd],"Espanhol: %s;<br>",((DIC_ENTRADA)value)->espanhol);
+           if(((DIC_ENTRADA)value)->frances != NULL) fprintf(file[fd],"Françes: %s;<br>",((DIC_ENTRADA)value)->frances);
+           if(((DIC_ENTRADA)value)->ingles != NULL) fprintf(file[fd],"Ingles: %s;<br>",((DIC_ENTRADA)value)->ingles);
+           if(((DIC_ENTRADA)value)->italiano != NULL) fprintf(file[fd],"Italiano: %s;<br>",((DIC_ENTRADA)value)->italiano);
+           if(((DIC_ENTRADA)value)->russo != NULL) fprintf(file[fd],"Russo: %s;<br>",((DIC_ENTRADA)value)->russo);
+           fprintf(file[fd],"</div><br>");
+           fprintf(file[fd],"\n");
+           printDicionario((DIC_ENTRADA)value);
+        }
+      }
     }
-    //for(x=0;x<7;x++) printf("%d\n",a[x]);
-    
-	return 0;
+    close(STDOUT_FILENO);
+    fprintf(ind,"<html>\n\t<head><meta charset=\'UTF-8\'><style type=\"text/css\">a:link {text-decoration:none; color:black; text-align:center;} a:visited {text-decoration:none;color:black;text-align:center;} a:hover {text-decoration:underline;color:black;text-align:center;} </style></head>\n\t<title>Dicionário</title>\n\t<ul>\n");
+    fprintf(ind,"<br><h1>Dicionário</h1><br>");
+    fprintf(ind,"<h3>Estatísticas:</h3><h4>Número de palavras Portuguesas do Dicionário: %d</h4><h4>Número de traduções para Alemão: %d </h4><h4>Número de traduções para Espanhol: %d </h4><h4>Número de traduções para Françes: %d </h4><h4>Número de traduções para Inglês: %d </h4><h4>Número de traduções para Italiano: %d </h4><h4>Número de traduções para Russo: %d </h4><p>Escolha uma entrada do dicionário para aceder á lista de palavras disponíveis:</p><br><br>",a[0],a[1],a[2],a[3],a[4],a[5],a[6]);
+    for(x=97;x<123;x++){
+       fprintf(ind,"\n\t\t<li><a href=\'%c.html\'>%c (nº de palavras: %d)</a></li>",x,(x-32),b[(x-97)]);
+    }
+    fprintf(ind,"\n\t</ul>\n</html> ");
+	  return 0;
 }
