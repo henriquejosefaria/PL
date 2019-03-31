@@ -22,7 +22,6 @@ int tuplos;
 char* frase;
 GHashTable* h;
 DIC_ENTRADA e;
-long i;
 int indice = 0;
 int a[7];
 FILE* dicfd;
@@ -139,11 +138,11 @@ void faztraducao(char* str,char* lang) {
     if(tuplos!=0) {
         str[strlen(str)-2]='\0';
         int id = getId(str);
-        indice+=7;
-        retiraExcesso(str);
-        char* dados = getdados(str);
         DIC_ENTRADA dic = (DIC_ENTRADA) g_hash_table_lookup(h,GINT_TO_POINTER(id));
         if(dic != NULL) {
+            indice+=7;
+            retiraExcesso(str);
+            char* dados = getdados(str);
             addLang(dic,lang,dados);
             tuplos--;
         }
@@ -160,61 +159,58 @@ void printDicionario(DIC_ENTRADA dic) {
 }
 
 int main(int argc,char* argv[]) {
-
     GHashTableIter iter;
     gpointer key,value;
     h = g_hash_table_new(g_direct_hash,g_direct_equal);
-    int x,size,i;
+    int x,size,i,fd;
     char* f=malloc(sizeof(char)*9);
     FILE* file[26];
     int b[26];
-    int fd;
     
     for(x=0;x<7;x++){a[x] = 0;} 
-    for(x=0;x<26;x++)b[x] = 0;
-	  if(argc == 4) {tuplos = atoi(argv[1]); i=2;}
+    for(x=0;x<26;x++){b[x] = 0;}
+	if(argc == 4) {tuplos = atoi(argv[1]); i=2;}
     else {tuplos=10000000;i=1;}
     for(; i< argc ; i++) {
     	yyin=fopen(argv[i],"r");
-      yylex();
-      fclose(yyin);
+        yylex();
+        fclose(yyin);
     }
     FILE* ind = fopen("indice.html","a");
     for(x=0;x<26;x++){
        sprintf(f,"%c.html",(97+x));
        file[x] = fopen(f,"a");
-       }
+    }
     dicfd = fopen("dictionary.txt","a"); 
     f[1]='\0'; 
     // aqui inserem-se as entradas nos ficheiros
     g_hash_table_iter_init (&iter, h);
-    while (g_hash_table_iter_next (&iter, &key, &value))
-    {
-      if(value!=NULL){
-      	sprintf(f,"%c",tolower(((DIC_ENTRADA)value)->titulo[0]));
-      	fd=0;
-      	fd += (int)f[0]-97;
-        if(fd < 26 && fd >= 0){
-           b[((int)f[0]-97)]+=1;
-           fprintf(file[fd],"<button title=\"Clique para mostrar/ocultar\" type=\"button\" onclick=\"if(document.getElementById('%s') .style.display=='none') {document.getElementById('%s') .style.display='block'} else{document.getElementById('%s') .style.display='none'}\">",((DIC_ENTRADA)value)->titulo,((DIC_ENTRADA)value)->titulo,((DIC_ENTRADA)value)->titulo);
-           fprintf(file[fd],"%s",((DIC_ENTRADA)value)->titulo);
-           fprintf(file[fd],"</button>");
-           fprintf(file[fd],"<div id=\"");
-           fprintf(file[fd],"%s",((DIC_ENTRADA)value)->titulo);
-           fprintf(file[fd],"\"style=\"display:none\">");
-           fprintf(file[fd],"Traduções diponiveis:<br>");
-           fprintf(file[fd],"Português: %s<br>",((DIC_ENTRADA)value)->titulo );
-           if(((DIC_ENTRADA)value)->alemao != NULL) fprintf(file[fd],"Alemão: %s;<br>",((DIC_ENTRADA)value)->alemao);
-           if(((DIC_ENTRADA)value)->espanhol != NULL) fprintf(file[fd],"Espanhol: %s;<br>",((DIC_ENTRADA)value)->espanhol);
-           if(((DIC_ENTRADA)value)->frances != NULL) fprintf(file[fd],"Françes: %s;<br>",((DIC_ENTRADA)value)->frances);
-           if(((DIC_ENTRADA)value)->ingles != NULL) fprintf(file[fd],"Ingles: %s;<br>",((DIC_ENTRADA)value)->ingles);
-           if(((DIC_ENTRADA)value)->italiano != NULL) fprintf(file[fd],"Italiano: %s;<br>",((DIC_ENTRADA)value)->italiano);
-           if(((DIC_ENTRADA)value)->russo != NULL) fprintf(file[fd],"Russo: %s;<br>",((DIC_ENTRADA)value)->russo);
-           fprintf(file[fd],"</div><br>");
-           fprintf(file[fd],"\n");
-           printDicionario((DIC_ENTRADA)value);
+    while (g_hash_table_iter_next (&iter, &key, &value)){
+        if(value!=NULL){
+      	    sprintf(f,"%c",tolower(((DIC_ENTRADA)value)->titulo[0]));
+      	    fd=0;
+      	    fd += (int)f[0]-97;
+            if(fd < 26 && fd >= 0){
+                b[((int)f[0]-97)]+=1;
+                fprintf(file[fd],"<button title=\"Clique para mostrar/ocultar\" type=\"button\" onclick=\"if(document.getElementById('%s') .style.display=='none') {document.getElementById('%s') .style.display='block'} else{document.getElementById('%s') .style.display='none'}\">",((DIC_ENTRADA)value)->titulo,((DIC_ENTRADA)value)->titulo,((DIC_ENTRADA)value)->titulo);
+                fprintf(file[fd],"%s",((DIC_ENTRADA)value)->titulo);
+                fprintf(file[fd],"</button>");
+                fprintf(file[fd],"<div id=\"");
+                fprintf(file[fd],"%s",((DIC_ENTRADA)value)->titulo);
+                fprintf(file[fd],"\"style=\"display:none\">");
+                fprintf(file[fd],"Traduções diponiveis:<br>");
+                fprintf(file[fd],"Português: %s<br>",((DIC_ENTRADA)value)->titulo );
+                if(((DIC_ENTRADA)value)->alemao != NULL) fprintf(file[fd],"Alemão: %s;<br>",((DIC_ENTRADA)value)->alemao);
+                if(((DIC_ENTRADA)value)->espanhol != NULL) fprintf(file[fd],"Espanhol: %s;<br>",((DIC_ENTRADA)value)->espanhol);
+                if(((DIC_ENTRADA)value)->frances != NULL) fprintf(file[fd],"Françes: %s;<br>",((DIC_ENTRADA)value)->frances);
+                if(((DIC_ENTRADA)value)->ingles != NULL) fprintf(file[fd],"Ingles: %s;<br>",((DIC_ENTRADA)value)->ingles);
+                if(((DIC_ENTRADA)value)->italiano != NULL) fprintf(file[fd],"Italiano: %s;<br>",((DIC_ENTRADA)value)->italiano);
+                if(((DIC_ENTRADA)value)->russo != NULL) fprintf(file[fd],"Russo: %s;<br>",((DIC_ENTRADA)value)->russo);
+                fprintf(file[fd],"</div><br>");
+                fprintf(file[fd],"\n");
+                printDicionario((DIC_ENTRADA)value);
+            }
         }
-      }
     }
     close(STDOUT_FILENO);
     fprintf(ind,"<html>\n\t<head><meta charset=\'UTF-8\'><style type=\"text/css\">a:link {text-decoration:none; color:black; text-align:center;} a:visited {text-decoration:none;color:black;text-align:center;} a:hover {text-decoration:underline;color:black;text-align:center;} </style></head>\n\t<title>Dicionário</title>\n\t<ul>\n");
@@ -224,5 +220,5 @@ int main(int argc,char* argv[]) {
        fprintf(ind,"\n\t\t<li><a href=\'%c.html\'>%c (nº de palavras: %d)</a></li>",x,(x-32),b[(x-97)]);
     }
     fprintf(ind,"\n\t</ul>\n</html> ");
-	  return 0;
+    return 0;
 }
