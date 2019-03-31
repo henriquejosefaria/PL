@@ -18,7 +18,7 @@ typedef struct entrada {
 }*DIC_ENTRADA;
 
 int nova=0;
-int tuplos;
+long tuplos;
 char* frase;
 GHashTable* h;
 DIC_ENTRADA e;
@@ -169,7 +169,7 @@ int main(int argc,char* argv[]) {
     
     for(x=0;x<7;x++){a[x] = 0;} 
     for(x=0;x<26;x++){b[x] = 0;}
-	if(argc == 4) {tuplos = atoi(argv[1]); i=2;}
+	if(argc == 4) {tuplos = atol(argv[1]); i=2;}
     else {tuplos=10000000;i=1;}
     for(; i< argc ; i++) {
     	yyin=fopen(argv[i],"r");
