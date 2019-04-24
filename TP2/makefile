@@ -1,11 +1,17 @@
-preprocessamento: preprocessamento.gawk
-	gawk -f preprocessamento.gawk formacao.csv > output.csv
-
-processamento: preprocessamento.gawk processamento.gawk	
-	gawk -f preprocessamento.gawk < formacao.csv > prepro.csv
-	gawk -f processamento.gawk < prepro.csv > pos.csv
-	gawk -f dot.awk < pos.csv > grafo.dot
+get_dot: docawk
 	dot -Tjpeg grafo.dot -o grafo.jpeg
 
+docawk: processamento dot.awk
+	gawk -f dot.awk pos.txt > grafo.dot
+
+processamento: prepocessamento processamento.gawk
+	gawk -f processamento.gawk prepro.txt > pos.txt
+	
+prepocessamento: preprocessamento.gawk
+	gawk -f preprocessamento.gawk formacao.csv > prepro.txt
+
 clean: 
-	rm -f output.*
+	rm -f prepro.csv
+	rm -f pos.csv
+	rm -f grafo.*
+	rm -f *.txt
