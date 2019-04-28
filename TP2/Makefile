@@ -10,23 +10,22 @@
 all: a.out
 
 
-a.out: preprocessamento processamento grafico
+a.out: preprocessamento processamento grafo
 	rm grafo.dot
-	eog grafo.jpeg
 
 preprocessamento:
 	gawk -f preprocessamento.awk < formacao.csv > next.csv 
 
 processamento:
-	gawk -f processamento.awk < next.csv > next2.csv
-	rm next.csv
+	gawk -f processamento.awk < next.csv > next2.txt
 
-grafico:
-	gawk -f dot.awk < next2.csv > posprocessamento.csv
+grafo:
+	gawk -f dot.awk < next.csv
 	dot -Tjpeg grafo.dot -o grafo.jpeg
-	rm next2.csv
 
 .PHONY: clean
 
 clean:
+	rm next.csv
+	rm grafo.dot
 	rm grafo.jpeg
