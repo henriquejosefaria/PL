@@ -1,0 +1,46 @@
+%{
+	#include <stdio.h>
+%}
+
+%x	ARTISTA OBRA EVENT
+
+%%
+
+<*>{
+	"artista:" 					{BEGIN ARTISTA;}
+	"obra:"						{BEGIN OBRA;}
+	"evento:"					{BEGIN EVENT;}
+	.|\n 						{;}
+}
+
+<ARTISTA>{
+	"nome:".*					{yylval.=strdup(yytext+5); return NOME;}
+	"idade:".*					{yylval.=atoi(strdup(yytext+6)); return IDADE;}
+	"cidade:".*					{yylval.=strdup(yytext+7); return CIDADE;}
+	"colaborou:".*				{yylval.=strdup(yytext+10); return COLABOROU;}
+	"obra:"						{BEGIN OBRA;}
+	"evento:"					{BEGIN EVENT;}
+	.\n 						{;}
+}
+
+<OBRA> {
+	"nome:".*					{yylval.=strdup(yytext+5); return CANCAO;}
+	"tipo:".*					{yylval.=strdup(yytext+5); return TIPO;}
+	"tempo:".*					{yylval.=atof(strdup(yytext+6)); return TEMPO;}
+	"artista:"					{BEGIN ARTISTA;}
+	"obra:"						{;}
+	"evento:"					{BEGIN EVENT;}
+	.|\n 						{;}
+}
+
+<EVENT>{
+	"nome:".*					{yylval.=strdup(yytext+5); return EVENTO;}
+	"tipo:".*					{yylval.=strdup(yytext+5); return TYPE;}
+	"data:".*					{yylval.=strdup(yytext+5); return DATA;}
+	"artista:"					{BEGIN ARTISTA;}
+	"obra:"						{BEGIN OBRA;}
+	"evento:"					{;}
+	.|\n 						{;}
+}
+
+%%
