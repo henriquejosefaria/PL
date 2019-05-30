@@ -1,22 +1,22 @@
 %{
-	#define _GNU_SOURCE
+	#define _GNU_SOURCE 
 	#include <stdio.h>
-	#include <stdlib.h>
+	#include <math.h>
+	void yyerror(char *s);
+	int yylex();
 	int fd1 = fopen("grafo.svg","w");
 	int fd2,fd3,fd4;
 %}
-
+%token NOME IDADE CIDADE TIPO TEMPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU
 %union{
 	int n;
 	float x;
 	char* c;
 }
 
-%token NOME IDADE CIDADE TIPO TEMPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODOZIU
-
 %type <n> IDADE
 %type <x> TEMPO
-%type <c> NOME CIDADE TIPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODOZIU
+%type <c> grafos grafo artista ligacoes lista musica evento NOME CIDADE TIPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU
 
 %%
 
@@ -38,12 +38,12 @@ ligacoes: musica ligacoes	  		{asprintf(&$$,"%s\n%s",$1,$2);}
 
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 
-artista	: NOME IDADE CIDADE lista 	{asprintf(&$$,"%s ->{%s}\n",$1,$4); // imprime para o dot
+artista	: NOME IDADE CIDADE lista 	{asprintf(&$$,"%s ->{%s}\n",$1,$4); //imprime para o dot
 									 fd2=fopen($1".html","w"); // a partir daqui para html
 								     fprintf(fd2,"<html> \n\t<head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t %s \n\t</body> \n</html>",$1,$2,$3,$4);
 								     close(fd2);
 								    }			
-		;
+									;
 
 musica 	: NOME TIPO TEMPO 		  	{
 									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
@@ -51,7 +51,7 @@ musica 	: NOME TIPO TEMPO 		  	{
 									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t</body> \n</html> ",$1,$2,$3);
 									 close(fd3);
 									}
-		;
+									;
 
 evento	: NOME TIPO DATA		  	{
 									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
@@ -59,7 +59,8 @@ evento	: NOME TIPO DATA		  	{
 									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t</body> \n</html> ",$1,$2,$3);
 									 close(fd4);
 									}
-		;
+									;
+
 			  /* PROBLEMA: SE TIVERMOS UMA OU MAIS LIGAÇÕES E 1 VAZIO {A,B,} */
 			  
 lista   : COLABOROU NOME lista	  	{asprintf(&$$," %s[label="%s"],%s",$2,$1,$3);}
@@ -73,8 +74,10 @@ lista   : COLABOROU NOME lista	  	{asprintf(&$$," %s[label="%s"],%s",$2,$1,$3);}
 %%
 
 #include "lex.yy.c"
+	
+	void yyerror(char *s){fprintf(stderr,"ERRO:%s\nLine:%d\n",s,yylineno);}
 
-int main() {
-	yyparse();
-	return 0;
-}
+	int main() {
+		yyparse();
+		return 0;
+	}

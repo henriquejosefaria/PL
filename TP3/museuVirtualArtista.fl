@@ -1,6 +1,7 @@
 %{
 	#include <stdio.h>
 %}
+%option noyywrap
 
 %x	ARTISTA OBRA EVENTO
 
@@ -23,7 +24,7 @@
 	.\n 						{;}
 }
 
-<OBRA> {
+<OBRA>{
 	"nome:".*					{yylval.n = strdup(yytext+5); return NOME;}
 	"tipo:".*					{yylval.n = strdup(yytext+5); return TIPO;}
 	"tempo:".*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
@@ -33,7 +34,7 @@
 	.|\n 						{;}
 }
 
-<EVENT=>{
+<EVENTO>{
 	"nome:".*					{yylval.n = strdup(yytext+5); return NOME;}
 	"tipo:".*					{yylval.n = strdup(yytext+5); return TYPE;}
 	"data:".*					{yylval.n = strdup(yytext+5); return DATA;}
