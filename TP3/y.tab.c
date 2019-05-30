@@ -1405,7 +1405,7 @@ yyreduce:
 									 f = strdup((yyvsp[(1) - (3)].c));
 									 strcat(f,".html");
 									 fd3=fopen(f,"w"); // a partir daqui para html
-									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %f \n\t</body> \n</html>",(yyvsp[(1) - (3)].c),(yyvsp[(2) - (3)].c),(yyvsp[(3) - (3)].x));
+									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Nome: %s <br>\n\t Tempo: %f \n\t</body> \n</html>",(yyvsp[(1) - (3)].c),(yyvsp[(2) - (3)].c),(yyvsp[(3) - (3)].x));
 									}
     break;
 
@@ -1417,7 +1417,7 @@ yyreduce:
 									 f = strdup((yyvsp[(1) - (3)].c));
 									 strcat(f,".html");
 									 fd4=fopen(f,"w"); // a partir daqui para html
-									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t</body> \n</html> ",(yyvsp[(1) - (3)].c),(yyvsp[(2) - (3)].c),(yyvsp[(3) - (3)].c));
+									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Data: %s \n\t</body> \n</html> ",(yyvsp[(1) - (3)].c),(yyvsp[(2) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 

@@ -59,7 +59,7 @@ musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
 									 f = strdup($1);
 									 strcat(f,".html");
 									 fd3=fopen(f,"w"); // a partir daqui para html
-									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %f \n\t</body> \n</html>",$1,$2,$3);
+									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Nome: %s <br>\n\t Tempo: %f \n\t</body> \n</html>",$1,$2,$3);
 									}
 			  | NOME TIPO DATA		{printf("10\n");
 									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
@@ -67,7 +67,7 @@ musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
 									 f = strdup($1);
 									 strcat(f,".html");
 									 fd4=fopen(f,"w"); // a partir daqui para html
-									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t</body> \n</html> ",$1,$2,$3);
+									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Data: %s \n\t</body> \n</html> ",$1,$2,$3);
 									}
 			  ;
 			  
