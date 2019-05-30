@@ -437,7 +437,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    33,    34,    37,    38,    41,    42,    48,
+       0,    26,    26,    33,    34,    37,    38,    41,    42,    48,
       58,    66,    76,    79,    82,    85,    88,    91
 };
 #endif
@@ -1353,10 +1353,11 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 27 "museuVirtualArtista.y"
+#line 26 "museuVirtualArtista.y"
     {printf("1\n");
 									 fd1 = fopen("grafo.svg","w");
-									 fprintf(fd1,"%s\n",(yyvsp[(1) - (1)].c));
+									 fprintf(fd1,"digraph {\nrankdir=LR;\n%s\n}",(yyvsp[(1) - (1)].c));
+									 printf("acabou\n\n");
 									}
     break;
 
@@ -1393,12 +1394,12 @@ yyreduce:
   case 9:
 #line 48 "museuVirtualArtista.y"
     {printf("8\n");
-									 asprintf(&(yyval.c),"%s ->{%s}\n",(yyvsp[(1) - (4)].c),(yyvsp[(4) - (4)].c)); //imprime para o dot
+									 asprintf(&(yyval.c),"\"%s\" ->{%s};\n",(yyvsp[(1) - (4)].c),(yyvsp[(4) - (4)].c)); //imprime para o dot
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (4)].c))+6);
 									 f = strdup((yyvsp[(1) - (4)].c));
 									 strcat(f,".html");
 									 fd2=fopen(f,"w"); // a partir daqui para html
-								     fprintf(fd2,"<html> \n\t<head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %d \n\t %s \n\t %s \n\t</body> \n</html>",(yyvsp[(1) - (4)].c),(yyvsp[(2) - (4)].n),(yyvsp[(3) - (4)].c),(yyvsp[(4) - (4)].c));
+								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d \n\t Cidade: %s \n\t %s \n\t</body> \n</html>",(yyvsp[(1) - (4)].c),(yyvsp[(2) - (4)].n),(yyvsp[(3) - (4)].c),(yyvsp[(4) - (4)].c));
 								    }
     break;
 
@@ -1463,12 +1464,12 @@ yyreduce:
 
   case 17:
 #line 91 "museuVirtualArtista.y"
-    {printf("1\n");(yyval.c)="";}
+    {printf("sem relações\n");(yyval.c)="\"\"";}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1472 "y.tab.c"
+#line 1473 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);

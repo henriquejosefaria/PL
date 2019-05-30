@@ -5,6 +5,7 @@ all:
 
 exec:
 	./MvA <exemplo3.txt
+	dot -Tsvg grafo.svg -o grafo.svg
 
 clean:
 	rm -f y.tab.c

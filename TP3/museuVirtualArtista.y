@@ -23,10 +23,10 @@
 %type <c> grafos grafo artista ligacoes lista musicaOuEvento NOME CIDADE TIPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU
 
 %%
-
 prog	: grafos	   				{printf("1\n");
 									 fd1 = fopen("grafo.svg","w");
-									 fprintf(fd1,"%s\n",$1);
+									 fprintf(fd1,"digraph {\nrankdir=LR;\n%s\n}",$1);
+									 printf("acabou\n\n");
 									}
 		;
 
@@ -46,12 +46,12 @@ ligacoes: musicaOuEvento ligacoes	{printf("6\n");asprintf(&$$,"%s\n%s",$1,$2);}
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 
 artista	: NOME IDADE CIDADE lista 	{printf("8\n");
-									 asprintf(&$$,"%s ->{%s}\n",$1,$4); //imprime para o dot
+									 asprintf(&$$,"\"%s\" ->{%s};\n",$1,$4); //imprime para o dot
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 f = strdup($1);
 									 strcat(f,".html");
 									 fd2=fopen(f,"w"); // a partir daqui para html
-								     fprintf(fd2,"<html> \n\t<head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %d \n\t %s \n\t %s \n\t</body> \n</html>",$1,$2,$3,$4);
+								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d \n\t Cidade: %s \n\t %s \n\t</body> \n</html>",$1,$2,$3,$4);
 								    }			
 									;
 
@@ -88,7 +88,7 @@ lista   : COLABOROU NOME lista	  	{printf("11\n");
 		| PRODUZIU NOME lista	  	{printf("15\n");
 									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
 									}
-		|					 	  	{printf("1\n");$$="";}
+		|					 	  	{printf("sem relações\n");$$="\"\"";}
 		;
 
 %%

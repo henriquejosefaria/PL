@@ -3496,7 +3496,7 @@ YY_RULE_SETUP
 case 7:
 YY_RULE_SETUP
 #line 17 "museuVirtualArtista.fl"
-{BEGIN OBRA;}
+{printf("passei para obras\n\n\n");BEGIN OBRA;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
@@ -3585,12 +3585,12 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 42 "museuVirtualArtista.fl"
-{BEGIN OBRA;}
+{printf("Vou entrar na obra!!\n");BEGIN OBRA;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 43 "museuVirtualArtista.fl"
-{BEGIN EVENTO;}
+{printf("Vou entrar no evento!!\n");BEGIN EVENTO;}
 	YY_BREAK
 
 case 25:
