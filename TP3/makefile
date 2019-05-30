@@ -5,6 +5,7 @@ all:
 
 exec:
 	./MvA < exemplo3.txt
+	dot -Tsvg grafo.svg -o grafo.svg
 
 teste_flex:
 	flex -f TestemuseuVirtualArtista.fl
@@ -16,3 +17,5 @@ clean:
 	rm -f lex.yy.c
 	rm -f MvA
 	rm -f grafo.svg
+	rm -f teste
+	rm -f y.output

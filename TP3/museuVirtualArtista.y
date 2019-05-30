@@ -1,6 +1,7 @@
 %{
 	#define _GNU_SOURCE 
 	#include <stdio.h>
+	#include <string.h>
 	#include <math.h>
 	#include <unistd.h>
 	void yyerror(char *s);
@@ -22,57 +23,71 @@
 %type <c> grafos grafo artista ligacoes lista musicaOuEvento NOME CIDADE TIPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU
 
 %%
-
-prog	: grafos	   				{fd1 = fopen("grafo.svg","w");
-									 fprintf(fd1,"%s\n",$1);
+prog	: grafos	   				{printf("1\n");
+									 fd1 = fopen("grafo.svg","w");
+									 fprintf(fd1,"digraph {\nrankdir=LR;\n%s\n}",$1);
+									 printf("acabou\n\n");
 									}
 		;
 
-grafos  : grafo grafos 				{asprintf(&$$,"%s\n%s",$1,$2);}
-	    | grafo        				{asprintf(&$$,"%s\n",$1);}
+grafos  : grafo grafos 				{printf("2\n");asprintf(&$$,"%s\n%s",$1,$2);}
+	    | 	        				{$$="";printf("3\n");}
 	    ;
 
-grafo   : artista ligacoes    		{asprintf(&$$,"%s\n%s",$1,$2);}
-	    | artista			  		{asprintf(&$$,"%s\n",$1);}
+grafo   : artista ligacoes    		{printf("4\n");asprintf(&$$,"%s\n%s",$1,$2);}
 	    ;
 
-ligacoes: musicaOuEvento ligacoes	{asprintf(&$$,"%s\n%s",$1,$2);}
-		|							{$$="";}
+ligacoes: musicaOuEvento ligacoes	{printf("6\n");asprintf(&$$,"%s\n%s",$1,$2);}
+		|							{printf("7\n");$$="";}
 		;
 
 
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 
-artista	: NOME IDADE CIDADE lista 	{asprintf(&$$,"%s ->{%s}\n",$1,$4); //imprime para o dot
-									 char* f=NULL;
-									 sprintf( f, "%s%s",$1,".html");
+artista	: NOME IDADE CIDADE lista 	{printf("8\n");
+									 asprintf(&$$,"\"%s\" ->{%s};\n",$1,$4); //imprime para o dot
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 f = strdup($1);
+									 strcat(f,".html");
 									 fd2=fopen(f,"w"); // a partir daqui para html
-								     fprintf(fd2,"<html> \n\t<head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %d \n\t %s \n\t %s \n\t</body> \n</html>",$1,$2,$3,$4);
+								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d \n\t Cidade: %s \n\t %s \n\t</body> \n</html>",$1,$2,$3,$4);
 								    }			
 									;
 
-musicaOuEvento: NOME TIPO TEMPO 	{
+musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
 									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
-									 char* f=NULL;
-									 sprintf( f, "%s%s",$1,".html");
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 f = strdup($1);
+									 strcat(f,".html");
 									 fd3=fopen(f,"w"); // a partir daqui para html
 									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %f \n\t</body> \n</html>",$1,$2,$3);
 									}
-			  | NOME TIPO DATA		{
+			  | NOME TIPO DATA		{printf("10\n");
 									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
-									 char* f=NULL;
-									 sprintf( f, "%s%s",$1,".html");
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 f = strdup($1);
+									 strcat(f,".html");
 									 fd4=fopen(f,"w"); // a partir daqui para html
 									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t</body> \n</html> ",$1,$2,$3);
 									}
 			  ;
 			  
-lista   : COLABOROU NOME lista	  	{asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);}
-		| APRENDEU NOME lista	  	{asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);}
-		| ENSINOU NOME lista	  	{asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);}
-		| PARTICIPOU NOME lista	  	{asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);}
-		| PRODUZIU NOME lista	  	{asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);}
-		|					 	  	{$$="";}
+lista   : COLABOROU NOME lista	  	{printf("11\n");
+									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+									 }
+		| APRENDEU NOME lista	  	{printf("12\n");
+									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+									}
+		| ENSINOU NOME lista	  	{printf("13\n");
+									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+									}
+		| PARTICIPOU NOME lista	  	{printf("14\n");
+									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+									}
+		| PRODUZIU NOME lista	  	{printf("15\n");
+									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+									}
+		|					 	  	{printf("sem relações\n");$$="\"\"";}
 		;
 
 %%

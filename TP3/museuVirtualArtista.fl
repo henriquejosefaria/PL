@@ -18,7 +18,7 @@
 	"colaborou:".*				{yylval.c = strdup(yytext+10); return COLABOROU;}
 	"aprendeu:".*				{yylval.c = strdup(yytext+9); return APRENDEU;}
 	"ensinou:".*				{yylval.c = strdup(yytext+8); return ENSINOU;}
-	"obra:"						{BEGIN OBRA;}
+	"obra:"						{printf("passei para obras\n\n\n");BEGIN OBRA;}
 	"evento:"					{BEGIN EVENTO;}
 	.|\n 						{;}
 }
