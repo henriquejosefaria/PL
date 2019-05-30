@@ -1,7 +1,7 @@
 all:
 	flex -8 -f museuVirtualArtista.fl
-	yacc museuVirtualArtista.y
-	cc -Wall -o MvA y.tab.c
+	yacc -v museuVirtualArtista.y
+	cc -Wall -o MvA y.tab.c  #ao incluir o outro faz compilação geral
 
 exec:
 	./MvA < exemplo3.txt
