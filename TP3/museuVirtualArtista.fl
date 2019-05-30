@@ -10,7 +10,6 @@
 	"artista:" 					{BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
 	"evento:"					{BEGIN EVENTO;}
-	.|\n 						{;}
 }
 
 <ARTISTA>{
@@ -18,6 +17,8 @@
 	"idade:".*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	"cidade:".*					{yylval.c = strdup(yytext+7); return CIDADE;}
 	"colaborou:".*				{yylval.c = strdup(yytext+10); return COLABOROU;}
+	"aprendeu:".*				{yylval.c = strdup(yytext+9); return APRENDEU;}
+	"ensinou:".*				{yylval.c = strdup(yytext+8); return ENSINOU;}
 	"obra:"						{BEGIN OBRA;}
 	"evento:"					{BEGIN EVENTO;}
 	.\n 						{;}
@@ -33,14 +34,16 @@
 	.|\n 						{;}
 }
 
-<EVENT=>{
+<EVENTO>{
 	"nome:".*					{yylval.n = strdup(yytext+5); return NOME;}
-	"tipo:".*					{yylval.n = strdup(yytext+5); return TYPE;}
+	"tipo:".*					{yylval.n = strdup(yytext+5); return TIPO;}
 	"data:".*					{yylval.n = strdup(yytext+5); return DATA;}
 	"artista:"					{BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
 	"evento:"					{;}
 	.|\n 						{;}
 }
+
+<*>(.|\n) 						{;}
 
 %%
