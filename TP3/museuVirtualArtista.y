@@ -24,7 +24,7 @@
 
 %%
 prog	: grafos	   				{printf("1\n");
-									 fd1 = fopen("grafo.svg","w");
+									 fd1 = fopen("grafo.dot","w");
 									 fprintf(fd1,"digraph {\nrankdir=LR;\n%s\n}",$1);
 									 printf("acabou\n\n");
 									}
@@ -34,13 +34,12 @@ grafos  : grafo grafos 				{printf("2\n");asprintf(&$$,"%s\n%s",$1,$2);}
 	    | 	        				{$$="";printf("3\n");}
 	    ;
 
-grafo   : artista ligacoes    		{printf("4\n");asprintf(&$$,"%s\n%s",$1,$2);}
+grafo   : artista ligacoes			{printf("4\n");asprintf(&$$,"%s\n%s",$1,$2);}
 	    ;
 
 ligacoes: musicaOuEvento ligacoes	{printf("6\n");asprintf(&$$,"%s\n%s",$1,$2);}
 		|							{printf("7\n");$$="";}
 		;
-
 
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 

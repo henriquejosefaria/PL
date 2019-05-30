@@ -8,24 +8,24 @@
 %%
 
 <ARTISTA>{
-	"nome:".*					{printf("Encontrei nome!\n"); yylval.c = strdup(yytext+5); printf("Guardei o nome!");return NOME;}
+	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
 	"idade:".*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	"cidade:".*					{yylval.c = strdup(yytext+7); return CIDADE;}
 	"colaborou:".*				{yylval.c = strdup(yytext+10); return COLABOROU;}
 	"aprendeu:".*				{yylval.c = strdup(yytext+9); return APRENDEU;}
 	"ensinou:".*				{yylval.c = strdup(yytext+8); return ENSINOU;}
-	"obra:"						{printf("passei para obras\n\n\n");BEGIN OBRA;}
+	"obra:"						{printf("passei para obras\n\n\n"); BEGIN OBRA;}
 	"evento:"					{BEGIN EVENTO;}
-	.|\n 						{;}
+	.|\n 						{}
 }
 
 <OBRA>{
-	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
+	"nome:".*					{printf("Entrei");yylval.c = strdup(yytext+5); return NOME;}
 	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
 	"tempo:".*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
 	"artista:"					{BEGIN ARTISTA;}
 	"evento:"					{BEGIN EVENTO;}
-	.|\n 						{;}
+	.|\n 						{}
 }
 
 <EVENTO>{
@@ -34,7 +34,7 @@
 	"data:".*					{yylval.c = strdup(yytext+5); return DATA;}
 	"artista:"					{BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
-	.|\n 						{;}
+	.|\n 						{}
 }
 
 <*>{

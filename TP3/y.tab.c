@@ -436,8 +436,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    26,    26,    33,    34,    37,    40,    41,    47,    57,
-      65,    75,    78,    81,    84,    87,    90
+       0,    26,    26,    33,    34,    37,    40,    41,    46,    56,
+      64,    74,    77,    80,    83,    86,    89
 };
 #endif
 
@@ -1386,7 +1386,7 @@ yyreduce:
     break;
 
   case 8:
-#line 47 "museuVirtualArtista.y"
+#line 46 "museuVirtualArtista.y"
     {printf("8\n");
 									 asprintf(&(yyval.c),"\"%s\" ->{%s};\n",(yyvsp[(1) - (4)].c),(yyvsp[(4) - (4)].c)); //imprime para o dot
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (4)].c))+6);
@@ -1398,7 +1398,7 @@ yyreduce:
     break;
 
   case 9:
-#line 57 "museuVirtualArtista.y"
+#line 56 "museuVirtualArtista.y"
     {printf("9\n");
 									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (3)].c))+6);
@@ -1410,7 +1410,7 @@ yyreduce:
     break;
 
   case 10:
-#line 65 "museuVirtualArtista.y"
+#line 64 "museuVirtualArtista.y"
     {printf("10\n");
 									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (3)].c))+6);
@@ -1422,42 +1422,42 @@ yyreduce:
     break;
 
   case 11:
-#line 75 "museuVirtualArtista.y"
+#line 74 "museuVirtualArtista.y"
     {printf("11\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									 }
     break;
 
   case 12:
-#line 78 "museuVirtualArtista.y"
+#line 77 "museuVirtualArtista.y"
     {printf("12\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
   case 13:
-#line 81 "museuVirtualArtista.y"
+#line 80 "museuVirtualArtista.y"
     {printf("13\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
   case 14:
-#line 84 "museuVirtualArtista.y"
+#line 83 "museuVirtualArtista.y"
     {printf("14\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
   case 15:
-#line 87 "museuVirtualArtista.y"
+#line 86 "museuVirtualArtista.y"
     {printf("15\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
   case 16:
-#line 90 "museuVirtualArtista.y"
+#line 89 "museuVirtualArtista.y"
     {printf("sem relações\n");(yyval.c)="\"\"";}
     break;
 
@@ -1677,7 +1677,7 @@ yyreturn:
 }
 
 
-#line 93 "museuVirtualArtista.y"
+#line 92 "museuVirtualArtista.y"
 
 
  #include "lex.yy.c"

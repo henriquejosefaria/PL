@@ -3466,7 +3466,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 11 "museuVirtualArtista.fl"
-{printf("Encontrei nome!\n"); yylval.c = strdup(yytext+5); printf("Guardei o nome!");return NOME;}
+{yylval.c = strdup(yytext+5); return NOME;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
@@ -3496,7 +3496,7 @@ YY_RULE_SETUP
 case 7:
 YY_RULE_SETUP
 #line 17 "museuVirtualArtista.fl"
-{printf("passei para obras\n\n\n");BEGIN OBRA;}
+{printf("passei para obras\n\n\n"); BEGIN OBRA;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
@@ -3507,14 +3507,14 @@ case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
 #line 19 "museuVirtualArtista.fl"
-{;}
+{}
 	YY_BREAK
 
 
 case 10:
 YY_RULE_SETUP
 #line 23 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+5); return NOME;}
+{printf("Entrei");yylval.c = strdup(yytext+5); return NOME;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
@@ -3540,7 +3540,7 @@ case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
 #line 28 "museuVirtualArtista.fl"
-{;}
+{}
 	YY_BREAK
 
 
@@ -3573,7 +3573,7 @@ case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
 #line 37 "museuVirtualArtista.fl"
-{;}
+{}
 	YY_BREAK
 
 
