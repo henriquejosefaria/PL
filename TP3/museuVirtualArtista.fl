@@ -12,41 +12,6 @@
 (?i:evento):						{BEGIN EVENTO;}
 
 <ARTISTA>{
-<<<<<<< HEAD
-	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
-	"idade:".*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
-	"cidade:".*					{yylval.c = strdup(yytext+7); return CIDADE;}
-	"colaborou:".*				{yylval.c = strdup(yytext+10); return COLABOROU;}
-	"aprendeu:".*				{yylval.c = strdup(yytext+9); return APRENDEU;}
-	"ensinou:".*				{yylval.c = strdup(yytext+8); return ENSINOU;}
-	"obra:"						{printf("passei para obras\n\n\n"); BEGIN OBRA;}
-	"evento:"					{BEGIN EVENTO;}
-	.|\n 						{}
-}
-
-<OBRA>{
-	"nome:".*					{printf("Entrei");yylval.c = strdup(yytext+5); return NOME;}
-	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
-	"tempo:".*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
-	"artista:"					{BEGIN ARTISTA;}
-	"evento:"					{BEGIN EVENTO;}
-	.|\n 						{}
-}
-
-<EVENTO>{
-	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
-	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
-	"data:".*					{yylval.c = strdup(yytext+5); return DATA;}
-	"artista:"					{BEGIN ARTISTA;}
-	"obra:"						{BEGIN OBRA;}
-	.|\n 						{}
-}
-
-<*>{
-	"artista:" 					{printf("Vou entrar no artista!!\n");BEGIN ARTISTA;}
-	"obra:"						{printf("Vou entrar na obra!!\n");BEGIN OBRA;}
-	"evento:"					{printf("Vou entrar no evento!!\n");BEGIN EVENTO;}
-=======
 	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
 	(?i:idade):.*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	(?i:cidade):.*					{yylval.c = strdup(yytext+7); return CIDADE;}
@@ -74,7 +39,6 @@
 	(?i:artista):					{BEGIN ARTISTA;}
 	(?i:obra):						{BEGIN OBRA;}
 	.|\n 							{;}
->>>>>>> e6cbc629f3d400773a487ce463dc7a34ddfd935d
 }
 
 <*>(.|\n) 							{;}

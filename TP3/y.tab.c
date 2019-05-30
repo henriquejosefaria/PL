@@ -1354,7 +1354,7 @@ yyreduce:
         case 2:
 #line 26 "museuVirtualArtista.y"
     {printf("1\n");
-									 fd1 = fopen("grafo.svg","w");
+									 fd1 = fopen("grafo.dot","w");
 									 fprintf(fd1,"digraph {\nrankdir=LR;\n%s\n}",(yyvsp[(1) - (1)].c));
 									 printf("acabou\n\n");
 									}

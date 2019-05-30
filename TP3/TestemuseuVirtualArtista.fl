@@ -10,7 +10,7 @@
 
 (?i:artista):  						{BEGIN ARTISTA;}
 (?i:obra):							{BEGIN OBRA;}
-"evento:"						{BEGIN EVENTO;}
+"evento:"							{BEGIN EVENTO;}
 
 <ARTISTA>{
 	"nome:".*					{printf("Nome artista: %s\n",yytext+5);}
