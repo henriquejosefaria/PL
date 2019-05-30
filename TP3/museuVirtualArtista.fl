@@ -30,7 +30,6 @@
 	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
 	"tempo:".*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
 	"artista:"					{BEGIN ARTISTA;}
-	"obra:"						{;}
 	"evento:"					{BEGIN EVENTO;}
 	.|\n 						{;}
 }
@@ -41,7 +40,6 @@
 	"data:".*					{yylval.c = strdup(yytext+5); return DATA;}
 	"artista:"					{BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
-	"evento:"					{;}
 	.|\n 						{;}
 }
 
