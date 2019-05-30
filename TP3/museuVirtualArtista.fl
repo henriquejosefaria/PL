@@ -7,6 +7,10 @@
 
 %%
 
+"artista:" 						{BEGIN ARTISTA;}
+"obra:"							{BEGIN OBRA;}
+"evento:"						{BEGIN EVENTO;}
+
 <ARTISTA>{
 	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
 	"idade:".*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
@@ -35,12 +39,6 @@
 	"artista:"					{BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
 	.|\n 						{;}
-}
-
-<*>{
-	"artista:" 					{BEGIN ARTISTA;}
-	"obra:"						{BEGIN OBRA;}
-	"evento:"					{BEGIN EVENTO;}
 }
 
 <*>(.|\n) 						{;}

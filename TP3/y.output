@@ -1,8 +1,8 @@
-State 5 conflicts: 1 shift/reduce, 2 reduce/reduce
-State 11 conflicts: 1 shift/reduce
+Estado 5 conflitos: 1 shift/reduce, 2 reduce/reduce
+Estado 11 conflictos: 1 shift/reduce
 
 
-Grammar
+Gramática
 
     0 $accept: prog $end
 
@@ -15,7 +15,7 @@ Grammar
     5      | artista
 
     6 ligacoes: musicaOuEvento ligacoes
-    7         | /* empty */
+    7         | %empty
 
     8 artista: NOME IDADE CIDADE lista
 
@@ -27,10 +27,10 @@ Grammar
    13      | ENSINOU NOME lista
    14      | PARTICIPOU NOME lista
    15      | PRODUZIU NOME lista
-   16      | /* empty */
+   16      | %empty
 
 
-Terminals, with rules where they appear
+Terminais, com as regras aonde aparecem
 
 $end (0) 0
 error (256)
@@ -47,331 +47,331 @@ PARTICIPOU (267) 14
 PRODUZIU (268) 15
 
 
-Nonterminals, with rules where they appear
+Não-terminais, com as regras aonde aparecem
 
 $accept (14)
-    on left: 0
+    à esquerda: 0
 prog (15)
-    on left: 1, on right: 0
+    à esquerda: 1, à direita: 0
 grafos (16)
-    on left: 2 3, on right: 1 2
+    à esquerda: 2 3, à direita: 1 2
 grafo (17)
-    on left: 4 5, on right: 2 3
+    à esquerda: 4 5, à direita: 2 3
 ligacoes (18)
-    on left: 6 7, on right: 4 6
+    à esquerda: 6 7, à direita: 4 6
 artista (19)
-    on left: 8, on right: 4 5
+    à esquerda: 8, à direita: 4 5
 musicaOuEvento (20)
-    on left: 9 10, on right: 6
+    à esquerda: 9 10, à direita: 6
 lista (21)
-    on left: 11 12 13 14 15 16, on right: 8 11 12 13 14 15
+    à esquerda: 11 12 13 14 15 16, à direita: 8 11 12 13 14 15
 
 
-state 0
+Estado0
 
     0 $accept: . prog $end
 
-    NOME  shift, and go to state 1
+    NOME  fazer shift, e ir para o estado 1
 
-    prog     go to state 2
-    grafos   go to state 3
-    grafo    go to state 4
-    artista  go to state 5
+    prog     ir para o estado 2
+    grafos   ir para o estado 3
+    grafo    ir para o estado 4
+    artista  ir para o estado 5
 
 
-state 1
+Estado1
 
     8 artista: NOME . IDADE CIDADE lista
 
-    IDADE  shift, and go to state 6
+    IDADE  fazer shift, e ir para o estado 6
 
 
-state 2
+Estado2
 
     0 $accept: prog . $end
 
-    $end  shift, and go to state 7
+    $end  fazer shift, e ir para o estado 7
 
 
-state 3
+Estado3
 
     1 prog: grafos .
 
-    $default  reduce using rule 1 (prog)
+    $default  reduzir usando a regra 1 (prog)
 
 
-state 4
+Estado4
 
     2 grafos: grafo . grafos
     3       | grafo .
 
-    NOME  shift, and go to state 1
+    NOME  fazer shift, e ir para o estado 1
 
-    $default  reduce using rule 3 (grafos)
+    $default  reduzir usando a regra 3 (grafos)
 
-    grafos   go to state 8
-    grafo    go to state 4
-    artista  go to state 5
+    grafos   ir para o estado 8
+    grafo    ir para o estado 4
+    artista  ir para o estado 5
 
 
-state 5
+Estado5
 
     4 grafo: artista . ligacoes
     5      | artista .
 
-    NOME  shift, and go to state 9
+    NOME  fazer shift, e ir para o estado 9
 
-    $end      reduce using rule 5 (grafo)
-    $end      [reduce using rule 7 (ligacoes)]
-    NOME      [reduce using rule 5 (grafo)]
-    NOME      [reduce using rule 7 (ligacoes)]
-    $default  reduce using rule 5 (grafo)
+    $end      reduzir usando a regra 5 (grafo)
+    $end      [reduzir usando a regra 7 (ligacoes)]
+    NOME      [reduzir usando a regra 5 (grafo)]
+    NOME      [reduzir usando a regra 7 (ligacoes)]
+    $default  reduzir usando a regra 5 (grafo)
 
-    ligacoes        go to state 10
-    musicaOuEvento  go to state 11
+    ligacoes        ir para o estado 10
+    musicaOuEvento  ir para o estado 11
 
 
-state 6
+Estado6
 
     8 artista: NOME IDADE . CIDADE lista
 
-    CIDADE  shift, and go to state 12
+    CIDADE  fazer shift, e ir para o estado 12
 
 
-state 7
+Estado7
 
     0 $accept: prog $end .
 
-    $default  accept
+    $default  aceite
 
 
-state 8
+Estado8
 
     2 grafos: grafo grafos .
 
-    $default  reduce using rule 2 (grafos)
+    $default  reduzir usando a regra 2 (grafos)
 
 
-state 9
+Estado9
 
     9 musicaOuEvento: NOME . TIPO TEMPO
    10               | NOME . TIPO DATA
 
-    TIPO  shift, and go to state 13
+    TIPO  fazer shift, e ir para o estado 13
 
 
-state 10
+Estado10
 
     4 grafo: artista ligacoes .
 
-    $default  reduce using rule 4 (grafo)
+    $default  reduzir usando a regra 4 (grafo)
 
 
-state 11
+Estado11
 
     6 ligacoes: musicaOuEvento . ligacoes
 
-    NOME  shift, and go to state 9
+    NOME  fazer shift, e ir para o estado 9
 
-    NOME      [reduce using rule 7 (ligacoes)]
-    $default  reduce using rule 7 (ligacoes)
+    NOME      [reduzir usando a regra 7 (ligacoes)]
+    $default  reduzir usando a regra 7 (ligacoes)
 
-    ligacoes        go to state 14
-    musicaOuEvento  go to state 11
+    ligacoes        ir para o estado 14
+    musicaOuEvento  ir para o estado 11
 
 
-state 12
+Estado12
 
     8 artista: NOME IDADE CIDADE . lista
 
-    COLABOROU   shift, and go to state 15
-    APRENDEU    shift, and go to state 16
-    ENSINOU     shift, and go to state 17
-    PARTICIPOU  shift, and go to state 18
-    PRODUZIU    shift, and go to state 19
+    COLABOROU   fazer shift, e ir para o estado 15
+    APRENDEU    fazer shift, e ir para o estado 16
+    ENSINOU     fazer shift, e ir para o estado 17
+    PARTICIPOU  fazer shift, e ir para o estado 18
+    PRODUZIU    fazer shift, e ir para o estado 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduzir usando a regra 16 (lista)
 
-    lista  go to state 20
+    lista  ir para o estado 20
 
 
-state 13
+Estado13
 
     9 musicaOuEvento: NOME TIPO . TEMPO
    10               | NOME TIPO . DATA
 
-    TEMPO  shift, and go to state 21
-    DATA   shift, and go to state 22
+    TEMPO  fazer shift, e ir para o estado 21
+    DATA   fazer shift, e ir para o estado 22
 
 
-state 14
+Estado14
 
     6 ligacoes: musicaOuEvento ligacoes .
 
-    $default  reduce using rule 6 (ligacoes)
+    $default  reduzir usando a regra 6 (ligacoes)
 
 
-state 15
+Estado15
 
    11 lista: COLABOROU . NOME lista
 
-    NOME  shift, and go to state 23
+    NOME  fazer shift, e ir para o estado 23
 
 
-state 16
+Estado16
 
    12 lista: APRENDEU . NOME lista
 
-    NOME  shift, and go to state 24
+    NOME  fazer shift, e ir para o estado 24
 
 
-state 17
+Estado17
 
    13 lista: ENSINOU . NOME lista
 
-    NOME  shift, and go to state 25
+    NOME  fazer shift, e ir para o estado 25
 
 
-state 18
+Estado18
 
    14 lista: PARTICIPOU . NOME lista
 
-    NOME  shift, and go to state 26
+    NOME  fazer shift, e ir para o estado 26
 
 
-state 19
+Estado19
 
    15 lista: PRODUZIU . NOME lista
 
-    NOME  shift, and go to state 27
+    NOME  fazer shift, e ir para o estado 27
 
 
-state 20
+Estado20
 
     8 artista: NOME IDADE CIDADE lista .
 
-    $default  reduce using rule 8 (artista)
+    $default  reduzir usando a regra 8 (artista)
 
 
-state 21
+Estado21
 
     9 musicaOuEvento: NOME TIPO TEMPO .
 
-    $default  reduce using rule 9 (musicaOuEvento)
+    $default  reduzir usando a regra 9 (musicaOuEvento)
 
 
-state 22
+Estado22
 
    10 musicaOuEvento: NOME TIPO DATA .
 
-    $default  reduce using rule 10 (musicaOuEvento)
+    $default  reduzir usando a regra 10 (musicaOuEvento)
 
 
-state 23
+Estado23
 
    11 lista: COLABOROU NOME . lista
 
-    COLABOROU   shift, and go to state 15
-    APRENDEU    shift, and go to state 16
-    ENSINOU     shift, and go to state 17
-    PARTICIPOU  shift, and go to state 18
-    PRODUZIU    shift, and go to state 19
+    COLABOROU   fazer shift, e ir para o estado 15
+    APRENDEU    fazer shift, e ir para o estado 16
+    ENSINOU     fazer shift, e ir para o estado 17
+    PARTICIPOU  fazer shift, e ir para o estado 18
+    PRODUZIU    fazer shift, e ir para o estado 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduzir usando a regra 16 (lista)
 
-    lista  go to state 28
+    lista  ir para o estado 28
 
 
-state 24
+Estado24
 
    12 lista: APRENDEU NOME . lista
 
-    COLABOROU   shift, and go to state 15
-    APRENDEU    shift, and go to state 16
-    ENSINOU     shift, and go to state 17
-    PARTICIPOU  shift, and go to state 18
-    PRODUZIU    shift, and go to state 19
+    COLABOROU   fazer shift, e ir para o estado 15
+    APRENDEU    fazer shift, e ir para o estado 16
+    ENSINOU     fazer shift, e ir para o estado 17
+    PARTICIPOU  fazer shift, e ir para o estado 18
+    PRODUZIU    fazer shift, e ir para o estado 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduzir usando a regra 16 (lista)
 
-    lista  go to state 29
+    lista  ir para o estado 29
 
 
-state 25
+Estado25
 
    13 lista: ENSINOU NOME . lista
 
-    COLABOROU   shift, and go to state 15
-    APRENDEU    shift, and go to state 16
-    ENSINOU     shift, and go to state 17
-    PARTICIPOU  shift, and go to state 18
-    PRODUZIU    shift, and go to state 19
+    COLABOROU   fazer shift, e ir para o estado 15
+    APRENDEU    fazer shift, e ir para o estado 16
+    ENSINOU     fazer shift, e ir para o estado 17
+    PARTICIPOU  fazer shift, e ir para o estado 18
+    PRODUZIU    fazer shift, e ir para o estado 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduzir usando a regra 16 (lista)
 
-    lista  go to state 30
+    lista  ir para o estado 30
 
 
-state 26
+Estado26
 
    14 lista: PARTICIPOU NOME . lista
 
-    COLABOROU   shift, and go to state 15
-    APRENDEU    shift, and go to state 16
-    ENSINOU     shift, and go to state 17
-    PARTICIPOU  shift, and go to state 18
-    PRODUZIU    shift, and go to state 19
+    COLABOROU   fazer shift, e ir para o estado 15
+    APRENDEU    fazer shift, e ir para o estado 16
+    ENSINOU     fazer shift, e ir para o estado 17
+    PARTICIPOU  fazer shift, e ir para o estado 18
+    PRODUZIU    fazer shift, e ir para o estado 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduzir usando a regra 16 (lista)
 
-    lista  go to state 31
+    lista  ir para o estado 31
 
 
-state 27
+Estado27
 
    15 lista: PRODUZIU NOME . lista
 
-    COLABOROU   shift, and go to state 15
-    APRENDEU    shift, and go to state 16
-    ENSINOU     shift, and go to state 17
-    PARTICIPOU  shift, and go to state 18
-    PRODUZIU    shift, and go to state 19
+    COLABOROU   fazer shift, e ir para o estado 15
+    APRENDEU    fazer shift, e ir para o estado 16
+    ENSINOU     fazer shift, e ir para o estado 17
+    PARTICIPOU  fazer shift, e ir para o estado 18
+    PRODUZIU    fazer shift, e ir para o estado 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduzir usando a regra 16 (lista)
 
-    lista  go to state 32
+    lista  ir para o estado 32
 
 
-state 28
+Estado28
 
    11 lista: COLABOROU NOME lista .
 
-    $default  reduce using rule 11 (lista)
+    $default  reduzir usando a regra 11 (lista)
 
 
-state 29
+Estado29
 
    12 lista: APRENDEU NOME lista .
 
-    $default  reduce using rule 12 (lista)
+    $default  reduzir usando a regra 12 (lista)
 
 
-state 30
+Estado30
 
    13 lista: ENSINOU NOME lista .
 
-    $default  reduce using rule 13 (lista)
+    $default  reduzir usando a regra 13 (lista)
 
 
-state 31
+Estado31
 
    14 lista: PARTICIPOU NOME lista .
 
-    $default  reduce using rule 14 (lista)
+    $default  reduzir usando a regra 14 (lista)
 
 
-state 32
+Estado32
 
    15 lista: PRODUZIU NOME lista .
 
-    $default  reduce using rule 15 (lista)
+    $default  reduzir usando a regra 15 (lista)

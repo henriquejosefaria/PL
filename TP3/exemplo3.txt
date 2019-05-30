@@ -6,7 +6,7 @@ idade:25
 cidade:Lisboa
 
 obra:
-nome:Telemóveis
+nome:Telemoveis
 tipo:pop
 tempo:3.10
 
@@ -16,12 +16,12 @@ tipo:pop
 tempo:3.51
 
 evento:
-nome:Festival RTP da Canção 2019
+nome:Festival RTP da Cancao 2019
 tipo:sarau musical
 data:03-03-2019
 
 evento:
-nome:Festival Eurovisão da Canção 2019
+nome:Festival Eurovisao da Cancao 2019
 tipo:concerto
 data:14-05-2019
 

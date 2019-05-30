@@ -4,7 +4,12 @@ all:
 	cc -o MvA y.tab.c  #ao incluir o outro faz compilação geral
 
 exec:
-	./MvA <exemplo3.txt
+	./MvA < exemplo3.txt
+
+teste_flex:
+	flex -f TestemuseuVirtualArtista.fl
+	cc -o teste lex.yy.c
+	./teste exemplo3.txt
 
 clean:
 	rm -f y.tab.c
