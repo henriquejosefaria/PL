@@ -1,4 +1,4 @@
-State 5 conflicts: 1 shift/reduce, 2 reduce/reduce
+State 5 conflicts: 1 shift/reduce
 State 11 conflicts: 1 shift/reduce
 
 
@@ -9,42 +9,41 @@ Grammar
     1 prog: grafos
 
     2 grafos: grafo grafos
-    3       | grafo
+    3       | /* empty */
 
     4 grafo: artista ligacoes
-    5      | artista
 
-    6 ligacoes: musicaOuEvento ligacoes
-    7         | /* empty */
+    5 ligacoes: musicaOuEvento ligacoes
+    6         | /* empty */
 
-    8 artista: NOME IDADE CIDADE lista
+    7 artista: NOME IDADE CIDADE lista
 
-    9 musicaOuEvento: NOME TIPO TEMPO
-   10               | NOME TIPO DATA
+    8 musicaOuEvento: NOME TIPO TEMPO
+    9               | NOME TIPO DATA
 
-   11 lista: COLABOROU NOME lista
-   12      | APRENDEU NOME lista
-   13      | ENSINOU NOME lista
-   14      | PARTICIPOU NOME lista
-   15      | PRODUZIU NOME lista
-   16      | /* empty */
+   10 lista: COLABOROU NOME lista
+   11      | APRENDEU NOME lista
+   12      | ENSINOU NOME lista
+   13      | PARTICIPOU NOME lista
+   14      | PRODUZIU NOME lista
+   15      | /* empty */
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-NOME (258) 8 9 10 11 12 13 14 15
-IDADE (259) 8
-CIDADE (260) 8
-TIPO (261) 9 10
-TEMPO (262) 9
-DATA (263) 10
-COLABOROU (264) 11
-APRENDEU (265) 12
-ENSINOU (266) 13
-PARTICIPOU (267) 14
-PRODUZIU (268) 15
+NOME (258) 7 8 9 10 11 12 13 14
+IDADE (259) 7
+CIDADE (260) 7
+TIPO (261) 8 9
+TEMPO (262) 8
+DATA (263) 9
+COLABOROU (264) 10
+APRENDEU (265) 11
+ENSINOU (266) 12
+PARTICIPOU (267) 13
+PRODUZIU (268) 14
 
 
 Nonterminals, with rules where they appear
@@ -56,15 +55,15 @@ prog (15)
 grafos (16)
     on left: 2 3, on right: 1 2
 grafo (17)
-    on left: 4 5, on right: 2 3
+    on left: 4, on right: 2
 ligacoes (18)
-    on left: 6 7, on right: 4 6
+    on left: 5 6, on right: 4 5
 artista (19)
-    on left: 8, on right: 4 5
+    on left: 7, on right: 4
 musicaOuEvento (20)
-    on left: 9 10, on right: 6
+    on left: 8 9, on right: 5
 lista (21)
-    on left: 11 12 13 14 15 16, on right: 8 11 12 13 14 15
+    on left: 10 11 12 13 14 15, on right: 7 10 11 12 13 14
 
 
 state 0
@@ -72,6 +71,8 @@ state 0
     0 $accept: . prog $end
 
     NOME  shift, and go to state 1
+
+    $default  reduce using rule 3 (grafos)
 
     prog     go to state 2
     grafos   go to state 3
@@ -81,7 +82,7 @@ state 0
 
 state 1
 
-    8 artista: NOME . IDADE CIDADE lista
+    7 artista: NOME . IDADE CIDADE lista
 
     IDADE  shift, and go to state 6
 
@@ -103,7 +104,6 @@ state 3
 state 4
 
     2 grafos: grafo . grafos
-    3       | grafo .
 
     NOME  shift, and go to state 1
 
@@ -117,15 +117,11 @@ state 4
 state 5
 
     4 grafo: artista . ligacoes
-    5      | artista .
 
     NOME  shift, and go to state 9
 
-    $end      reduce using rule 5 (grafo)
-    $end      [reduce using rule 7 (ligacoes)]
-    NOME      [reduce using rule 5 (grafo)]
-    NOME      [reduce using rule 7 (ligacoes)]
-    $default  reduce using rule 5 (grafo)
+    NOME      [reduce using rule 6 (ligacoes)]
+    $default  reduce using rule 6 (ligacoes)
 
     ligacoes        go to state 10
     musicaOuEvento  go to state 11
@@ -133,7 +129,7 @@ state 5
 
 state 6
 
-    8 artista: NOME IDADE . CIDADE lista
+    7 artista: NOME IDADE . CIDADE lista
 
     CIDADE  shift, and go to state 12
 
@@ -154,8 +150,8 @@ state 8
 
 state 9
 
-    9 musicaOuEvento: NOME . TIPO TEMPO
-   10               | NOME . TIPO DATA
+    8 musicaOuEvento: NOME . TIPO TEMPO
+    9               | NOME . TIPO DATA
 
     TIPO  shift, and go to state 13
 
@@ -169,12 +165,12 @@ state 10
 
 state 11
 
-    6 ligacoes: musicaOuEvento . ligacoes
+    5 ligacoes: musicaOuEvento . ligacoes
 
     NOME  shift, and go to state 9
 
-    NOME      [reduce using rule 7 (ligacoes)]
-    $default  reduce using rule 7 (ligacoes)
+    NOME      [reduce using rule 6 (ligacoes)]
+    $default  reduce using rule 6 (ligacoes)
 
     ligacoes        go to state 14
     musicaOuEvento  go to state 11
@@ -182,7 +178,7 @@ state 11
 
 state 12
 
-    8 artista: NOME IDADE CIDADE . lista
+    7 artista: NOME IDADE CIDADE . lista
 
     COLABOROU   shift, and go to state 15
     APRENDEU    shift, and go to state 16
@@ -190,15 +186,15 @@ state 12
     PARTICIPOU  shift, and go to state 18
     PRODUZIU    shift, and go to state 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduce using rule 15 (lista)
 
     lista  go to state 20
 
 
 state 13
 
-    9 musicaOuEvento: NOME TIPO . TEMPO
-   10               | NOME TIPO . DATA
+    8 musicaOuEvento: NOME TIPO . TEMPO
+    9               | NOME TIPO . DATA
 
     TEMPO  shift, and go to state 21
     DATA   shift, and go to state 22
@@ -206,70 +202,70 @@ state 13
 
 state 14
 
-    6 ligacoes: musicaOuEvento ligacoes .
+    5 ligacoes: musicaOuEvento ligacoes .
 
-    $default  reduce using rule 6 (ligacoes)
+    $default  reduce using rule 5 (ligacoes)
 
 
 state 15
 
-   11 lista: COLABOROU . NOME lista
+   10 lista: COLABOROU . NOME lista
 
     NOME  shift, and go to state 23
 
 
 state 16
 
-   12 lista: APRENDEU . NOME lista
+   11 lista: APRENDEU . NOME lista
 
     NOME  shift, and go to state 24
 
 
 state 17
 
-   13 lista: ENSINOU . NOME lista
+   12 lista: ENSINOU . NOME lista
 
     NOME  shift, and go to state 25
 
 
 state 18
 
-   14 lista: PARTICIPOU . NOME lista
+   13 lista: PARTICIPOU . NOME lista
 
     NOME  shift, and go to state 26
 
 
 state 19
 
-   15 lista: PRODUZIU . NOME lista
+   14 lista: PRODUZIU . NOME lista
 
     NOME  shift, and go to state 27
 
 
 state 20
 
-    8 artista: NOME IDADE CIDADE lista .
+    7 artista: NOME IDADE CIDADE lista .
 
-    $default  reduce using rule 8 (artista)
+    $default  reduce using rule 7 (artista)
 
 
 state 21
 
-    9 musicaOuEvento: NOME TIPO TEMPO .
+    8 musicaOuEvento: NOME TIPO TEMPO .
 
-    $default  reduce using rule 9 (musicaOuEvento)
+    $default  reduce using rule 8 (musicaOuEvento)
 
 
 state 22
 
-   10 musicaOuEvento: NOME TIPO DATA .
+    9 musicaOuEvento: NOME TIPO DATA .
 
-    $default  reduce using rule 10 (musicaOuEvento)
+    $default  reduce using rule 9 (musicaOuEvento)
 
 
 state 23
 
-   11 lista: COLABOROU NOME . lista
+   10 lista: COLABOROU NOME . lista
 
     COLABOROU   shift, and go to state 15
     APRENDEU    shift, and go to state 16
@@ -277,14 +273,14 @@ state 23
     PARTICIPOU  shift, and go to state 18
     PRODUZIU    shift, and go to state 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduce using rule 15 (lista)
 
     lista  go to state 28
 
 
 state 24
 
-   12 lista: APRENDEU NOME . lista
+   11 lista: APRENDEU NOME . lista
 
     COLABOROU   shift, and go to state 15
     APRENDEU    shift, and go to state 16
@@ -292,14 +288,14 @@ state 24
     PARTICIPOU  shift, and go to state 18
     PRODUZIU    shift, and go to state 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduce using rule 15 (lista)
 
     lista  go to state 29
 
 
 state 25
 
-   13 lista: ENSINOU NOME . lista
+   12 lista: ENSINOU NOME . lista
 
     COLABOROU   shift, and go to state 15
     APRENDEU    shift, and go to state 16
@@ -307,14 +303,14 @@ state 25
     PARTICIPOU  shift, and go to state 18
     PRODUZIU    shift, and go to state 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduce using rule 15 (lista)
 
     lista  go to state 30
 
 
 state 26
 
-   14 lista: PARTICIPOU NOME . lista
+   13 lista: PARTICIPOU NOME . lista
 
     COLABOROU   shift, and go to state 15
     APRENDEU    shift, and go to state 16
@@ -322,14 +318,14 @@ state 26
     PARTICIPOU  shift, and go to state 18
     PRODUZIU    shift, and go to state 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduce using rule 15 (lista)
 
     lista  go to state 31
 
 
 state 27
 
-   15 lista: PRODUZIU NOME . lista
+   14 lista: PRODUZIU NOME . lista
 
     COLABOROU   shift, and go to state 15
     APRENDEU    shift, and go to state 16
@@ -337,41 +333,41 @@ state 27
     PARTICIPOU  shift, and go to state 18
     PRODUZIU    shift, and go to state 19
 
-    $default  reduce using rule 16 (lista)
+    $default  reduce using rule 15 (lista)
 
     lista  go to state 32
 
 
 state 28
 
-   11 lista: COLABOROU NOME lista .
+   10 lista: COLABOROU NOME lista .
 
-    $default  reduce using rule 11 (lista)
+    $default  reduce using rule 10 (lista)
 
 
 state 29
 
-   12 lista: APRENDEU NOME lista .
+   11 lista: APRENDEU NOME lista .
 
-    $default  reduce using rule 12 (lista)
+    $default  reduce using rule 11 (lista)
 
 
 state 30
 
-   13 lista: ENSINOU NOME lista .
+   12 lista: ENSINOU NOME lista .
 
-    $default  reduce using rule 13 (lista)
+    $default  reduce using rule 12 (lista)
 
 
 state 31
 
-   14 lista: PARTICIPOU NOME lista .
+   13 lista: PARTICIPOU NOME lista .
 
-    $default  reduce using rule 14 (lista)
+    $default  reduce using rule 13 (lista)
 
 
 state 32
 
-   15 lista: PRODUZIU NOME lista .
+   14 lista: PRODUZIU NOME lista .
 
-    $default  reduce using rule 15 (lista)
+    $default  reduce using rule 14 (lista)

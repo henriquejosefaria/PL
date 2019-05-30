@@ -371,7 +371,7 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  17
+#define YYNRULES  16
 /* YYNRULES -- Number of states.  */
 #define YYNSTATES  33
 
@@ -419,26 +419,25 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,     8,    10,    13,    15,    18,    19,
-      24,    28,    32,    36,    40,    44,    48,    52
+       0,     0,     3,     5,     8,     9,    12,    15,    16,    21,
+      25,    29,    33,    37,    41,    45,    49
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      15,     0,    -1,    16,    -1,    17,    16,    -1,    17,    -1,
-      19,    18,    -1,    19,    -1,    20,    18,    -1,    -1,     3,
-       4,     5,    21,    -1,     3,     6,     7,    -1,     3,     6,
-       8,    -1,     9,     3,    21,    -1,    10,     3,    21,    -1,
-      11,     3,    21,    -1,    12,     3,    21,    -1,    13,     3,
-      21,    -1,    -1
+      15,     0,    -1,    16,    -1,    17,    16,    -1,    -1,    19,
+      18,    -1,    20,    18,    -1,    -1,     3,     4,     5,    21,
+      -1,     3,     6,     7,    -1,     3,     6,     8,    -1,     9,
+       3,    21,    -1,    10,     3,    21,    -1,    11,     3,    21,
+      -1,    12,     3,    21,    -1,    13,     3,    21,    -1,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    26,    26,    33,    34,    37,    38,    41,    42,    48,
-      58,    66,    76,    79,    82,    85,    88,    91
+       0,    26,    26,    33,    34,    37,    40,    41,    47,    57,
+      65,    75,    78,    81,    84,    87,    90
 };
 #endif
 
@@ -467,15 +466,15 @@ static const yytype_uint16 yytoknum[] =
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    14,    15,    16,    16,    17,    17,    18,    18,    19,
-      20,    20,    21,    21,    21,    21,    21,    21
+       0,    14,    15,    16,    16,    17,    18,    18,    19,    20,
+      20,    21,    21,    21,    21,    21,    21
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     2,     1,     2,     0,     4,
-       3,     3,     3,     3,     3,     3,     3,     0
+       0,     2,     1,     2,     0,     2,     2,     0,     4,     3,
+       3,     3,     3,     3,     3,     3,     0
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -483,10 +482,10 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     2,     4,     6,     0,     1,     3,     0,
-       5,     8,    17,     0,     7,     0,     0,     0,     0,     0,
-       9,    10,    11,    17,    17,    17,    17,    17,    12,    13,
-      14,    15,    16
+       4,     0,     0,     2,     4,     7,     0,     1,     3,     0,
+       5,     7,    16,     0,     6,     0,     0,     0,     0,     0,
+       8,     9,    10,    16,    16,    16,    16,    16,    11,    12,
+      13,    14,    15
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -1368,7 +1367,7 @@ yyreduce:
 
   case 4:
 #line 34 "museuVirtualArtista.y"
-    {printf("3\n");asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (1)].c));}
+    {(yyval.c)="";printf("3\n");}
     break;
 
   case 5:
@@ -1377,22 +1376,17 @@ yyreduce:
     break;
 
   case 6:
-#line 38 "museuVirtualArtista.y"
-    {printf("5\n");asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (1)].c));}
+#line 40 "museuVirtualArtista.y"
+    {printf("6\n");asprintf(&(yyval.c),"%s\n%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));}
     break;
 
   case 7:
 #line 41 "museuVirtualArtista.y"
-    {printf("6\n");asprintf(&(yyval.c),"%s\n%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));}
-    break;
-
-  case 8:
-#line 42 "museuVirtualArtista.y"
     {printf("7\n");(yyval.c)="";}
     break;
 
-  case 9:
-#line 48 "museuVirtualArtista.y"
+  case 8:
+#line 47 "museuVirtualArtista.y"
     {printf("8\n");
 									 asprintf(&(yyval.c),"\"%s\" ->{%s};\n",(yyvsp[(1) - (4)].c),(yyvsp[(4) - (4)].c)); //imprime para o dot
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (4)].c))+6);
@@ -1403,8 +1397,8 @@ yyreduce:
 								    }
     break;
 
-  case 10:
-#line 58 "museuVirtualArtista.y"
+  case 9:
+#line 57 "museuVirtualArtista.y"
     {printf("9\n");
 									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (3)].c))+6);
@@ -1415,8 +1409,8 @@ yyreduce:
 									}
     break;
 
-  case 11:
-#line 66 "museuVirtualArtista.y"
+  case 10:
+#line 65 "museuVirtualArtista.y"
     {printf("10\n");
 									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (3)].c))+6);
@@ -1427,49 +1421,49 @@ yyreduce:
 									}
     break;
 
-  case 12:
-#line 76 "museuVirtualArtista.y"
+  case 11:
+#line 75 "museuVirtualArtista.y"
     {printf("11\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									 }
     break;
 
-  case 13:
-#line 79 "museuVirtualArtista.y"
+  case 12:
+#line 78 "museuVirtualArtista.y"
     {printf("12\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
-  case 14:
-#line 82 "museuVirtualArtista.y"
+  case 13:
+#line 81 "museuVirtualArtista.y"
     {printf("13\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
-  case 15:
-#line 85 "museuVirtualArtista.y"
+  case 14:
+#line 84 "museuVirtualArtista.y"
     {printf("14\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
-  case 16:
-#line 88 "museuVirtualArtista.y"
+  case 15:
+#line 87 "museuVirtualArtista.y"
     {printf("15\n");
 									 asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));
 									}
     break;
 
-  case 17:
-#line 91 "museuVirtualArtista.y"
+  case 16:
+#line 90 "museuVirtualArtista.y"
     {printf("sem relações\n");(yyval.c)="\"\"";}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1473 "y.tab.c"
+#line 1467 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1683,7 +1677,7 @@ yyreturn:
 }
 
 
-#line 94 "museuVirtualArtista.y"
+#line 93 "museuVirtualArtista.y"
 
 
  #include "lex.yy.c"

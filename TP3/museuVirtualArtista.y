@@ -31,11 +31,10 @@ prog	: grafos	   				{printf("1\n");
 		;
 
 grafos  : grafo grafos 				{printf("2\n");asprintf(&$$,"%s\n%s",$1,$2);}
-	    | grafo        				{printf("3\n");asprintf(&$$,"%s\n",$1);}
+	    | 	        				{$$="";printf("3\n");}
 	    ;
 
 grafo   : artista ligacoes    		{printf("4\n");asprintf(&$$,"%s\n%s",$1,$2);}
-	    | artista			  		{printf("5\n");asprintf(&$$,"%s\n",$1);}
 	    ;
 
 ligacoes: musicaOuEvento ligacoes	{printf("6\n");asprintf(&$$,"%s\n%s",$1,$2);}
