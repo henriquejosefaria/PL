@@ -8,7 +8,7 @@
 %%
 
 <ARTISTA>{
-	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
+	"nome:".*					{printf("Encontrei nome!\n"); yylval.c = strdup(yytext+5); printf("Guardei o nome!");return NOME;}
 	"idade:".*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	"cidade:".*					{yylval.c = strdup(yytext+7); return CIDADE;}
 	"colaborou:".*				{yylval.c = strdup(yytext+10); return COLABOROU;}
@@ -38,11 +38,11 @@
 }
 
 <*>{
-	"artista:" 					{BEGIN ARTISTA;}
+	"artista:" 					{printf("Vou entrar no artista!!\n");BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
 	"evento:"					{BEGIN EVENTO;}
 }
 
-<*>(.|\n) 						{;}
+<*>(.|\n) 						{printf("ignorado!!\n");}
 
 %%
