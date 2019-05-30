@@ -436,8 +436,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    26,    26,    32,    33,    36,    37,    40,    41,    47,
-      56,    64,    76,    77,    78,    79,    80,    81
+       0,    26,    26,    31,    32,    35,    36,    39,    40,    46,
+      54,    61,    70,    71,    72,    73,    74,    75
 };
 #endif
 
@@ -1355,108 +1355,104 @@ yyreduce:
 #line 26 "museuVirtualArtista.y"
     {fd1 = fopen("grafo.svg","w");
 									 fprintf(fd1,"%s\n",(yyvsp[(1) - (1)].c));
-									 //close(fd1);
 									}
     break;
 
   case 3:
-#line 32 "museuVirtualArtista.y"
+#line 31 "museuVirtualArtista.y"
     {asprintf(&(yyval.c),"%s\n%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));}
     break;
 
   case 4:
-#line 33 "museuVirtualArtista.y"
+#line 32 "museuVirtualArtista.y"
     {asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (1)].c));}
     break;
 
   case 5:
-#line 36 "museuVirtualArtista.y"
+#line 35 "museuVirtualArtista.y"
     {asprintf(&(yyval.c),"%s\n%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));}
     break;
 
   case 6:
-#line 37 "museuVirtualArtista.y"
+#line 36 "museuVirtualArtista.y"
     {asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (1)].c));}
     break;
 
   case 7:
-#line 40 "museuVirtualArtista.y"
+#line 39 "museuVirtualArtista.y"
     {asprintf(&(yyval.c),"%s\n%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));}
     break;
 
   case 8:
-#line 41 "museuVirtualArtista.y"
+#line 40 "museuVirtualArtista.y"
     {(yyval.c)="";}
     break;
 
   case 9:
-#line 47 "museuVirtualArtista.y"
+#line 46 "museuVirtualArtista.y"
     {asprintf(&(yyval.c),"%s ->{%s}\n",(yyvsp[(1) - (4)].c),(yyvsp[(4) - (4)].c)); //imprime para o dot
 									 char* f=NULL;
 									 sprintf( f, "%s%s",(yyvsp[(1) - (4)].c),".html");
 									 fd2=fopen(f,"w"); // a partir daqui para html
 								     fprintf(fd2,"<html> \n\t<head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %d \n\t %s \n\t %s \n\t</body> \n</html>",(yyvsp[(1) - (4)].c),(yyvsp[(2) - (4)].n),(yyvsp[(3) - (4)].c),(yyvsp[(4) - (4)].c));
-								     //close(fd2);
 								    }
     break;
 
   case 10:
-#line 56 "museuVirtualArtista.y"
+#line 54 "museuVirtualArtista.y"
     {
 									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
 									 char* f=NULL;
 									 sprintf( f, "%s%s",(yyvsp[(1) - (3)].c),".html");
 									 fd3=fopen(f,"w"); // a partir daqui para html
 									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %f \n\t</body> \n</html>",(yyvsp[(1) - (3)].c),(yyvsp[(2) - (3)].c),(yyvsp[(3) - (3)].x));
-									 //close(fd3);
 									}
     break;
 
   case 11:
-#line 64 "museuVirtualArtista.y"
+#line 61 "museuVirtualArtista.y"
     {
 									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
 									 char* f=NULL;
 									 sprintf( f, "%s%s",(yyvsp[(1) - (3)].c),".html");
 									 fd4=fopen(f,"w"); // a partir daqui para html
 									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t</body> \n</html> ",(yyvsp[(1) - (3)].c),(yyvsp[(2) - (3)].c),(yyvsp[(3) - (3)].c));
-									 //close(fd4);
 									}
     break;
 
   case 12:
-#line 76 "museuVirtualArtista.y"
+#line 70 "museuVirtualArtista.y"
     {asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));}
     break;
 
   case 13:
-#line 77 "museuVirtualArtista.y"
+#line 71 "museuVirtualArtista.y"
     {asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));}
     break;
 
   case 14:
-#line 78 "museuVirtualArtista.y"
+#line 72 "museuVirtualArtista.y"
     {asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));}
     break;
 
   case 15:
-#line 79 "museuVirtualArtista.y"
+#line 73 "museuVirtualArtista.y"
     {asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));}
     break;
 
   case 16:
-#line 80 "museuVirtualArtista.y"
+#line 74 "museuVirtualArtista.y"
     {asprintf(&(yyval.c)," %s[label=\"%s\"],%s",(yyvsp[(2) - (3)].c),(yyvsp[(1) - (3)].c),(yyvsp[(3) - (3)].c));}
     break;
 
   case 17:
-#line 81 "museuVirtualArtista.y"
+#line 75 "museuVirtualArtista.y"
     {(yyval.c)="";}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1460 "y.tab.c"
+#line 1456 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1670,14 +1666,14 @@ yyreturn:
 }
 
 
-#line 84 "museuVirtualArtista.y"
+#line 78 "museuVirtualArtista.y"
 
 
-#include "lex.yy.c"
+ #include "lex.yy.c"
 	
-	void yyerror(char *s){fprintf(stderr,"ERRO:%s\nLine:%d\n",s,yylineno);}
+ void yyerror(char *s){fprintf(stderr,"ERRO:%s\nLine:%d\n",s,yylineno);}
 
-	int main() {
-		yyparse();
-		return 0;
-	}
+ int main() {
+	yyparse();
+	return 0;
+}

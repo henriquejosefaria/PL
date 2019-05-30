@@ -1,3 +1,6 @@
+%{
+#include <stdio.h>
+%}
 %option noyywrap
 
 %x	ARTISTA OBRA EVENTO
@@ -17,8 +20,8 @@
 	"colaborou:".*				{yylval.c = strdup(yytext+10); return COLABOROU;}
 	"aprendeu:".*				{yylval.c = strdup(yytext+9); return APRENDEU;}
 	"ensinou:".*				{yylval.c = strdup(yytext+8); return ENSINOU;}
-	.*"obra:"					{BEGIN OBRA;}
-	.*"evento:"					{BEGIN EVENTO;}
+	"obra:"						{BEGIN OBRA;}
+	"evento:"					{BEGIN EVENTO;}
 	.\n 						{;}
 }
 
@@ -26,8 +29,8 @@
 	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
 	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
 	"tempo:".*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
-	.*"artista:"				{BEGIN ARTISTA;}
-	.*"evento:"					{BEGIN EVENTO;}
+	"artista:"					{BEGIN ARTISTA;}
+	"evento:"					{BEGIN EVENTO;}
 	.|\n 						{;}
 }
 
@@ -35,8 +38,8 @@
 	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
 	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
 	"data:".*					{yylval.c = strdup(yytext+5); return DATA;}
-	.*"artista:"					{BEGIN ARTISTA;}
-	.*"obra:"						{BEGIN OBRA;}
+	"artista:"					{BEGIN ARTISTA;}
+	"obra:"						{BEGIN OBRA;}
 	.|\n 						{;}
 }
 
