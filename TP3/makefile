@@ -1,7 +1,9 @@
 all:
 	flex -8 -f museuVirtualArtista.fl
 	yacc museuVirtualArtista.y
-	gcc -Wall y.tab.c -o MvA
+	cc -Wall -o MvA y.tab.c
+
+exec:
 	./MvA < exemplo3.txt
 
 clean:

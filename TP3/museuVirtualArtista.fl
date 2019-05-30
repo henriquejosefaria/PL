@@ -26,8 +26,8 @@
 }
 
 <OBRA>{
-	"nome:".*					{yylval.n = strdup(yytext+5); return NOME;}
-	"tipo:".*					{yylval.n = strdup(yytext+5); return TIPO;}
+	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
+	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
 	"tempo:".*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
 	"artista:"					{BEGIN ARTISTA;}
 	"obra:"						{;}
@@ -36,9 +36,9 @@
 }
 
 <EVENTO>{
-	"nome:".*					{yylval.n = strdup(yytext+5); return NOME;}
-	"tipo:".*					{yylval.n = strdup(yytext+5); return TIPO;}
-	"data:".*					{yylval.n = strdup(yytext+5); return DATA;}
+	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
+	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
+	"data:".*					{yylval.c = strdup(yytext+5); return DATA;}
 	"artista:"					{BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
 	"evento:"					{;}
