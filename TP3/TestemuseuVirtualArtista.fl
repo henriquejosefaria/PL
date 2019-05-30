@@ -8,8 +8,8 @@
 
 %%
 
-"artista:" 						{BEGIN ARTISTA;}
-"obra:"							{BEGIN OBRA;}
+(?i:artista):  						{BEGIN ARTISTA;}
+(?i:obra):							{BEGIN OBRA;}
 "evento:"						{BEGIN EVENTO;}
 
 <ARTISTA>{

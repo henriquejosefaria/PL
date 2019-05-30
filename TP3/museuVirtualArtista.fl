@@ -7,40 +7,40 @@
 
 %%
 
-"artista:" 						{BEGIN ARTISTA;}
-"obra:"							{BEGIN OBRA;}
-"evento:"						{BEGIN EVENTO;}
+(?i:artista): 						{BEGIN ARTISTA;}
+(?i:obra):							{BEGIN OBRA;}
+(?i:evento):						{BEGIN EVENTO;}
 
 <ARTISTA>{
-	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
-	"idade:".*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
-	"cidade:".*					{yylval.c = strdup(yytext+7); return CIDADE;}
-	"colaborou:".*				{yylval.c = strdup(yytext+10); return COLABOROU;}
-	"aprendeu:".*				{yylval.c = strdup(yytext+9); return APRENDEU;}
-	"ensinou:".*				{yylval.c = strdup(yytext+8); return ENSINOU;}
-	"obra:"						{printf("passei para obras\n\n\n");BEGIN OBRA;}
-	"evento:"					{BEGIN EVENTO;}
-	.|\n 						{;}
+	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
+	(?i:idade):.*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
+	(?i:cidade):.*					{yylval.c = strdup(yytext+7); return CIDADE;}
+	(?i:colaborou):.*				{yylval.c = strdup(yytext+10); return COLABOROU;}
+	(?i:aprendeu):.*				{yylval.c = strdup(yytext+9); return APRENDEU;}
+	(?i:ensinou):.*					{yylval.c = strdup(yytext+8); return ENSINOU;}
+	(?i:obra):						{BEGIN OBRA;}
+	(?i:evento):					{BEGIN EVENTO;}
+	.|\n 							{;}
 }
 
 <OBRA>{
-	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
-	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
-	"tempo:".*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
-	"artista:"					{BEGIN ARTISTA;}
-	"evento:"					{BEGIN EVENTO;}
-	.|\n 						{;}
+	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
+	(?i:tipo):.*					{yylval.c = strdup(yytext+5); return TIPO;}
+	(?i:tempo):.*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
+	(?i:artista):					{BEGIN ARTISTA;}
+	(?i:evento):					{BEGIN EVENTO;}
+	.|\n 							{;}
 }
 
 <EVENTO>{
-	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
-	"tipo:".*					{yylval.c = strdup(yytext+5); return TIPO;}
-	"data:".*					{yylval.c = strdup(yytext+5); return DATA;}
-	"artista:"					{BEGIN ARTISTA;}
-	"obra:"						{BEGIN OBRA;}
-	.|\n 						{;}
+	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
+	(?i:tipo):.*					{yylval.c = strdup(yytext+5); return TIPO;}
+	(?i:data):.*					{yylval.c = strdup(yytext+5); return DATA;}
+	(?i:artista):					{BEGIN ARTISTA;}
+	(?i:obra):						{BEGIN OBRA;}
+	.|\n 							{;}
 }
 
-<*>(.|\n) 						{;}
+<*>(.|\n) 							{;}
 
 %%
