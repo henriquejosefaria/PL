@@ -5,7 +5,7 @@
 	#include <unistd.h>
 	void yyerror(char *s);
 	int yylex();
-	FILE* fd1 = fopen("grafo.svg","w");
+	FILE* fd1;
 	FILE* fd2,*fd3,*fd4;
 %}
 	// simbolos terminais
@@ -23,7 +23,8 @@
 
 %%
 
-prog	: grafos	   				{fprintf(fd1,"%s\n",$1);
+prog	: grafos	   				{fd1 = fopen("grafo.svg","w");
+									 fprintf(fd1,"%s\n",$1);
 									 //close(fd1);
 									}
 		;
@@ -44,7 +45,7 @@ ligacoes: musicaOuEvento ligacoes	{asprintf(&$$,"%s\n%s",$1,$2);}
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 
 artista	: NOME IDADE CIDADE lista 	{asprintf(&$$,"%s ->{%s}\n",$1,$4); //imprime para o dot
-									 char* f;
+									 char* f=NULL;
 									 sprintf( f, "%s%s",$1,".html");
 									 fd2=fopen(f,"w"); // a partir daqui para html
 								     fprintf(fd2,"<html> \n\t<head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %d \n\t %s \n\t %s \n\t</body> \n</html>",$1,$2,$3,$4);
@@ -54,7 +55,7 @@ artista	: NOME IDADE CIDADE lista 	{asprintf(&$$,"%s ->{%s}\n",$1,$4); //imprime
 
 musicaOuEvento: NOME TIPO TEMPO 	{
 									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
-									 char* f;
+									 char* f=NULL;
 									 sprintf( f, "%s%s",$1,".html");
 									 fd3=fopen(f,"w"); // a partir daqui para html
 									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %f \n\t</body> \n</html>",$1,$2,$3);
@@ -62,7 +63,7 @@ musicaOuEvento: NOME TIPO TEMPO 	{
 									}
 			  | NOME TIPO DATA		{
 									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
-									 char* f;
+									 char* f=NULL;
 									 sprintf( f, "%s%s",$1,".html");
 									 fd4=fopen(f,"w"); // a partir daqui para html
 									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t %s \n\t %s \n\t</body> \n</html> ",$1,$2,$3);
