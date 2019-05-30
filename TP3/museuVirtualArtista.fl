@@ -3,15 +3,9 @@
 %}
 %option noyywrap
 
-%x	ARTISTA OBRA EVENTO
+%x ARTISTA OBRA EVENTO
 
 %%
-
-<*>{
-	"artista:" 					{BEGIN ARTISTA;}
-	"obra:"						{BEGIN OBRA;}
-	"evento:"					{BEGIN EVENTO;}
-}
 
 <ARTISTA>{
 	"nome:".*					{yylval.c = strdup(yytext+5); return NOME;}
@@ -22,7 +16,7 @@
 	"ensinou:".*				{yylval.c = strdup(yytext+8); return ENSINOU;}
 	"obra:"						{BEGIN OBRA;}
 	"evento:"					{BEGIN EVENTO;}
-	.\n 						{;}
+	.|\n 						{;}
 }
 
 <OBRA>{
@@ -41,6 +35,12 @@
 	"artista:"					{BEGIN ARTISTA;}
 	"obra:"						{BEGIN OBRA;}
 	.|\n 						{;}
+}
+
+<*>{
+	"artista:" 					{BEGIN ARTISTA;}
+	"obra:"						{BEGIN OBRA;}
+	"evento:"					{BEGIN EVENTO;}
 }
 
 <*>(.|\n) 						{;}
