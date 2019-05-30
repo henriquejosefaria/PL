@@ -1,0 +1,7 @@
+.DS_Store
+*.html
+MvA
+teste
+lex.yy.c
+y.tab.*
+y.output

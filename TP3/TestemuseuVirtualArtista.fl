@@ -1,0 +1,54 @@
+%{
+#include <stdio.h>
+%}
+
+%option noyywrap
+
+%x ARTISTA OBRA EVENTO
+
+%%
+
+(?i:artista):  						{BEGIN ARTISTA;}
+(?i:obra):							{BEGIN OBRA;}
+"evento:"						{BEGIN EVENTO;}
+
+<ARTISTA>{
+	"nome:".*					{printf("Nome artista: %s\n",yytext+5);}
+	"idade:".*					{printf("Idade artista: %s\n",yytext+6);}
+	"cidade:".*					{printf("Cidade artista: %s\n",yytext+7);}
+	"colaborou:".*				{printf("Colaborou com: %s\n",yytext+10);}
+	"aprendeu:".*				{printf("Aprendeu com: %s\n",yytext+9);}
+	"ensinou:".*				{printf("Ensinou: %s\n",yytext+8);}
+	"obra:"						{BEGIN OBRA;}
+	"evento:"					{BEGIN EVENTO;}
+	.|\n 						{printf("\n");}
+}
+
+<OBRA>{
+	"nome:".*					{printf("Nome obra: %s\n",yytext+5);}
+	"tipo:".*					{printf("Tipo obra: %s\n",yytext+5);}
+	"tempo:".*					{printf("Tempo obra: %s\n",yytext+6);}
+	"artista:"					{BEGIN ARTISTA;}
+	"evento:"					{BEGIN EVENTO;}
+	.|\n 						{printf("\n");}
+}
+
+<EVENTO>{
+	"nome:".*					{printf("Nome evento: %s\n",yytext+5);}
+	"tipo:".*					{printf("Tipo evento: %s\n",yytext+5);}
+	"data:".*					{printf("Data evento: %s\n",yytext+5);}
+	"artista:"					{BEGIN ARTISTA;}
+	"obra:"						{BEGIN OBRA;}
+	.|\n 						{printf("\n");}
+}
+
+<*>(.|\n) 						{printf("\n");}
+
+%%
+
+int main(int argc, char* argv[]) {
+	yyin=fopen(argv[1],"r");
+    yylex();
+    fclose(yyin);
+	return 0;
+}
