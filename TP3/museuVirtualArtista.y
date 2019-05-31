@@ -30,11 +30,12 @@ prog	: grafos	   				{printf("1\n");
 									}
 		;
 
-grafos  : grafo grafos 				{printf("2\n");asprintf(&$$,"%s\n%s",$1,$2);}
-	    | 	        				{$$="";printf("3\n");}
+grafos  : grafo ';' grafos			{printf("2\n");asprintf(&$$,"%s\n%s",$1,$3);}
+	    | 		       				{$$="";printf("3\n");}
 	    ;
 
 grafo   : artista ligacoes			{printf("4\n");asprintf(&$$,"%s\n%s",$1,$2);}
+		|							{$$="";}
 	    ;
 
 ligacoes: musicaOuEvento ligacoes	{printf("6\n");asprintf(&$$,"%s\n%s",$1,$2);}
@@ -71,20 +72,21 @@ musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
 									}
 			  ;
 			  
-lista   : COLABOROU NOME lista	  	{printf("11\n");
-									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+lista   : COLABOROU lista		  	{printf("11\n");
+
+									 asprintf(&$$," \"%s\"[label=\"Colaborou\"],%s",$1,$2);
 									 }
-		| APRENDEU NOME lista	  	{printf("12\n");
-									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+		| APRENDEU lista		  	{printf("12\n");
+									 asprintf(&$$," \"%s\"[label=\"Aprendeu\"],%s",$1,$2);
 									}
-		| ENSINOU NOME lista	  	{printf("13\n");
-									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+		| ENSINOU lista	 		 	{printf("13\n");
+									 asprintf(&$$," \"%s\"[label=\"Ensinou\"],%s",$1,$2);
 									}
-		| PARTICIPOU NOME lista	  	{printf("14\n");
-									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+		| PARTICIPOU lista		  	{printf("14\n");
+									 asprintf(&$$," \"%s\"[label=\"Participou\"],%s",$1,$2);
 									}
-		| PRODUZIU NOME lista	  	{printf("15\n");
-									 asprintf(&$$," %s[label=\"%s\"],%s",$2,$1,$3);
+		| PRODUZIU lista		  	{printf("15\n");
+									 asprintf(&$$," \"%s\"[label=\"Produziu\"],%s",$1,$2);
 									}
 		|					 	  	{printf("sem relações\n");$$="\"\"";}
 		;

@@ -1,0 +1,24 @@
+digraph {
+rankdir=LR;
+"Tiago Miranda" ->{""};
+
+Telemoveis
+
+Celulitite
+
+Festival RTP da Cancao 2019
+
+Festival Eurovisao da Cancao 2019
+
+
+"Mariza" ->{ "Artur Batalha"[label="Colaborou"],""};
+
+Lavava No Rio, Lavava
+
+Promete, Jura
+
+Festival Womad 2002
+
+
+
+}

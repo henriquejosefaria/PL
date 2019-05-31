@@ -406,8 +406,8 @@ static yyconst flex_int16_t yy_nxt[][128] =
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   15,   14,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
+       14,   14,   14,   14,   14,   14,   14,   14,   14,   15,
        14,   14,   14,   14,   14,   16,   14,   17,   14,   18,
        14,   14,   14,   19,   14,   14,   14,   14,   20,   21,
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
@@ -423,8 +423,8 @@ static yyconst flex_int16_t yy_nxt[][128] =
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       14,   14,   14,   14,   14,   15,   14,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
+       14,   14,   14,   14,   14,   14,   14,   14,   14,   15,
        14,   14,   14,   14,   14,   16,   14,   17,   14,   18,
        14,   14,   14,   19,   14,   14,   14,   14,   20,   21,
 
@@ -440,9 +440,9 @@ static yyconst flex_int16_t yy_nxt[][128] =
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
-       22,   22,   22,   22,   22,   23,   22,   22,   22,   22,
-
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
+
+       22,   22,   22,   22,   22,   22,   22,   22,   22,   23,
        22,   22,   22,   22,   22,   24,   22,   22,   22,   25,
        22,   22,   22,   22,   22,   22,   22,   22,   26,   22,
        22,   22,   22,   22,   27,   22,   22,   22,   22,   22,
@@ -458,8 +458,8 @@ static yyconst flex_int16_t yy_nxt[][128] =
 
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
-       22,   22,   22,   22,   22,   23,   22,   22,   22,   22,
        22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
+       22,   22,   22,   22,   22,   22,   22,   22,   22,   23,
        22,   22,   22,   22,   22,   24,   22,   22,   22,   25,
        22,   22,   22,   22,   22,   22,   22,   22,   26,   22,
        22,   22,   22,   22,   27,   22,   22,   22,   22,   22,
@@ -475,8 +475,8 @@ static yyconst flex_int16_t yy_nxt[][128] =
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
-       28,   28,   28,   28,   28,   29,   28,   28,   28,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
+       28,   28,   28,   28,   28,   28,   28,   28,   28,   29,
        28,   28,   28,   28,   28,   30,   28,   28,   31,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   32,   33,
        28,   28,   28,   28,   34,   28,   28,   28,   28,   28,
@@ -492,8 +492,8 @@ static yyconst flex_int16_t yy_nxt[][128] =
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
-       28,   28,   28,   28,   28,   29,   28,   28,   28,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   28,   28,
+       28,   28,   28,   28,   28,   28,   28,   28,   28,   29,
 
        28,   28,   28,   28,   28,   30,   28,   28,   31,   28,
        28,   28,   28,   28,   28,   28,   28,   28,   32,   33,
@@ -3168,8 +3168,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 26
-#define YY_END_OF_BUFFER 27
+#define YY_NUM_RULES 29
+#define YY_END_OF_BUFFER 30
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -3179,10 +3179,10 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[162] =
     {   0,
-        0,    0,    0,    0,    0,    0,    0,    0,   27,   25,
-       25,   25,   25,   12,   12,   12,   12,   12,   12,   12,
-       12,   18,   18,   18,   18,   18,   18,   24,   24,   24,
-       24,   24,   24,   24,    0,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,   30,   28,
+       28,   28,   28,   13,   10,   13,   13,   13,   13,   13,
+       13,   20,   17,   20,   20,   20,   20,   27,   24,   27,
+       27,   27,   27,   27,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -3190,12 +3190,12 @@ static yyconst flex_int16_t yy_accept[162] =
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    2,
 
-        0,    0,    0,    0,    0,    0,    4,   10,    0,    0,
-       13,    0,   14,    0,   21,   19,   23,   20,    0,    0,
-        0,    0,    0,    0,    0,    5,    4,    0,    0,   13,
-       15,   14,    0,   21,   19,   20,    0,    3,    0,    6,
-        0,    0,   11,    5,    0,   17,   15,    0,    1,    0,
-        6,    0,    9,   16,   22,    8,    0,    9,    8,    7,
+        0,    0,    0,    0,    0,    0,    4,   11,    0,    0,
+       14,    0,   15,    0,   23,   21,   26,   22,    0,    0,
+        0,    0,    0,    0,    0,    5,    4,    0,    0,   14,
+       16,   15,    0,   23,   21,   22,    0,    3,    0,    6,
+        0,    0,   12,    5,    0,   19,   16,    0,    1,    0,
+        6,    0,    9,   18,   25,    8,    0,    9,    8,    7,
         7
     } ;
 
@@ -3238,8 +3238,9 @@ char *yytext;
 #line 1 "museuVirtualArtista.fl"
 #line 2 "museuVirtualArtista.fl"
 #include <stdio.h>
+char* myartista;
 
-#line 3243 "lex.yy.c"
+#line 3244 "lex.yy.c"
 
 #define INITIAL 0
 #define ARTISTA 1
@@ -3408,10 +3409,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 8 "museuVirtualArtista.fl"
+#line 9 "museuVirtualArtista.fl"
 
 
-#line 3415 "lex.yy.c"
+#line 3416 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -3484,145 +3485,160 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "museuVirtualArtista.fl"
+#line 11 "museuVirtualArtista.fl"
 {BEGIN ARTISTA;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "museuVirtualArtista.fl"
+#line 12 "museuVirtualArtista.fl"
 {BEGIN OBRA;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "museuVirtualArtista.fl"
+#line 13 "museuVirtualArtista.fl"
 {BEGIN EVENTO;}
 	YY_BREAK
 
 case 4:
 YY_RULE_SETUP
-#line 15 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+5); return NOME;}
+#line 16 "museuVirtualArtista.fl"
+{yylval.c = strdup(yytext+5); myartista = strdup(yytext+5); return NOME;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "museuVirtualArtista.fl"
+#line 17 "museuVirtualArtista.fl"
 {yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "museuVirtualArtista.fl"
+#line 18 "museuVirtualArtista.fl"
 {yylval.c = strdup(yytext+7); return CIDADE;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+10); return COLABOROU;}
+#line 19 "museuVirtualArtista.fl"
+{yylval.c = myartista; yylval.c = strdup(yytext+10); return COLABOROU;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+9); return APRENDEU;}
+#line 20 "museuVirtualArtista.fl"
+{yylval.c = myartista; yylval.c = strdup(yytext+9); return APRENDEU;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+8); return ENSINOU;}
+#line 21 "museuVirtualArtista.fl"
+{yylval.c = myartista; yylval.c = strdup(yytext+8); return ENSINOU;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 21 "museuVirtualArtista.fl"
-{BEGIN OBRA;}
+#line 22 "museuVirtualArtista.fl"
+{return yytext[0];}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 22 "museuVirtualArtista.fl"
-{BEGIN EVENTO;}
+#line 23 "museuVirtualArtista.fl"
+{printf("A entrar me obras!!");BEGIN OBRA;}
 	YY_BREAK
 case 12:
-/* rule 12 can match eol */
 YY_RULE_SETUP
-#line 23 "museuVirtualArtista.fl"
+#line 24 "museuVirtualArtista.fl"
+{BEGIN EVENTO;}
+	YY_BREAK
+case 13:
+/* rule 13 can match eol */
+YY_RULE_SETUP
+#line 25 "museuVirtualArtista.fl"
 {;}
 	YY_BREAK
 
 
-case 13:
-YY_RULE_SETUP
-#line 27 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+5); return NOME;}
-	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 28 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+5); return TIPO;}
+#line 29 "museuVirtualArtista.fl"
+{yylval.c = strdup(yytext+5); return NOME;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 29 "museuVirtualArtista.fl"
-{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
+#line 30 "museuVirtualArtista.fl"
+{yylval.c = strdup(yytext+5); return TIPO;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 30 "museuVirtualArtista.fl"
-{BEGIN ARTISTA;}
+#line 31 "museuVirtualArtista.fl"
+{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 31 "museuVirtualArtista.fl"
-{BEGIN EVENTO;}
+#line 32 "museuVirtualArtista.fl"
+{return yytext[0];}
 	YY_BREAK
 case 18:
-/* rule 18 can match eol */
 YY_RULE_SETUP
-#line 32 "museuVirtualArtista.fl"
+#line 33 "museuVirtualArtista.fl"
+{BEGIN ARTISTA;}
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 34 "museuVirtualArtista.fl"
+{BEGIN EVENTO;}
+	YY_BREAK
+case 20:
+/* rule 20 can match eol */
+YY_RULE_SETUP
+#line 35 "museuVirtualArtista.fl"
 {;}
 	YY_BREAK
 
 
-case 19:
-YY_RULE_SETUP
-#line 36 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+5); return NOME;}
-	YY_BREAK
-case 20:
-YY_RULE_SETUP
-#line 37 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+5); return TIPO;}
-	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 38 "museuVirtualArtista.fl"
-{yylval.c = strdup(yytext+5); return DATA;}
+#line 39 "museuVirtualArtista.fl"
+{yylval.c = strdup(yytext+5); return NOME;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 39 "museuVirtualArtista.fl"
-{BEGIN ARTISTA;}
+#line 40 "museuVirtualArtista.fl"
+{yylval.c = strdup(yytext+5); return TIPO;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 40 "museuVirtualArtista.fl"
-{BEGIN OBRA;}
+#line 41 "museuVirtualArtista.fl"
+{yylval.c = strdup(yytext+5); return DATA;}
 	YY_BREAK
 case 24:
-/* rule 24 can match eol */
 YY_RULE_SETUP
-#line 41 "museuVirtualArtista.fl"
-{;}
+#line 42 "museuVirtualArtista.fl"
+{return yytext[0];}
 	YY_BREAK
-
 case 25:
-/* rule 25 can match eol */
 YY_RULE_SETUP
 #line 43 "museuVirtualArtista.fl"
-{;}
+{printf("A entrar:contexto artista!!\n");BEGIN ARTISTA;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
+#line 44 "museuVirtualArtista.fl"
+{BEGIN OBRA;}
+	YY_BREAK
+case 27:
+/* rule 27 can match eol */
+YY_RULE_SETUP
 #line 45 "museuVirtualArtista.fl"
+{;}
+	YY_BREAK
+
+case 28:
+/* rule 28 can match eol */
+YY_RULE_SETUP
+#line 47 "museuVirtualArtista.fl"
+{;}
+	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 49 "museuVirtualArtista.fl"
 ECHO;
 	YY_BREAK
-#line 3626 "lex.yy.c"
+#line 3642 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(ARTISTA):
 case YY_STATE_EOF(OBRA):
@@ -4617,7 +4633,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 45 "museuVirtualArtista.fl"
+#line 49 "museuVirtualArtista.fl"
 
 
 
