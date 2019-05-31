@@ -1,6 +1,5 @@
 %{
 #include <stdio.h>
-char* myartista;
 %}
 %option noyywrap
 
@@ -13,14 +12,14 @@ char* myartista;
 (?i:evento):						{BEGIN EVENTO;}
 
 <ARTISTA>{
-	(?i:nome):.*					{yylval.c = strdup(yytext+5); myartista = strdup(yytext+5); return NOME;}
+	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
 	(?i:idade):.*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	(?i:cidade):.*					{yylval.c = strdup(yytext+7); return CIDADE;}
-	(?i:colaborou):.*				{yylval.c = myartista; yylval.c = strdup(yytext+10); return COLABOROU;}
-	(?i:aprendeu):.*				{yylval.c = myartista; yylval.c = strdup(yytext+9); return APRENDEU;}
-	(?i:ensinou):.*					{yylval.c = myartista; yylval.c = strdup(yytext+8); return ENSINOU;}
+	(?i:colaborou):.*				{yylval.c = strdup(yytext+10); return COLABOROU;}
+	(?i:aprendeu):.*				{yylval.c = strdup(yytext+9); return APRENDEU;}
+	(?i:ensinou):.*					{yylval.c = strdup(yytext+8); return ENSINOU;}
 	;								{return yytext[0];}
-	(?i:obra):						{printf("A entrar me obras!!");BEGIN OBRA;}
+	(?i:obra):						{BEGIN OBRA;}
 	(?i:evento):					{BEGIN EVENTO;}
 	.|\n 							{;}
 }
@@ -40,7 +39,7 @@ char* myartista;
 	(?i:tipo):.*					{yylval.c = strdup(yytext+5); return TIPO;}
 	(?i:data):.*					{yylval.c = strdup(yytext+5); return DATA;}
 	;								{return yytext[0];}
-	(?i:artista):					{printf("A entrar:contexto artista!!\n");BEGIN ARTISTA;}
+	(?i:artista):					{BEGIN ARTISTA;}
 	(?i:obra):						{BEGIN OBRA;}
 	.|\n 							{;}
 }

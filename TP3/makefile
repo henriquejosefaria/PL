@@ -1,10 +1,12 @@
-all:
+all: clean comp exec
+
+comp: museuVirtualArtista.fl museuVirtualArtista.y
 	flex -f museuVirtualArtista.fl
 	yacc -v museuVirtualArtista.y
 	cc -o MvA y.tab.c  #ao incluir o outro faz compilação geral
 
-exec:
-	./MvA <exemplo3.txt
+exec: texto.txt
+	./MvA < texto.txt
 	dot -Tsvg grafo.dot -o grafo.svg
 
 clean:
