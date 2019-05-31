@@ -12,14 +12,20 @@
 <!-- Tiago Miranda -->
 <g id="node1" class="node">
 <title>Tiago Miranda</title>
+<g id="a_node1"><a xlink:href="Tiago Miranda.html" xlink:title="Colaborou">
 <ellipse fill="none" stroke="#000000" cx="153.736" cy="-72" rx="47.3823" ry="18"/>
 <text text-anchor="middle" x="153.736" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Colaborou</text>
+</a>
+</g>
 </g>
 <!-- Mariza -->
 <g id="node2" class="node">
 <title>Mariza</title>
+<g id="a_node2"><a xlink:href="Mariza.html" xlink:title="Mariza">
 <ellipse fill="none" stroke="#000000" cx="35.1475" cy="-45" rx="35.2956" ry="18"/>
 <text text-anchor="middle" x="35.1475" y="-40.8" font-family="Times,serif" font-size="14.00" fill="#000000">Mariza</text>
+</a>
+</g>
 </g>
 <!-- Mariza&#45;&gt;Tiago Miranda -->
 <g id="edge1" class="edge">
@@ -30,8 +36,11 @@
 <!-- Artur Batalha -->
 <g id="node3" class="node">
 <title>Artur Batalha</title>
+<g id="a_node3"><a xlink:href="Artur Batalha.html" xlink:title="Colaborou">
 <ellipse fill="none" stroke="#000000" cx="153.736" cy="-18" rx="47.3823" ry="18"/>
 <text text-anchor="middle" x="153.736" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">Colaborou</text>
+</a>
+</g>
 </g>
 <!-- Mariza&#45;&gt;Artur Batalha -->
 <g id="edge2" class="edge">

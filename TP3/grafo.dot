@@ -1,13 +1,15 @@
 digraph {
 rankdir=LR;
-"Tiago Miranda" -> {};
+"Tiago Miranda"[URL="Tiago Miranda.html"];
+ "Tiago Miranda" -> {};
 
 
 
 
 
 
-"Mariza" -> { "Artur Batalha"[label="Colaborou"]; "Tiago Miranda"[label="Colaborou"];};
+"Mariza"[URL="Mariza.html"];
+ "Mariza" -> { "Artur Batalha"[URL="Artur Batalha.html", label="Colaborou"]; "Tiago Miranda"[URL="Tiago Miranda.html", label="Colaborou"];};
 
 
 

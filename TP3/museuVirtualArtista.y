@@ -8,6 +8,7 @@
 	int yylex();
 	FILE* fd1;
 	FILE* fd2,*fd3,*fd4;
+	char* myArtista;
 %}
 	// simbolos terminais
 %token NOME IDADE CIDADE TIPO TEMPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU
@@ -45,47 +46,56 @@ ligacoes: musicaOuEvento ligacoes	{printf("6\n");asprintf(&$$,"%s\n%s",$1,$2);}
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 
 artista	: NOME IDADE CIDADE lista 	{printf("8\n");
-									 asprintf(&$$,"\"%s\" -> {%s};\n",$1,$4); //imprime para o dot
+									 myArtista = $1;
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
-									 f = strdup($1);
-									 strcat(f,".html");
+									 sprintf(f,"%s.html",$1);
+									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n \"%s\" -> {%s};\n",$1,f,$1,$4); //imprime para o dot
 									 fd2=fopen(f,"w"); // a partir daqui para html
-								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d \n\t Cidade: %s \n\t %s \n\t</body> \n</html>",$1,$2,$3,$4);
+								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d <br>\n\t Cidade: %s \n\t</body> \n</html>",$1,$2,$3);
 								    }			
 									;
 
 musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
 									 $$=""; // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
-									 f = strdup($1);
-									 strcat(f,".html");
+									 sprintf(f,"%s.html",$1);
 									 fd3=fopen(f,"w"); // a partir daqui para html
-									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Nome: %s <br>\n\t Tempo: %f \n\t</body> \n</html>",$1,$2,$3);
+									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Tempo: %f \n\t</body> \n</html>",$1,$2,$3);
 									}
 			  | NOME TIPO DATA		{printf("10\n");
 									 $$=""; // imprime para o dot nome
-									 char* f = malloc(sizeof(char)*strlen($1)+6);
-									 f = strdup($1);
-									 strcat(f,".html");
+									  char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",$1);
 									 fd4=fopen(f,"w"); // a partir daqui para html
 									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Data: %s \n\t</body> \n</html> ",$1,$2,$3);
 									}
 			  ;
 			  
 lista   : COLABOROU lista		  	{printf("11\n");
-									 asprintf(&$$," \"%s\"[label=\"Colaborou\"];%s",$1,$2);
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",$1);
+									 printf("%s\n",f);
+									 asprintf(&$$," \"%s\"[URL=\"%s\", label=\"Colaborou\"];%s",$1,f,$2);
 									 }
 		| APRENDEU lista		  	{printf("12\n");
-									 asprintf(&$$," \"%s\"[label=\"Aprendeu\"];%s",$1,$2);
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",$1);
+									 asprintf(&$$," \" %s\"[URL=\"%s\",label=\"Aprendeu\"];%s",$1,f,$2);
 									}
 		| ENSINOU lista	 		 	{printf("13\n");
-									 asprintf(&$$," \"%s\"[label=\"Ensinou\"];%s",$1,$2);
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",$1);
+									 asprintf(&$$," \"%s\"[URL=\"%s\", label=\"Ensinou\"];%s",$1,f,$2);
 									}
 		| PARTICIPOU lista		  	{printf("14\n");
-									 asprintf(&$$," \"%s\"[label=\"Participou\"];%s",$1,$2);
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",$1);
+									 asprintf(&$$," \"%s\"[URL=\"%s\", label=\"Participou\"];%s",$1,f,$2);
 									}
 		| PRODUZIU lista		  	{printf("15\n");
-									 asprintf(&$$," \"%s\"[label=\"Produziu\"];%s",$1,$2);
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",$1);
+									 asprintf(&$$," \"%s\"[URL=\"%s\", label=\"Produziu\"];%s",$1,f,$2);
 									}
 		|					 	  	{printf("sem relações\n");$$="";}
 		;
