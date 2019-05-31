@@ -8,7 +8,10 @@ exec:
 	dot -Tsvg grafo.dot -o grafo.svg
 
 clean:
-	rm -f y.tab.c
+	rm -f y.tab.*
 	rm -f lex.yy.c
 	rm -f MvA
 	rm -f grafo.svg
+	rm -f grafo.dot
+	rm -f *.html
+	rm -f y.output
