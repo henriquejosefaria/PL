@@ -45,7 +45,7 @@ ligacoes: musicaOuEvento ligacoes	{printf("6\n");asprintf(&$$,"%s\n%s",$1,$2);}
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 
 artista	: NOME IDADE CIDADE lista 	{printf("8\n");
-									 asprintf(&$$,"\"%s\" ->{%s};\n",$1,$4); //imprime para o dot
+									 asprintf(&$$,"\"%s\" -> {%s};\n",$1,$4); //imprime para o dot
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 f = strdup($1);
 									 strcat(f,".html");
@@ -55,7 +55,7 @@ artista	: NOME IDADE CIDADE lista 	{printf("8\n");
 									;
 
 musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
-									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
+									 $$=""; // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 f = strdup($1);
 									 strcat(f,".html");
@@ -63,7 +63,7 @@ musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
 									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Nome: %s <br>\n\t Tempo: %f \n\t</body> \n</html>",$1,$2,$3);
 									}
 			  | NOME TIPO DATA		{printf("10\n");
-									 asprintf(&$$,"%s\n",$1); // imprime para o dot nome
+									 $$=""; // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 f = strdup($1);
 									 strcat(f,".html");
@@ -73,22 +73,21 @@ musicaOuEvento: NOME TIPO TEMPO 	{printf("9\n");
 			  ;
 			  
 lista   : COLABOROU lista		  	{printf("11\n");
-
-									 asprintf(&$$," \"%s\"[label=\"Colaborou\"],%s",$1,$2);
+									 asprintf(&$$," \"%s\"[label=\"Colaborou\"];%s",$1,$2);
 									 }
 		| APRENDEU lista		  	{printf("12\n");
-									 asprintf(&$$," \"%s\"[label=\"Aprendeu\"],%s",$1,$2);
+									 asprintf(&$$," \"%s\"[label=\"Aprendeu\"];%s",$1,$2);
 									}
 		| ENSINOU lista	 		 	{printf("13\n");
-									 asprintf(&$$," \"%s\"[label=\"Ensinou\"],%s",$1,$2);
+									 asprintf(&$$," \"%s\"[label=\"Ensinou\"];%s",$1,$2);
 									}
 		| PARTICIPOU lista		  	{printf("14\n");
-									 asprintf(&$$," \"%s\"[label=\"Participou\"],%s",$1,$2);
+									 asprintf(&$$," \"%s\"[label=\"Participou\"];%s",$1,$2);
 									}
 		| PRODUZIU lista		  	{printf("15\n");
-									 asprintf(&$$," \"%s\"[label=\"Produziu\"],%s",$1,$2);
+									 asprintf(&$$," \"%s\"[label=\"Produziu\"];%s",$1,$2);
 									}
-		|					 	  	{printf("sem relações\n");$$="\"\"";}
+		|					 	  	{printf("sem relações\n");$$=" \"\"";}
 		;
 
 %%

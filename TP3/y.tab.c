@@ -437,7 +437,7 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    26,    26,    33,    34,    37,    38,    41,    42,    47,
-      57,    65,    75,    79,    82,    85,    88,    91
+      57,    65,    75,    78,    81,    84,    87,    90
 };
 #endif
 
@@ -1390,7 +1390,7 @@ yyreduce:
   case 9:
 #line 47 "museuVirtualArtista.y"
     {printf("8\n");
-									 asprintf(&(yyval.c),"\"%s\" ->{%s};\n",(yyvsp[(1) - (4)].c),(yyvsp[(4) - (4)].c)); //imprime para o dot
+									 asprintf(&(yyval.c),"\"%s\" -> {%s};\n",(yyvsp[(1) - (4)].c),(yyvsp[(4) - (4)].c)); //imprime para o dot
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (4)].c))+6);
 									 f = strdup((yyvsp[(1) - (4)].c));
 									 strcat(f,".html");
@@ -1402,7 +1402,7 @@ yyreduce:
   case 10:
 #line 57 "museuVirtualArtista.y"
     {printf("9\n");
-									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
+									 (yyval.c)=""; // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (3)].c))+6);
 									 f = strdup((yyvsp[(1) - (3)].c));
 									 strcat(f,".html");
@@ -1414,7 +1414,7 @@ yyreduce:
   case 11:
 #line 65 "museuVirtualArtista.y"
     {printf("10\n");
-									 asprintf(&(yyval.c),"%s\n",(yyvsp[(1) - (3)].c)); // imprime para o dot nome
+									 (yyval.c)=""; // imprime para o dot nome
 									 char* f = malloc(sizeof(char)*strlen((yyvsp[(1) - (3)].c))+6);
 									 f = strdup((yyvsp[(1) - (3)].c));
 									 strcat(f,".html");
@@ -1426,47 +1426,46 @@ yyreduce:
   case 12:
 #line 75 "museuVirtualArtista.y"
     {printf("11\n");
-
-									 asprintf(&(yyval.c)," \"%s\"[label=\"Colaborou\"],%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
+									 asprintf(&(yyval.c)," \"%s\"[label=\"Colaborou\"];%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
 									 }
     break;
 
   case 13:
-#line 79 "museuVirtualArtista.y"
+#line 78 "museuVirtualArtista.y"
     {printf("12\n");
-									 asprintf(&(yyval.c)," \"%s\"[label=\"Aprendeu\"],%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
+									 asprintf(&(yyval.c)," \"%s\"[label=\"Aprendeu\"];%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
 									}
     break;
 
   case 14:
-#line 82 "museuVirtualArtista.y"
+#line 81 "museuVirtualArtista.y"
     {printf("13\n");
-									 asprintf(&(yyval.c)," \"%s\"[label=\"Ensinou\"],%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
+									 asprintf(&(yyval.c)," \"%s\"[label=\"Ensinou\"];%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
 									}
     break;
 
   case 15:
-#line 85 "museuVirtualArtista.y"
+#line 84 "museuVirtualArtista.y"
     {printf("14\n");
-									 asprintf(&(yyval.c)," \"%s\"[label=\"Participou\"],%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
+									 asprintf(&(yyval.c)," \"%s\"[label=\"Participou\"];%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
 									}
     break;
 
   case 16:
-#line 88 "museuVirtualArtista.y"
+#line 87 "museuVirtualArtista.y"
     {printf("15\n");
-									 asprintf(&(yyval.c)," \"%s\"[label=\"Produziu\"],%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
+									 asprintf(&(yyval.c)," \"%s\"[label=\"Produziu\"];%s",(yyvsp[(1) - (2)].c),(yyvsp[(2) - (2)].c));
 									}
     break;
 
   case 17:
-#line 91 "museuVirtualArtista.y"
-    {printf("sem relações\n");(yyval.c)="\"\"";}
+#line 90 "museuVirtualArtista.y"
+    {printf("sem relações\n");(yyval.c)=" \"\"";}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1470 "y.tab.c"
+#line 1469 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1680,7 +1679,7 @@ yyreturn:
 }
 
 
-#line 94 "museuVirtualArtista.y"
+#line 93 "museuVirtualArtista.y"
 
 
  #include "lex.yy.c"
