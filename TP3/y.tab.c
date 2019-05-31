@@ -1460,7 +1460,7 @@ yyreduce:
 
   case 17:
 #line 90 "museuVirtualArtista.y"
-    {printf("sem relações\n");(yyval.c)=" \"\"";}
+    {printf("sem relações\n");(yyval.c)="";}
     break;
 
 

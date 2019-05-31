@@ -87,7 +87,7 @@ lista   : COLABOROU lista		  	{printf("11\n");
 		| PRODUZIU lista		  	{printf("15\n");
 									 asprintf(&$$," \"%s\"[label=\"Produziu\"];%s",$1,$2);
 									}
-		|					 	  	{printf("sem relações\n");$$=" \"\"";}
+		|					 	  	{printf("sem relações\n");$$="";}
 		;
 
 %%
