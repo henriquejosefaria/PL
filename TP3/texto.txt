@@ -4,8 +4,8 @@ artista:
 nome:Tiago Miranda
 idade:25
 cidade:Lisboa
-aprendeu:Artur Batalha
 bibliografia:Tiago Miranda nasceu em Lisboa e mais tarde mudou-se para o Cacém. Entre o 9.º e o 12.º ano, frequenta a Escola Secundária Gama Barros, sendo colega de turma de Rita Moreira (amiga e irmã de João Reis Moreira, bailarino que o tem acompanhado nos concertos ao vivo desde 2018) e de Rúben de Sá Osório (seu amigo e o estilista). Após o ensino secundário, frequentou a licenciatura em Design de Comunicação e Produção Audiovisual, na Escola Superior de Artes Aplicadas do Instituto Politécnico de Castelo Branco, curso que não concluiu por duas disciplinas. Volta para Lisboa e em 2012 começa a trabalhar na cadeia de sex shops ContraNatura, revezando-se entre as suas quatro lojas. Em 2018, após o sucesso do álbum Adoro Bolos, abandona o seu trabalho na ContraNatura para dedicar-se a tempo inteiro à sua carreira musical.#
+aprendeu:Artur Batalha
 
 obra:
 nome:Telemoveis
@@ -130,9 +130,9 @@ artista:
 nome:Mariza
 idade:45
 cidade:Maputo
+bibliografia:Marisa dos Reis Nunes (Lourenço Marques, 16 de dezembro de 1973) é o nome de nascimento da fadista portuguesa Mariza, segundo ela própria corrige na TSF à conversa com Carlos Vaz Marques em 2003, «cantadeira de fados». Tem sido presença regular em palcos como o Carnegie Hall, em Nova Iorque, o Walt Disney Concert Hall, em Los Angeles, o Lobero Theater, em Santa Bárbara, a Salle Pleyel, em Paris, a Ópera de Sydney ou o Royal Albert Hall. O jornal britânico The Guardian considerou-a «uma diva da música do mundo». Ao longo de sua carreira vendeu um milhão de discos no mundo todo, sendo uma das recordistas de vendas de discos em Portugal.#
 colaborou:Artur Batalha
 ensinou:Tiago Miranda
-bibliografia:Marisa dos Reis Nunes (Lourenço Marques, 16 de dezembro de 1973) é o nome de nascimento da fadista portuguesa Mariza, segundo ela própria corrige na TSF à conversa com Carlos Vaz Marques em 2003, «cantadeira de fados». Tem sido presença regular em palcos como o Carnegie Hall, em Nova Iorque, o Walt Disney Concert Hall, em Los Angeles, o Lobero Theater, em Santa Bárbara, a Salle Pleyel, em Paris, a Ópera de Sydney ou o Royal Albert Hall. O jornal britânico The Guardian considerou-a «uma diva da música do mundo». Ao longo de sua carreira vendeu um milhão de discos no mundo todo, sendo uma das recordistas de vendas de discos em Portugal.#
 
 obra:
 nome:Lavava No Rio, Lavava
