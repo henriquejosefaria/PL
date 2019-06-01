@@ -142,6 +142,7 @@ lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
  		y+=3;
  	} else res[y] = str[x];
  }
+ res[y] = '\0';
  return res;
  }
  int main() {
