@@ -32,7 +32,7 @@ nome:Mariza
 idade:45
 cidade:Maputo
 colaborou:Artur Batalha
-colaborou:Tiago Miranda
+aprendeu:Tiago Miranda
 
 obra:
 nome:Lavava No Rio, Lavava

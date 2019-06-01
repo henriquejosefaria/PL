@@ -16,9 +16,9 @@ char* myartista;
 	(?i:nome):.*		{yylval.c = strdup(yytext+5); myartista = yylval.c; return NOME;}
 	(?i:idade):.*		{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	(?i:cidade):.*		{yylval.c = strdup(yytext+7); return CIDADE;}
-	(?i:colaborou):.*	{yylval.c = strdup(yytext+10); strcat(yylval.c,"/"); strcat(yylval.c,myartista); return COLABOROU;}
-	(?i:aprendeu):.*	{yylval.c = strdup(yytext+9); strcat(yylval.c,"/"); strcat(yylval.c,myartista); return APRENDEU;}
-	(?i:ensinou):.*		{yylval.c = strdup(yytext+8); strcat(yylval.c,"/"); strcat(yylval.c,myartista); return ENSINOU;}
+	(?i:colaborou):.*	{char*x = strdup(yytext+10);printf("yytext = %s\n",yytext); sprintf(yylval.c,"%s/%s",x,myartista); return COLABOROU;}
+	(?i:aprendeu):.*	{sprintf(yylval.c,"%s/%s",strdup(yytext+9),myartista); return APRENDEU;}
+	(?i:ensinou):.*		{sprintf(yylval.c,"%s/%s",strdup(yytext+8),myartista); return ENSINOU;}
 	;					{return yytext[0];}
 	(?i:obra):			{BEGIN OBRA;}
 	(?i:evento):		{BEGIN EVENTO;}
