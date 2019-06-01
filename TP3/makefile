@@ -1,5 +1,16 @@
 all: clean comp dot
 
+mac: clean comp dot execMac
+
+linux:  clean comp dot execLinux
+
+execMac:
+	open -a "Google Chrome" grafo.svg
+
+execLinux:
+	google-chrome grafo.svg
+
+
 comp: museuVirtualArtista.fl museuVirtualArtista.y
 	flex -f -8 museuVirtualArtista.fl
 	yacc -v museuVirtualArtista.y
