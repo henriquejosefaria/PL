@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+char* myartista;
 %}
 %option noyywrap
 
@@ -7,42 +8,42 @@
 
 %%
 
-(?i:artista): 						{BEGIN ARTISTA;}
-(?i:obra):							{BEGIN OBRA;}
-(?i:evento):						{BEGIN EVENTO;}
+(?i:artista): 			{BEGIN ARTISTA;}
+(?i:obra):				{BEGIN OBRA;}
+(?i:evento):			{BEGIN EVENTO;}
 
 <ARTISTA>{
-	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
-	(?i:idade):.*					{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
-	(?i:cidade):.*					{yylval.c = strdup(yytext+7); return CIDADE;}
-	(?i:colaborou):.*				{yylval.c = strdup(yytext+10); return COLABOROU;}
-	(?i:aprendeu):.*				{yylval.c = strdup(yytext+9); return APRENDEU;}
-	(?i:ensinou):.*					{yylval.c = strdup(yytext+8); return ENSINOU;}
-	;								{return yytext[0];}
-	(?i:obra):						{BEGIN OBRA;}
-	(?i:evento):					{BEGIN EVENTO;}
-	.|\n 							{;}
+	(?i:nome):.*		{yylval.c = strdup(yytext+5); myartista = yylval.c; return NOME;}
+	(?i:idade):.*		{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
+	(?i:cidade):.*		{yylval.c = strdup(yytext+7); return CIDADE;}
+	(?i:colaborou):.*	{yylval.c = strdup(yytext+10); strcat(yylval.c,"/"); strcat(yylval.c,myartista); return COLABOROU;}
+	(?i:aprendeu):.*	{yylval.c = strdup(yytext+9); strcat(yylval.c,"/"); strcat(yylval.c,myartista); return APRENDEU;}
+	(?i:ensinou):.*		{yylval.c = strdup(yytext+8); strcat(yylval.c,"/"); strcat(yylval.c,myartista); return ENSINOU;}
+	;					{return yytext[0];}
+	(?i:obra):			{BEGIN OBRA;}
+	(?i:evento):		{BEGIN EVENTO;}
+	.|\n 				{;}
 }
 
 <OBRA>{
-	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
-	(?i:tipo):.*					{yylval.c = strdup(yytext+5); return TIPO;}
-	(?i:tempo):.*					{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
-	;								{return yytext[0];}
-	(?i:artista):					{BEGIN ARTISTA;}
-	(?i:evento):					{BEGIN EVENTO;}
-	.|\n 							{;}
+	(?i:nome):.*		{yylval.c = strdup(yytext+5); return NOME;}
+	(?i:tipo):.*		{yylval.c = strdup(yytext+5); return TIPO;}
+	(?i:tempo):.*		{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
+	;					{return yytext[0];}
+	(?i:artista):		{BEGIN ARTISTA;}
+	(?i:evento):		{BEGIN EVENTO;}
+	.|\n 				{;}
 }
 
 <EVENTO>{
-	(?i:nome):.*					{yylval.c = strdup(yytext+5); return NOME;}
-	(?i:tipo):.*					{yylval.c = strdup(yytext+5); return TIPO;}
-	(?i:data):.*					{yylval.c = strdup(yytext+5); return DATA;}
-	;								{return yytext[0];}
-	(?i:artista):					{BEGIN ARTISTA;}
-	(?i:obra):						{BEGIN OBRA;}
-	.|\n 							{;}
+	(?i:nome):.*		{yylval.c = strdup(yytext+5); return NOME;}
+	(?i:tipo):.*		{yylval.c = strdup(yytext+5); return TIPO;}
+	(?i:data):.*		{yylval.c = strdup(yytext+5); return DATA;}
+	;					{return yytext[0];}
+	(?i:artista):		{BEGIN ARTISTA;}
+	(?i:obra):			{BEGIN OBRA;}
+	.|\n 				{;}
 }
-(.|\n)		 						{;}
+(.|\n)		 			{;}
 
 %%

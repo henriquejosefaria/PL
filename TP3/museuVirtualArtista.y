@@ -70,17 +70,41 @@ musicaOuEvento: NOME TIPO TEMPO 	{char* f = malloc(sizeof(char)*strlen($1)+6);
 									}
 			  ;
 			  
-lista   : COLABOROU lista		  	{char* f = malloc(sizeof(char)*strlen($1)+6);
-									 sprintf(f,"%s.html",$1);
-									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Colaborou\"];\n%s",myArtista,$1,f,$2);
+lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
+									 int i = 0,j = 0, index;
+									 for(;$1[i]!='/';i++) colab[i] = $1[i];
+									 index = i;
+									 char* artista = malloc(sizeof(char)*strlen($1));
+									 i++;
+									 for(; $1[i]!='\0';j++,i++) artista[j] = $1[i];
+									 artista[j] = colab[index] = '\0';
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",colab);
+									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Colaborou\"];\n%s",artista,colab,f,$2);
 									 }
-		| APRENDEU lista		  	{char* f = malloc(sizeof(char)*strlen($1)+6);
-									 sprintf(f,"%s.html",$1);
-									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Aprendeu\"];\n%s",myArtista,$1,f,$2);
+		| APRENDEU lista		  	{char* apren = malloc(sizeof(char)*strlen($1));
+									 int i = 0,j = 0, index;
+									 for(;$1[i]!='/';i++) apren[i] = $1[i];
+									 index = i;
+									 char* artista = malloc(sizeof(char)*strlen($1));
+									 i++;
+									 for(; $1[i]!='\0';j++,i++) artista[j] = $1[i];
+									 artista[j] = apren[index] = '\0';
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",apren);
+									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Aprendeu\"];\n%s",artista,apren,f,$2);
 									}
-		| ENSINOU lista	 		 	{char* f = malloc(sizeof(char)*strlen($1)+6);
-									 sprintf(f,"%s.html",$1);
-									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Ensinou\"];\n%s",myArtista,$1,f,$2);
+		| ENSINOU lista	 		 	{char* ensi = malloc(sizeof(char)*strlen($1));
+									 int i = 0,j = 0, index;
+									 for(;$1[i]!='/';i++) ensi[i] = $1[i];
+									 index = i;
+									 char* artista = malloc(sizeof(char)*strlen($1));
+									 i++;
+									 for(; $1[i]!='\0';j++,i++) artista[j] = $1[i];
+									 artista[j] = ensi[index] = '\0';
+									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 sprintf(f,"%s.html",ensi);
+									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Ensinou\"];\n%s",artista,ensi,f,$2);
 									}
 		|					 	  	{$$="";}
 		;
