@@ -48,8 +48,10 @@ artista	: NOME IDADE CIDADE BIBLIOGRAFIA lista
 								 	{myArtista = strdup($1);
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
-									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n%s",$1,f,$5);
-									 fd2=fopen(f,"w"); // a partir daqui para html
+									 // aqui escreve para dot
+									 asprintf(&$$,"\"%s\"[URL=\"%s\",shape=tripleoctagon,color=purple,style=filled];\n%s",$1,f,$5);
+									 fd2=fopen(f,"w"); 
+									 // a partir daqui para html
 								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d <br>\n\t Cidade: %s <br>\n\t Bibliografia: <blockquote style=\"height:300px; overflow: hidden; min-height: 300 px;\"> %s </blockquote> \n\t</body> \n</html>",$1,$2,$3,prepareString($4));
 								    }			
 									;
@@ -57,18 +59,18 @@ artista	: NOME IDADE CIDADE BIBLIOGRAFIA lista
 musicaOuEvento: NOME TIPO TEMPO LETRA
 								 	{char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
-									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n\"%s\" -> \"%s\"[label=\"Produziu\"];",$1,f,myArtista,$1);
-									 f = malloc(sizeof(char)*strlen($1)+6);
-									 sprintf(f,"%s.html",$1);
-									 fd3=fopen(f,"w"); // a partir daqui para html
+									 // aqui escreve para dot
+									 asprintf(&$$,"\"%s\"[shape=box,color=yellow,style=filled];\n\"%s\"[URL=\"%s\"];\n\"%s\" -> \"%s\"[label=\"Produziu\"];",$1,$1,f,myArtista,$1);
+									 fd3=fopen(f,"w"); 
+									 // a partir daqui para html
 									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Tempo: %.2f <br><br>\n\t Letra: <br> <p> %s </p>\n\t</body> \n</html>",$1,$2,$3,$4);
 									}
 			  | NOME TIPO DATA		{char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
-									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n\"%s\" -> \"%s\"[label=\"Participou\"];",$1,f,myArtista,$1);
-									 f = malloc(sizeof(char)*strlen($1)+6);
-									 sprintf(f,"%s.html",$1);
-									 fd4=fopen(f,"w"); // a partir daqui para html
+									 // aqui escreve para dot
+									 asprintf(&$$,"\"%s\"[color=red,style=filled];\n\"%s\"[URL=\"%s\"];\n\"%s\" -> \"%s\"[label=\"Participou\"];",$1,$1,f,myArtista,$1);
+									 fd4=fopen(f,"w"); 
+									 // a partir daqui para html
 									 fprintf(fd4,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Data: %s \n\t</body> \n</html> ",$1,$2,$3);
 									}
 			  ;
