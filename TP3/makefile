@@ -1,4 +1,4 @@
-all: clean comp dot exec
+all: clean comp dot
 
 comp: museuVirtualArtista.fl museuVirtualArtista.y
 	flex -f -8 museuVirtualArtista.fl
@@ -8,9 +8,6 @@ comp: museuVirtualArtista.fl museuVirtualArtista.y
 dot: texto.txt
 	./MvA < texto.txt
 	dot -Tsvg grafo.dot -o grafo.svg
-
-exec:
-	google-chrome grafo.svg
 
 clean:
 	rm -f y.tab.*

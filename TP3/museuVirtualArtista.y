@@ -5,6 +5,7 @@
 	#include <math.h>
 	#include <unistd.h>
 	void yyerror(char *s);
+	char* prepareString(char* str);
 	int yylex();
 	FILE* fd1;
 	FILE* fd2,*fd3,*fd4;
@@ -49,7 +50,7 @@ artista	: NOME IDADE CIDADE BIBLIOGRAFIA lista
 									 sprintf(f,"%s.html",$1);
 									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n%s",$1,f,$5);
 									 fd2=fopen(f,"w"); // a partir daqui para html
-								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d <br>\n\t Cidade: %s <br>\n\t Bibliografia: %s\n\t</body> \n</html>",$1,$2,$3,$4);
+								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d <br>\n\t Cidade: %s <br>\n\t Bibliografia: <blockquote style=\"height:300px; overflow: hidden; min-height: 300 px;\"> %s </blockquote> \n\t</body> \n</html>",$1,$2,$3,prepareString($4));
 								    }			
 									;
 
@@ -60,7 +61,7 @@ musicaOuEvento: NOME TIPO TEMPO LETRA
 									 f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
 									 fd3=fopen(f,"w"); // a partir daqui para html
-									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Tempo: %.2f <br><br>\n\t Letra: <br> %s\n\t</body> \n</html>",$1,$2,$3,$4);
+									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Tempo: %.2f <br><br>\n\t Letra: <br> <p> %s </p>\n\t</body> \n</html>",$1,$2,$3,$4);
 									}
 			  | NOME TIPO DATA		{char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
@@ -129,6 +130,20 @@ lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
 	
  void yyerror(char *s){fprintf(stderr,"ERRO:%s\nLine:%d\n",s,yylineno);}
 
+ char* prepareString(char* str){
+ int x,y;
+ char* res = malloc(sizeof(char)*strlen(str)*2);
+ for(x=0,y=0;str[x] != '\0';x++,y++){
+ 	if(str[x] == '\n'){
+ 		res[y] = '<';
+ 		res[y+1] = 'b';
+ 		res[y+2] ='r';
+ 		res[y+3] = '>';
+ 		y+=3;
+ 	} else res[y] = str[x];
+ }
+ return res;
+ }
  int main() {
 	yyparse();
 	return 0;
