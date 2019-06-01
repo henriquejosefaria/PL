@@ -132,7 +132,7 @@ idade:45
 cidade:Maputo
 colaborou:Artur Batalha
 ensinou:Tiago Miranda
-bibliografia:Estriou-se no Festival Womad 2002, muito jovem ainda sendo que ao fim de 20 anos de carreira tem bastantes discos de ouro e platina em Portugal. Mundialmente Famosa pelo 
+bibliografia:Marisa dos Reis Nunes (Lourenço Marques, 16 de dezembro de 1973) é o nome de nascimento da fadista portuguesa Mariza, segundo ela própria corrige na TSF à conversa com Carlos Vaz Marques em 2003, «cantadeira de fados». Tem sido presença regular em palcos como o Carnegie Hall, em Nova Iorque, o Walt Disney Concert Hall, em Los Angeles, o Lobero Theater, em Santa Bárbara, a Salle Pleyel, em Paris, a Ópera de Sydney ou o Royal Albert Hall. O jornal britânico The Guardian considerou-a «uma diva da música do mundo». Ao longo de sua carreira vendeu um milhão de discos no mundo todo, sendo uma das recordistas de vendas de discos em Portugal.#
 
 obra:
 nome:Lavava No Rio, Lavava
