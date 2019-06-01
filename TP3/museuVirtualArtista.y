@@ -80,7 +80,11 @@ lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
 									 artista[j] = colab[index] = '\0';
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",colab);
-									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Colaborou\"];\n%s",artista,colab,f,$2);
+									 if(fopen(f,"r")){
+										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Colaborou\"];\n%s",artista,colab,f,$2);
+									 } else{
+									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Colaborou\"];\n%s",artista,colab,$2);
+									 }
 									 }
 		| APRENDEU lista		  	{char* apren = malloc(sizeof(char)*strlen($1));
 									 int i = 0,j = 0, index;
@@ -92,7 +96,11 @@ lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
 									 artista[j] = apren[index] = '\0';
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",apren);
-									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Aprendeu\"];\n%s",artista,apren,f,$2);
+									 if(fopen(f,"r")){
+										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Aprendeu\"];\n%s",artista,apren,f,$2);
+									 } else{
+									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Aprendeu\"];\n%s",artista,apren,$2);
+									 }
 									}
 		| ENSINOU lista	 		 	{char* ensi = malloc(sizeof(char)*strlen($1));
 									 int i = 0,j = 0, index;
@@ -104,7 +112,11 @@ lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
 									 artista[j] = ensi[index] = '\0';
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",ensi);
-									 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Ensinou\"];\n%s",artista,ensi,f,$2);
+									 if(fopen(f,"r")){
+										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Ensinou\"];\n%s",artista,ensi,f,$2);
+									 } else{
+									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Ensinou\"];\n%s",artista,ensi,$2);
+									 }
 									}
 		|					 	  	{$$="";}
 		;
