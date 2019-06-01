@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 char* myartista;
-char* tmp;
+int comp;
 %}
 %option noyywrap
 
@@ -14,12 +14,12 @@ char* tmp;
 (?i:evento):			{BEGIN EVENTO;}
 
 <ARTISTA>{
-	(?i:nome):.*		{yylval.c = strdup(yytext+5); myartista = strdup(yytext+5);; return NOME;}
+	(?i:nome):.*		{yylval.c = strdup(yytext+5); myartista = strdup(yytext+5);comp = strlen(myartista); return NOME;}
 	(?i:idade):.*		{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	(?i:cidade):.*		{yylval.c = strdup(yytext+7); return CIDADE;}
-	(?i:colaborou):.*	{tmp = malloc(256);sprintf(tmp,"%s/%s",strdup(yytext+10),myartista); yylval.c = strdup(tmp); return COLABOROU;}
-	(?i:aprendeu):.*	{tmp = malloc(256);sprintf(tmp,"%s/%s",strdup(yytext+9),myartista); yylval.c = strdup(tmp); return APRENDEU;}
-	(?i:ensinou):.*		{tmp = malloc(256);sprintf(tmp,"%s/%s",strdup(yytext+8),myartista); yylval.c = strdup(tmp); return ENSINOU;}
+	(?i:colaborou):.*	{char* tmp = malloc(sizeof(char)*(comp+2+strlen(yytext+10))); sprintf(tmp,"%s/%s",strdup(yytext+10),myartista); yylval.c = strdup(tmp); return COLABOROU;}
+	(?i:aprendeu):.*	{char* tmp = malloc(sizeof(char)*(comp+2+strlen(yytext+9))); sprintf(tmp,"%s/%s",strdup(yytext+9),myartista); yylval.c = strdup(tmp); return APRENDEU;}
+	(?i:ensinou):.*		{char* tmp = malloc(sizeof(char)*(comp+2+strlen(yytext+8))); sprintf(tmp,"%s/%s",strdup(yytext+8),myartista); yylval.c = strdup(tmp); return ENSINOU;}
 	;					{return yytext[0];}
 	(?i:obra):			{BEGIN OBRA;}
 	(?i:evento):		{BEGIN EVENTO;}
