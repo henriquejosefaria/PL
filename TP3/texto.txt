@@ -5,16 +5,114 @@ nome:Tiago Miranda
 idade:25
 cidade:Lisboa
 aprendeu:Artur Batalha
+bibliografia:Tiago Miranda nasceu em Lisboa e mais tarde mudou-se para o Cacém. Entre o 9.º e o 12.º ano, frequenta a Escola Secundária Gama Barros, sendo colega de turma de Rita Moreira (amiga e irmã de João Reis Moreira, bailarino que o tem acompanhado nos concertos ao vivo desde 2018) e de Rúben de Sá Osório (seu amigo e o estilista). Após o ensino secundário, frequentou a licenciatura em Design de Comunicação e Produção Audiovisual, na Escola Superior de Artes Aplicadas do Instituto Politécnico de Castelo Branco, curso que não concluiu por duas disciplinas. Volta para Lisboa e em 2012 começa a trabalhar na cadeia de sex shops ContraNatura, revezando-se entre as suas quatro lojas. Em 2018, após o sucesso do álbum Adoro Bolos, abandona o seu trabalho na ContraNatura para dedicar-se a tempo inteiro à sua carreira musical.#
 
 obra:
 nome:Telemoveis
 tipo:pop
 tempo:3.10
+letra:Eu parti o telemóvel
+A tentar ligar para o céu
+Pa' saber se eu mato a saudade
+Ou quem morre sou eu
+E quem mata quem
+Quem mata quem mata
+Quem mata quem
+Nem eu sei
+Quando eu souber, eu não ligo a mais ninguém
+E se a vida ligar
+Se a vida mandar mensagem
+Se ela não parar
+E tu não tiveres coragem de atender
+Tu já sabes o que é que vai acontecer
+Eu vou descer a minha escada
+Vou estragar o telemóvel
+O telele
+Eu vou partir o telemóvel
+O teu e o meu
+E eu vou estragar o telemóvel
+Eu quero viver e escangalhar o telemóvel
+E se eu partir o telemóvel
+Eu só parto aquilo que é meu
+Tou para ver se a saudade morre
+Vai na volta, quem morre sou eu
+E quem mata quem mata
+Eu nem sei
+A chibaria nunca viu nascer ninguém
+Eu partia telemóveis
+Mas eu nunca mais parto o meu
+Eu sei que a saudade tá morta
+Quem mandou a flecha fui eu
+Quem mandou a flecha fui eu
+Fui eu#
 
 obra:
 nome:Celulitite
 tipo:pop
 tempo:3.51
+letra:Oh mor, oh mor
+Solta os cães e traz o lixo
+Oh mor, oh mor
+Vou te comprar um cochicho
+'Pa ver se eu te abaixo o baixo
+'Pa te arrancar o sangacho
+'Pa te arrastar o tarracho
+'Po bicho matar a bichar
+Dá-lhe um cu dum nenuco
+Dê-lhe um cu dum nenuco eunuco
+Dá-lhe um cu dum nenuco
+E aproveita e diz-me
+Quem quer saber da celulite?
+Quer saber do seu limite
+Para amar o seu limite?
+Ninguém quer saber da celulite
+Quer saber do seu limite
+Para amar o seu limite
+Eu 'tou me a cagar
+Eu 'tou me a cagar
+'Pa celulite
+Mama solta a celulite yaya
+A polícia 'tá a pensar que é dinamite yaya
+Chama o melhor canalizador da city
+Pede sanita infinita
+Que o teu cu não tem limite yaya
+Ali pisaste, ali ficaste
+Ali partiste a party com o lípido que abanaste
+Paulatinamente, praticamente nunca papaste
+Trabalhas 'pa patrulha pela pata que apanhaste
+Olhu nheque-nheque-nhiqui ai ai
+Eu quero ver-te a dar o nheque-nheque-nhiqui ai ai
+Olhu nheque-nheque-nhiqui ai ai
+Eu quero ver-te a dar o nheque-nheque-nhiqui ai ai
+Dá-lhe um cu dum nenuco
+Dê-lhe um cu dum nenuco eunuco
+Dá-lhe um cu dum nenuco
+E aproveita e diz-me
+Quem quer saber da celulite?
+Quer saber do seu limite
+Para amar o seu limite?
+Ninguém quer saber da celulite
+Quer saber do seu limite
+Para amar o seu limite
+Eu 'tou me a cagar
+Eu 'tou me a cagar
+E tu também devias 'tar
+Tu não tens celulite
+Tens celulitite
+Mania que tem celulite
+Mas é só mania
+Tu não tens celulite
+Tens celulitite
+Mania que tem celulite
+Mas é só mania
+Quem quer saber da celulite?
+Quer saber do seu limite
+Para amar o seu limite?
+Ninguém quer saber da celulite
+Quer saber do seu limite
+Para amar o seu limite
+Eu 'tou me a cagar
+E tu também devias 'tar#
 
 evento:
 nome:Festival RTP da Cancao 2019
@@ -34,16 +132,67 @@ idade:45
 cidade:Maputo
 colaborou:Artur Batalha
 ensinou:Tiago Miranda
+bibliografia:Estriou-se no Festival Womad 2002, muito jovem ainda sendo que ao fim de 20 anos de carreira tem bastantes discos de ouro e platina em Portugal. Mundialmente Famosa pelo 
 
 obra:
 nome:Lavava No Rio, Lavava
 tipo:fado
 tempo:3.55
+letra:Lavava no rio, lavava
+Gelava-me o frio, gelava,
+Quando ia ao rio lavar.
+Passava fome, passava,
+Chorava, também chorava,
+Ao ver minha mãe chorar!
+Cantava, também, cantava!
+Sonhava, também, sonhava!
+E, na minha fantasia,
+Tais coisas fantasiava,
+Que esquecia que chorava,
+Que esquecia que sofria!
+Já não vou ao rio lavar,
+Mas continuo a chorar!
+Já não sonho o que sonhava!
+Já não lavo no rio!
+Por que me gela este frio
+Mais do que então gelava?
+Ai, minha mãe, minha mãe
+Que saudades desse bem,
+Do mal que eu não conhecia!
+Dessa fome que eu passava,
+Do frio que nos gelava,
+E da minha fantasia!
+Já não temos fome, mãe!
+Mas já não temos também
+O desejo de a não ter!
+Já não sabemos sonhar,
+Já andamos a enganar
+O desejo de morrer!#
 
 obra:
 nome:Promete, Jura
 tipo:fado
 tempo:3.53
+letra:Estás a pensar em mim, promete, jura
+Se sentes como eu o vento a soluçar
+As verdades mais certas, mais impuras
+Que as nossas bocas têm p'ra contar
+Se sentes lá fora a chuva estremecida
+Como o desenlaçar d'uma aventura
+Que pode ou não ficar por toda a vida
+Diz que sentes como eu, promete, jura
+Se sentes este fogo que me queima
+Se sentes o meu corpo em tempestade
+Luta por mim amor, arrisca, teima
+Abraça este desejo que me invade
+Se sentes, meu amor, o que eu não disse
+Além de tudo o mais do que disseste
+É que não houve verso que sentisse
+Aquilo que eu te dei e tu me deste
+Se sentes lá fora a chuva estremecida
+Como o desenlaçar d'uma aventura
+Que pode ou não ficar por toda a vida
+Diz que sentes como eu, promete, jura#
 
 evento:
 nome:Festival Womad 2002
