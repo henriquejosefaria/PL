@@ -1,0 +1,27 @@
+digraph {
+rankdir=LR;
+"Tiago Miranda"[URL="Tiago Miranda.html"];
+"Tiago Miranda" -> "Artur Batalha"[ label="Aprendeu"];
+
+"Telemoveis"[URL="Telemoveis.html"];
+"Tiago Miranda" -> "Telemoveis"[label="Produziu"];
+"Celulitite"[URL="Celulitite.html"];
+"Tiago Miranda" -> "Celulitite"[label="Produziu"];
+"Festival RTP da Cancao 2019"[URL="Festival RTP da Cancao 2019.html"];
+"Tiago Miranda" -> "Festival RTP da Cancao 2019"[label="Participou"];
+"Festival Eurovisao da Cancao 2019"[URL="Festival Eurovisao da Cancao 2019.html"];
+"Tiago Miranda" -> "Festival Eurovisao da Cancao 2019"[label="Participou"];
+
+"Mariza"[URL="Mariza.html"];
+"Mariza" -> "Artur Batalha"[ label="Colaborou"];
+"Mariza" -> "Tiago Miranda"[URL="Tiago Miranda.html", label="Ensinou"];
+
+"Lavava No Rio, Lavava"[URL="Lavava No Rio, Lavava.html"];
+"Mariza" -> "Lavava No Rio, Lavava"[label="Produziu"];
+"Promete, Jura"[URL="Promete, Jura.html"];
+"Mariza" -> "Promete, Jura"[label="Produziu"];
+"Festival Womad 2002"[URL="Festival Womad 2002.html"];
+"Mariza" -> "Festival Womad 2002"[label="Participou"];
+
+
+}

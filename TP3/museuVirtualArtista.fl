@@ -17,7 +17,7 @@ int comp;
 	(?i:nome):.*		{yylval.c = strdup(yytext+5); myartista = strdup(yytext+5);comp = strlen(myartista); return NOME;}
 	(?i:idade):.*		{yylval.n = atoi(strdup(yytext+6)); return IDADE;}
 	(?i:cidade):.*	    {yylval.c = strdup(yytext+7); return CIDADE;}
-	(?i:bibliografia:)[^#]* {yylval.c = strdup(yytext+13); return BIBLIOGRAFIA;}
+	(?i:bibliografia):[^#]* {yylval.c = strdup(yytext+13); return BIBLIOGRAFIA;}
 	(?i:colaborou):.*	{char* tmp = malloc(sizeof(char)*(comp+2+strlen(yytext+10))); sprintf(tmp,"%s/%s",strdup(yytext+10),myartista); yylval.c = strdup(tmp); return COLABOROU;}
 	(?i:aprendeu):.*	{char* tmp = malloc(sizeof(char)*(comp+2+strlen(yytext+9))); sprintf(tmp,"%s/%s",strdup(yytext+9),myartista); yylval.c = strdup(tmp); return APRENDEU;}
 	(?i:ensinou):.*		{char* tmp = malloc(sizeof(char)*(comp+2+strlen(yytext+8))); sprintf(tmp,"%s/%s",strdup(yytext+8),myartista); yylval.c = strdup(tmp); return ENSINOU;}

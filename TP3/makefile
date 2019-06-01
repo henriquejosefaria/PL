@@ -1,7 +1,7 @@
 all: clean comp exec
 
 comp: museuVirtualArtista.fl museuVirtualArtista.y
-	flex -f museuVirtualArtista.fl
+	flex -f -8 museuVirtualArtista.fl
 	yacc -v museuVirtualArtista.y
 	cc -o MvA y.tab.c  #ao incluir o outro faz compilação geral
 
