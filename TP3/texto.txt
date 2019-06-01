@@ -4,6 +4,7 @@ artista:
 nome:Tiago Miranda
 idade:25
 cidade:Lisboa
+aprendeu:Artur Batalha
 
 obra:
 nome:Telemoveis
@@ -32,7 +33,7 @@ nome:Mariza
 idade:45
 cidade:Maputo
 colaborou:Artur Batalha
-aprendeu:Tiago Miranda
+ensinou:Tiago Miranda
 
 obra:
 nome:Lavava No Rio, Lavava
