@@ -8,7 +8,7 @@ bibliografia:Tiago Miranda nasceu em Lisboa e mais tarde mudou-se para o Cacém.
 aprendeu:Artur Batalha
 
 obra:
-nome:Telemoveis
+nome:Telemóveis
 tipo:pop
 tempo:3.10
 letra:Eu parti o telemóvel
@@ -115,12 +115,12 @@ Eu 'tou me a cagar
 E tu também devias 'tar#
 
 evento:
-nome:Festival RTP da Cancao 2019
+nome:Festival RTP da Canção 2019
 tipo:sarau musical
 data:03-03-2019
 
 evento:
-nome:Festival Eurovisao da Cancao 2019
+nome:Festival Eurovisão da Canção 2019
 tipo:concerto
 data:14-05-2019
 
