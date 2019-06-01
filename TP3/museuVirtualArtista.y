@@ -47,7 +47,7 @@ artista	: NOME IDADE CIDADE BIBLIOGRAFIA lista
 								 	{myArtista = strdup($1);
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
-									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n\"%s\" -> {};\n%s",$1,f,$1,$4);
+									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n%s",$1,f,$5);
 									 fd2=fopen(f,"w"); // a partir daqui para html
 								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d <br>\n\t Cidade: %s <br>\n\t Bibliografia: %s\n\t</body> \n</html>",$1,$2,$3,$4);
 								    }			

@@ -132,7 +132,7 @@ idade:45
 cidade:Maputo
 colaborou:Artur Batalha
 ensinou:Tiago Miranda
-bibliografia:Estriou-se no Festival Womad 2002, muito jovem ainda sendo que ao fim de 20 anos de carreira tem bastantes discos de ouro e platina em Portugal. Mundialmente Famosa pelo 
+bibliografia:Estriou-se no Festival Womad 2002, muito jovem ainda sendo que ao fim de 20 anos de carreira tem bastantes discos de ouro e platina em Portugal. Mundialmente Famosa pelo #
 
 obra:
 nome:Lavava No Rio, Lavava

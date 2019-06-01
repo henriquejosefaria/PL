@@ -31,7 +31,7 @@ int comp;
 	(?i:nome):.*		{yylval.c = strdup(yytext+5); return NOME;}
 	(?i:tipo):.*		{yylval.c = strdup(yytext+5); return TIPO;}
 	(?i:tempo):.*		{yylval.x = atof(strdup(yytext+6)); return TEMPO;}
-	{?i:letra:}[^#]*	{yylval.c = strdup(yytext+6); return LETRA;}
+	(?i:letra:)[^#]*	{yylval.c = strdup(yytext+6); return LETRA;}
 	;					{return yytext[0];}
 	(?i:artista):		{BEGIN ARTISTA;}
 	(?i:evento):		{BEGIN EVENTO;}
