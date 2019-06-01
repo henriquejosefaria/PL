@@ -11,7 +11,7 @@
 	char* myArtista;
 %}
 	// simbolos terminais
-%token NOME IDADE CIDADE TIPO TEMPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU
+%token NOME IDADE CIDADE TIPO TEMPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU BIBLIOGRAFIA LETRA
 
 %union{
 	int n;
@@ -21,7 +21,7 @@
 
 %type <n> IDADE
 %type <x> TEMPO
-%type <c> grafos grafo artista ligacoes lista musicaOuEvento NOME CIDADE TIPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU
+%type <c> grafos grafo artista ligacoes lista musicaOuEvento NOME CIDADE TIPO DATA COLABOROU APRENDEU ENSINOU PARTICIPOU PRODUZIU BIBLIOGRAFIA LETRA
 
 %%
 prog	: grafos	   				{fd1 = fopen("grafo.dot","w");
@@ -43,22 +43,24 @@ ligacoes: musicaOuEvento ligacoes	{asprintf(&$$,"%s\n%s",$1,$2);}
 
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
 
-artista	: NOME IDADE CIDADE lista 	{myArtista = strdup($1);
+artista	: NOME IDADE CIDADE BIBLIOGRAFIA lista
+								 	{myArtista = strdup($1);
 									 char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
 									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n\"%s\" -> {};\n%s",$1,f,$1,$4);
 									 fd2=fopen(f,"w"); // a partir daqui para html
-								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d <br>\n\t Cidade: %s \n\t</body> \n</html>",$1,$2,$3);
+								     fprintf(fd2,"<html> \n\t<head> \n\t<h1>\n\t %s \n\t</h1> \n\t</head> \n\t<body> \n\t Idade: %d <br>\n\t Cidade: %s <br>\n\t Bibliografia: %s\n\t</body> \n</html>",$1,$2,$3,$4);
 								    }			
 									;
 
-musicaOuEvento: NOME TIPO TEMPO 	{char* f = malloc(sizeof(char)*strlen($1)+6);
+musicaOuEvento: NOME TIPO TEMPO LETRA
+								 	{char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
 									 asprintf(&$$,"\"%s\"[URL=\"%s\"];\n\"%s\" -> \"%s\"[label=\"Produziu\"];",$1,f,myArtista,$1);
 									 f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
 									 fd3=fopen(f,"w"); // a partir daqui para html
-									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Tempo: %.2f \n\t</body> \n</html>",$1,$2,$3);
+									 fprintf(fd3,"<html>\n\t <head> \n\t<h1> %s \n\t</h1> \n\t</head> \n\t<body> \n\t Tipo: %s <br>\n\t Tempo: %.2f <br><br>\n\t Letra: <br> %s\n\t</body> \n</html>",$1,$2,$3,$4);
 									}
 			  | NOME TIPO DATA		{char* f = malloc(sizeof(char)*strlen($1)+6);
 									 sprintf(f,"%s.html",$1);
