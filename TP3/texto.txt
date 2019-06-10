@@ -6,7 +6,7 @@ idade:25
 cidade:Lisboa
 bibliografia:Tiago Miranda nasceu em Lisboa e mais tarde mudou-se para o Cacém. Entre o 9.º e o 12.º ano, frequenta a Escola Secundária Gama Barros, sendo colega de turma de Rita Moreira (amiga e irmã de João Reis Moreira, bailarino que o tem acompanhado nos concertos ao vivo desde 2018) e de Rúben de Sá Osório (seu amigo e o estilista). 
 Após o ensino secundário, frequentou a licenciatura em Design de Comunicação e Produção Audiovisual, na Escola Superior de Artes Aplicadas do Instituto Politécnico de Castelo Branco, curso que não concluiu por duas disciplinas. Volta para Lisboa e em 2012 começa a trabalhar na cadeia de sex shops ContraNatura, revezando-se entre as suas quatro lojas. Em 2018, após o sucesso do álbum Adoro Bolos, abandona o seu trabalho na ContraNatura para dedicar-se a tempo inteiro à sua carreira musical.#
-aprendeu:Artur Batalha
+aprendeu:Mariza
 
 obra:
 nome:Telemóveis
