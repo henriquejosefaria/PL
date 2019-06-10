@@ -90,7 +90,7 @@ lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
 									 } else{
 									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Colaborou\"];\n%s",artista,colab,$2);
 									 }
-									 }
+									}
 		| APRENDEU lista		  	{char* apren = malloc(sizeof(char)*strlen($1));
 									 int i = 0,j = 0, index;
 									 for(;$1[i]!='/';i++) apren[i] = $1[i];

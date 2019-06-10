@@ -1,0 +1,74 @@
+digraph {
+forcelabels=true;
+rankdir=TB;
+
+rank1 [style=invisible];
+rank2 [style=invisible];
+rank3 [style=invisible];
+rank4 [style=invisible];
+rank5 [style=invisible];
+vazio1 [label=""];
+grafos2 [label="grafos"];
+lista2 [label="lista"];
+vazio2 [label=""];
+ligacoes2 [label="ligacoes"];
+vazio3 [label=""];
+structNome [shape=record,label="{NOME|Tiago Miranda}"];
+structIdade [shape=record,label="{IDADE|25}"];
+structCidade [shape=record,label="{CIDADE|Lisboa}"];
+structBibliografia [shape=record,label="{BIBLIOGRAFIA|informação do autor}"];
+structAprendeu [shape=record,label="{APRENDEU|Artur Batalha}"];
+structNome2 [shape=record,label="{NOME|Telemóveis}"];
+structTipo [shape=record,label="{TIPO|pop}"];
+structTempo [shape=record,label="{TEMPO|3.10}"];
+structLetra [shape=record,label="{LETRA| Eu parti o telemóvel etc}"];
+subgraph {
+	"prog" -> "grafos";
+	"prog" -> "$";
+	subgraph {
+		"grafos" -> "grafo";
+		subgraph {
+			"grafo" -> "artista";
+			subgraph {
+				"artista" -> structNome;
+				"artista" -> structIdade;
+				"artista" -> structCidade;
+				"artista" -> structBibliografia;
+				"artista" -> "lista";
+				subgraph {
+					"lista" -> structAprendeu;
+					"lista" -> lista2;
+					lista2 -> vazio2;
+				}
+			}
+			"grafo" -> "ligacoes";
+			subgraph {
+				"ligacoes" -> "musicaOuEvento";
+				subgraph{
+					"musicaOuEvento" -> structNome2;
+					"musicaOuEvento" -> structTipo;
+					"musicaOuEvento" -> structTempo;
+					"musicaOuEvento" -> structLetra;
+				}
+				"ligacoes" -> ligacoes2;
+				ligacoes2 -> vazio3;
+			}
+		}
+	}
+	"grafos" -> ";";
+	subgraph {
+		"grafos" -> grafos2;
+		grafos2 -> vazio1;
+	}
+	{rank = same; "grafos"; "$";}
+	{rank = same; "grafo"; ";"; grafos2;}
+	{rank = same; "artista"; "ligacoes"; vazio1;}
+	{rank = same; structNome; structIdade; structCidade; structBibliografia; "lista"; musicaOuEvento; ligacoes2;}
+	{rank = same; structNome2; structTipo; structTempo; structLetra; structAprendeu; lista2;}
+	rank1 -> "grafos" ->"$" [style=invis];
+	rank2 -> "grafo" -> ";" -> grafos2 [style=invis];
+	rank3 -> "artista" -> "ligacoes" -> vazio1 [style=invis];
+	rank4 -> structNome -> structIdade -> structCidade -> structBibliografia -> "lista" -> musicaOuEvento -> ligacoes2 [style=invis];
+	rank5 -> structAprendeu -> lista2 -> structNome2 -> structTipo -> structTempo -> structLetra [style=invis];
+}
+}
