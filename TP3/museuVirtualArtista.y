@@ -30,16 +30,16 @@ prog	: grafos	   				{fd1 = fopen("grafo.dot","w");
 									}
 		;
 
-grafos  : grafo ';' grafos			{asprintf(&$$,"%s\n%s",$1,$3);}
-	    | 		       				{$$="";}
+grafos  : grafos ';' grafo			{asprintf(&$$,"%s\n%s",$3,$1);}
+	    | grafo	       				{asprintf(&$$,"%s",$1);}
 	    ;
 
 grafo   : artista ligacoes			{asprintf(&$$,"%s\n%s",$1,$2);}
-		|							{$$="";}
+		| 							{$$="";}
 	    ;
 
-ligacoes: musicaOuEvento ligacoes	{asprintf(&$$,"%s\n%s",$1,$2);}
-		|							{$$="";}
+ligacoes: ligacoes musicaOuEvento	{asprintf(&$$,"%s\n%s",$2,$1);}
+		| musicaOuEvento    		{asprintf(&$$,"%s",$1);}
 		;
 
 			      /* A PARTIR DAQUI DIVIDE-SE ENTRE HTML E DOT */
@@ -75,52 +75,52 @@ musicaOuEvento: NOME TIPO TEMPO LETRA
 									}
 			  ;
 			  
-lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
+lista   : lista COLABOROU			{char* colab = malloc(sizeof(char)*strlen($2));
 									 int i = 0,j = 0, index;
-									 for(;$1[i]!='/';i++) colab[i] = $1[i];
+									 for(;$2[i]!='/';i++) colab[i] = $2[i];
 									 index = i;
-									 char* artista = malloc(sizeof(char)*strlen($1));
+									 char* artista = malloc(sizeof(char)*strlen($2));
 									 i++;
-									 for(; $1[i]!='\0';j++,i++) artista[j] = $1[i];
+									 for(; $2[i]!='\0';j++,i++) artista[j] = $2[i];
 									 artista[j] = colab[index] = '\0';
-									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 char* f = malloc(sizeof(char)*strlen($2)+6);
 									 sprintf(f,"%s.html",colab);
 									 if(fopen(f,"r")){
-										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Colaborou\"];\n%s",artista,colab,f,$2);
+										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Colaborou\"];\n%s",artista,colab,f,$1);
 									 } else{
-									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Colaborou\"];\n%s",artista,colab,$2);
+									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Colaborou\"];\n%s",artista,colab,$1);
 									 }
 									}
-		| APRENDEU lista		  	{char* apren = malloc(sizeof(char)*strlen($1));
+		| lista APRENDEU		  	{char* apren = malloc(sizeof(char)*strlen($2));
 									 int i = 0,j = 0, index;
-									 for(;$1[i]!='/';i++) apren[i] = $1[i];
+									 for(;$2[i]!='/';i++) apren[i] = $2[i];
 									 index = i;
-									 char* artista = malloc(sizeof(char)*strlen($1));
+									 char* artista = malloc(sizeof(char)*strlen($2));
 									 i++;
-									 for(; $1[i]!='\0';j++,i++) artista[j] = $1[i];
+									 for(; $2[i]!='\0';j++,i++) artista[j] = $2[i];
 									 artista[j] = apren[index] = '\0';
-									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 char* f = malloc(sizeof(char)*strlen($2)+6);
 									 sprintf(f,"%s.html",apren);
 									 if(fopen(f,"r")){
-										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Aprendeu\"];\n%s",artista,apren,f,$2);
+										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Aprendeu\"];\n%s",artista,apren,f,$1);
 									 } else{
-									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Aprendeu\"];\n%s",artista,apren,$2);
+									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Aprendeu\"];\n%s",artista,apren,$1);
 									 }
 									}
-		| ENSINOU lista	 		 	{char* ensi = malloc(sizeof(char)*strlen($1));
+		| lista ENSINOU	 		 	{char* ensi = malloc(sizeof(char)*strlen($2));
 									 int i = 0,j = 0, index;
-									 for(;$1[i]!='/';i++) ensi[i] = $1[i];
+									 for(;$2[i]!='/';i++) ensi[i] = $2[i];
 									 index = i;
-									 char* artista = malloc(sizeof(char)*strlen($1));
+									 char* artista = malloc(sizeof(char)*strlen($2));
 									 i++;
-									 for(; $1[i]!='\0';j++,i++) artista[j] = $1[i];
+									 for(; $2[i]!='\0';j++,i++) artista[j] = $2[i];
 									 artista[j] = ensi[index] = '\0';
-									 char* f = malloc(sizeof(char)*strlen($1)+6);
+									 char* f = malloc(sizeof(char)*strlen($2)+6);
 									 sprintf(f,"%s.html",ensi);
 									 if(fopen(f,"r")){
-										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Ensinou\"];\n%s",artista,ensi,f,$2);
+										 asprintf(&$$,"\"%s\" -> \"%s\"[URL=\"%s\", label=\"Ensinou\"];\n%s",artista,ensi,f,$1);
 									 } else{
-									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Ensinou\"];\n%s",artista,ensi,$2);
+									 	 asprintf(&$$,"\"%s\" -> \"%s\"[ label=\"Ensinou\"];\n%s",artista,ensi,$1);
 									 }
 									}
 		|					 	  	{$$="";}
@@ -147,7 +147,11 @@ lista   : COLABOROU lista			{char* colab = malloc(sizeof(char)*strlen($1));
  res[y] = '\0';
  return res;
  }
- int main() {
+ int main(int argc, char* argv[]) {
+ 	if(argc == 2)
+ 		yyin = fopen(argv[1],"r");
 	yyparse();
+	fclose(fd1);
+	system("dot -Tsvg grafo.dot -o grafo.svg");
 	return 0;
 }

@@ -1,8 +1,8 @@
-all: clean comp dot
+all: clean MvA install exec
 
-mac: clean comp dot execMac
+mac: all execMac
 
-linux:  clean comp dot execLinux
+linux:  all execLinux
 
 execMac:
 	open -a "Google Chrome" grafo.svg
@@ -11,14 +11,16 @@ execLinux:
 	google-chrome grafo.svg
 
 
-comp: museuVirtualArtista.fl museuVirtualArtista.y
+MvA: museuVirtualArtista.fl museuVirtualArtista.y
 	flex -f -8 museuVirtualArtista.fl
 	yacc -v museuVirtualArtista.y
 	cc -o MvA y.tab.c  #ao incluir o outro faz compilação geral
 
-dot: texto.txt
-	./MvA < texto.txt
-	dot -Tsvg grafo.dot -o grafo.svg
+exec: texto.txt
+	MvA texto.txt
+
+install: MvA
+	cp MvA /usr/local/bin/
 
 clean:
 	rm -f y.tab.*
@@ -28,3 +30,4 @@ clean:
 	rm -f grafo.dot
 	rm -f *.html
 	rm -f y.output
+	sudo rm -f /usr/local/bin/MvA
